@@ -89,7 +89,7 @@ function orderGrid() {
                 columns: [
                     { width: 70, id: "bill_id", header: [{ text: "Mã Bill", align: "center" }], align: "center" },
                     {
-                        width: 150, id: "area_name", header: [{ text: "Khu vực" }, { content: "comboFilter" }], editorType: "combobox", editorConfig: {
+                        width: 110, id: "area_name", header: [{ text: "Khu vực" }, { content: "comboFilter" }], editorType: "combobox", editorConfig: {
                             template: ({ value }) => getOptionsTemplate(value)
                         },
                         options: data.areaOptions,
@@ -105,7 +105,7 @@ function orderGrid() {
                         htmlEnable: true
                     },
                     { width: 150, id: "date_check_in", header: [{ text: "Giờ vào", align: "center" }, { content: "comboFilter" }], align: "center", editable: false },
-                    { width: 150, id: "date_check_out", header: [{ text: "Giờ ra", align: "center" }, { content: "comboFilter" }], align: "center", editable: false },
+                    { width: 100, id: "sum_orders", header: [{ text: "Số món", align: "center" }, { content: "comboFilter" }], align: "center", editable: false },
                     { width: 100, id: "total", header: [{ text: "Thành tiền", align: "center" }, { content: "comboFilter" }], align: "right", type: "number", format: "#,#", editable: false },
                     { width: 100, id: "money_received", header: [{ text: "Tiền nhận", align: "center" }, { content: "comboFilter" }], type: "number", format: "#,#", align: "left", autoHeight: true, editable: true },
                     { width: 100, id: "money_refund", header: [{ text: "Tiền thừa", align: "center" }, { content: "comboFilter" }], type: "number", format: "#,#", align: "left", autoHeight: true, editable: false },
@@ -120,15 +120,16 @@ function orderGrid() {
                     },
 
                     {
-                        id: "promotion_description", header: [{ text: "Khuyến mãi" }, { content: "comboFilter" }], editorType: "combobox", editorConfig: {
+                        width: 200, id: "promotion_description", header: [{ text: "Khuyến mãi" }, { content: "comboFilter" }], editorType: "combobox", editorConfig: {
                             template: ({ value }) => getOptionsTemplate(value)
                         },
                         options: data.promotionOptions,
                         template: (value) => getOptionsTemplate(value),
                         htmlEnable: true,
-                        minWidth: 150
+                        minWidth: 100,
                     },
-                    { id: "note", header: [{ text: "Ghi chú", align: "center" }, { content: "comboFilter" }], align: "left", editorType: "textarea", autoHeight: true, editable: false },
+                    { id: "note", header: [{ text: "Ghi chú", align: "center" }], type: "textarea", align: "center", editorType: "textarea", autoHeight: true, editable: true },
+                    // { id: "note", header: [{ text: "Ghi chú" }, { content: "comboFilter" }], align: "left", type: "textarea", editorType: "textarea", editable: true },
 
                     {
                         width: 70, id: "detail", gravity: 1.5, header: [{ text: "Chi tiết", align: "center" }], htmlEnable: true, align: "center",
@@ -158,24 +159,44 @@ function orderGrid() {
                         },
                         "save-button": function (e, data) {
 
-                            console.log(`data saved: ${JSON.stringify([data.row])}`);
+                            console.log(`data saved: ${JSON.stringify(data.row)}`);
                             console.log(`Đang cập nhật main order ... `);
+
+                            if (data.row.status == "Đã thanh toán") {
+                                if (!data.row.money_received) {
+                                    dhx.alert({
+                                        header: "Cập nhật Đơn hàng",
+                                        text: "Bạn phải nhập số Tiền nhận mới cập nhật Đã thanh toán xong",
+                                        buttonsAlignment: "center",
+                                        buttons: ["Đồng ý"]
+                                    })
+                                    return
+                                }
+                            }
 
                             getAjaxData2(function (data) {
 
                                 var result = JSON.parse(data);
-                                var price = Number(result.price);
+                                let css = (result.status == true) ? 'dhx_message--success' : 'dhx_message--error';
+                                // creating DHTMLX Message 
+                                dhx.message({
+                                    node: "message_container",
+                                    text: result.message,
+                                    icon: "dxi dxi-content-save",
+                                    css: css,
+                                    expire: 5000
+                                });
+
+                                // đợi 4s sau đó load lại trang
+                                setTimeout(function () {
+                                    location.reload();
+                                }, 4000)
 
 
-                                if (price == '0') {
-                                    dhx.alert({ header: "Cập nhật đơn hàng", text: "Chưa lấy được giá của sản phẩm", buttonsAlignment: "center", });
-                                }
 
-                                row.detail_price = price
-                                row.detail_total = row.detail_count * price
-                                row.detail_bill_id = bill_id
 
-                            }, "saveMainOrder", [data.row]);
+
+                            }, "saveMainOrder", data.row);
 
                         },
                         "print-button": function (e, data) {
@@ -201,15 +222,28 @@ function orderGrid() {
 
             // edit events
             grid.events.on("afterEditEnd", function (value, row, column) {
+
                 // console.log('Đang cập nhật dữ liệu chung ... ');
                 var money_received = row.money_received
+
+
+
                 if (money_received) {
 
                     if (!isNumber(money_received)) {
                         dhx.alert({ header: "Cập nhậ Đơn hàng", text: "Vui nhập nhập kiểu số", buttonsAlignment: "center", buttons: ["Đồng ý"] });
-                        dhx.alert({ header: "Cập nhậ Đơn hàng", text: "Vui nhập nhập kiểu số", buttonsAlignment: "center", buttons: ["Đồng ý"]});
+                        // dhx.alert({ header: "Cập nhậ Đơn hàng", text: "Vui nhập nhập kiểu số", buttonsAlignment: "center", buttons: ["Đồng ý"] });
                         row.money_refund = 0
                     } else {
+
+                        let money_received_check = row.money_received
+                        // trường hợp nhập số tiền đơn vị là 1000 đồng
+                        if (money_received_check.toString().length == 2 || money_received_check.toString().length == 3) {
+                            money_received = money_received * 1000
+                            row.money_received = money_received
+                        }
+
+
                         if (money_received < row.total) {
                             dhx.alert({
                                 header: "Cập nhật Đơn hàng",
@@ -223,9 +257,11 @@ function orderGrid() {
                                 buttonsAlignment: "center",
                             });
 
-                            row.money_refund = 0
+                            // row.money_refund = 0
                         } else {
-                            row.money_refund = value - row.total
+
+
+                            row.money_refund = money_received - row.total
                         }
                     }
 
@@ -285,7 +321,7 @@ function windows(id, data = null) {
     let bill_id = "";
     let table_order_name = "";
     let date_check_in = date[3] + ":" + date[4] + ":" + date[5];
-    let date_check_out = "";
+    // let date_check_out = "";
     let total = "";
     let status = "";
     let area_name = "";
@@ -296,7 +332,7 @@ function windows(id, data = null) {
         bill_id = data.bill_id.trim();
         table_order_name = data.table_order_name.trim();
         date_check_in = data.date_check_in.trim();
-        date_check_out = data.date_check_out.trim();
+        // date_check_out = data.date_check_out.trim();
         total = data.total.trim();
         status = statusChange(data.status.trim());
 
@@ -949,7 +985,7 @@ function getAjaxData2(callBack, url, objData) {
             // console.log(data);
         })
         .fail(function () {
-            alert("Không lấy được dữ liệu từ hệ thống??");
+            alert("Không lấy được dữ liệu từ hệ thống");
         })
         .always(function () {
             console.log("Done!!");

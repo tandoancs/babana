@@ -65,7 +65,7 @@ class Home extends BaseController
         // get data
         // $billData = $BillModel->readOptions(array('status <>' => 'Done'), 'bill_id');
         $billData = $BillModel->readOptionsIn('status', ['In-progress', 'Delivered'], 'date_check_in');
-        
+
         foreach ($billData as $bill) {
 
             $bill_id = $bill->bill_id;
@@ -92,10 +92,10 @@ class Home extends BaseController
                 'area_name' => !empty($areaItem) ? $areaItem->area_id . "__" . $areaItem->area_name : '',
                 'table_order_name' => !empty($tableItem) ? $tableItem->table_id . "__" . $tableItem->table_order_name : '',
                 'date_check_in' => date('d-m-y H:i:s', strtotime($bill->date_check_in)),
-                'date_check_out' => !empty($bill->date_check_out) ? date('d-m-y H:i:s', strtotime($bill->date_check_out)) : 'Chưa',
+                'sum_orders' => $bill->sum_orders,
                 'total' => $bill->total,
                 'status' => $status,
-                
+
                 // 'area_name' => '',
                 'promotion_description' => !empty($promotionItem) ? $promotionItem->description : 'Không',
                 'note' => $note,
@@ -148,7 +148,7 @@ class Home extends BaseController
                     'detail_price' => $price,
                     'detail_total' => $detail_total,
                     'detail_bill_id' => $billDetail->bill_id,
-                    
+
 
                     'detail_note' => $billDetail->note
                 );
@@ -162,7 +162,7 @@ class Home extends BaseController
                     'detail_price' => "",
                     'detail_total' => "",
                     'detail_bill_id' => "",
-                    
+
                     'detail_note' => ""
                 );
             }
@@ -384,7 +384,7 @@ class Home extends BaseController
                     $foodSizeItem = $FoodSizeModel->readItem(array('food_id' => $food_id, 'size_unit_code' => '1:M'));
                     $promotion_price = !empty($foodSizeItem) ? $foodSizeItem->promotion_price : 0;
                     $price = !empty($foodSizeItem) ? $foodSizeItem->price : 0;
-                    if ($promotion_price > 0 ) {
+                    if ($promotion_price > 0) {
                         $price = $promotion_price;
                     }
                 }
@@ -461,23 +461,22 @@ class Home extends BaseController
 
             $food_id = (!empty($detail_food_name) && strpos($detail_food_name, "__") !== false) ? explode("__", $detail_food_name)[0] : 0;
             $size_unit_code = (!empty($detail_size_unit_code) && strpos($detail_size_unit_code, "__") !== false) ? explode("__", $detail_size_unit_code)[0] : 0;
-            
 
-            if (!empty($food_id) && !empty($size_unit_code) ) {
+
+            if (!empty($food_id) && !empty($size_unit_code)) {
 
                 // connect and model
                 $db = db_connect();
                 $FoodSizeModel = new FoodSizeModel($db);
 
                 $where = ['food_id' => $food_id, 'size_unit_code' => $size_unit_code];
-                if ($FoodSizeModel->isAlreadyExist($where) ) {
+                if ($FoodSizeModel->isAlreadyExist($where)) {
                     $foodSizeData = $FoodSizeModel->readItem($where);
-                    if (!empty($foodSizeData) ) {
+                    if (!empty($foodSizeData)) {
                         $promotion_price = $foodSizeData->promotion_price;
-                        $price = ($promotion_price > 0 ) ? $promotion_price : $foodSizeData->price;
+                        $price = ($promotion_price > 0) ? $promotion_price : $foodSizeData->price;
                     }
                 }
-                
             }
         }
 
@@ -629,17 +628,41 @@ class Home extends BaseController
 
             $data = $this->request->getVar('data');
             $data = json_decode($data, true);
-            
+
             $db = db_connect();
             $BillModel = new BillModel($db);
             $BillDetailModel = new BillDetailModel($db);
 
-            foreach( $data as $key => $value ) {
-                
-            }
+            $bill_id = $data['bill_id'];
+            // // $area_id = (!empty($value['area_name']) && strpos($value['area_name'], '__') !== false) ? explode('__', $value['area_name'])[0] : 0;
+            // // $table_id = (!empty($value['table_order_name']) && strpos($value['table_order_name'], '__') !== false) ? explode('__', $value['table_order_name'])[0] : 0;
+            // // $money_received = $data['money_received'];
+            // // $money_refund = $data['money_refund'];
 
+            $status = $this->getOrderStatus($data['status'], 1);
+            $note = $data['note'];
+
+            $saveData = [
+                'status' => $status,
+                'money_received' => isset($data['money_received']) ? $data['money_received'] : 0,
+                'money_refund' => isset($data['money_refund']) ? $data['money_refund'] : 0,
+                'note' => $note
+            ];
+
+            $where = ['bill_id' => $bill_id];
+            if ($BillModel->isAlreadyExist($where)) {
+                $result = $BillModel->edit($where, $saveData);
+                if (!$result) {
+                    // return error message
+                    $message = 'Có lỗi khi lưu dữ liệu đơn hàng';
+                } else {
+                    $status = true;
+                    $message = 'Đơn hàng đã cập nhật thành công';
+                }
+            }
         }
 
+        return json_encode(array('status' => $status, 'message' => $message), JSON_UNESCAPED_UNICODE);
 
     }
 
@@ -654,17 +677,65 @@ class Home extends BaseController
 
             $data = $this->request->getVar('data');
             $data = json_decode($data, true);
-            
+
             $db = db_connect();
             $BillModel = new BillModel($db);
             $BillDetailModel = new BillDetailModel($db);
 
+            foreach ($data as $key => $value) {
 
+                $bill_id = $value['bill_id'];
+                // // $area_id = (!empty($value['area_name']) && strpos($value['area_name'], '__') !== false) ? explode('__', $value['area_name'])[0] : 0;
+                // // $table_id = (!empty($value['table_order_name']) && strpos($value['table_order_name'], '__') !== false) ? explode('__', $value['table_order_name'])[0] : 0;
+                $money_received = $value['money_received'];
+                $money_refund = $value['money_refund'];
+                $status = $this->getOrderStatus($value['status'], 1);
+                $note = $value['note'];
 
+                $saveData = [
+                    'status' => $status,
+                    'money_received' => $money_received,
+                    'money_refund' => $money_refund,
+                    'note' => $note
+                ];
+
+                $where = ['bill_id' => $bill_id];
+                if ($BillModel->isAlreadyExist($where)) {
+                    $result = $BillModel->edit($where, $saveData);
+                    if (!$result) {
+                        // return error message
+                        $status = false;
+                        $message = 'Có lỗi khi lưu dữ liệu đơn hàng';
+                        break;
+                    } else {
+                        $status = true;
+                        $message = 'Đơn hàng đã cập nhật thành công';
+                    }
+                }
+            }
         }
-
-
     }
+    // // public function saveDetail()
+    // // {
+    // //     $status = false;
+    // //     $message = 'Đơn hàng chưa lưu';
+
+    // //     $request = \Config\Services::request();
+    // //     if ($request->is('post')) {
+
+    // //         $data = $this->request->getVar('data');
+    // //         $data = json_decode($data, true);
+
+    // //         $db = db_connect();
+    // //         $BillModel = new BillModel($db);
+    // //         $BillDetailModel = new BillDetailModel($db);
+
+
+
+    // //     }
+
+
+    // // }
 
     public function getAreaId()
     {
@@ -690,12 +761,12 @@ class Home extends BaseController
                 // lấy các bàn có trạng thái Delivered và In-progress
                 $tableList = [];
                 $billData = $BillModel->readOptionsIn('status', ['Delivered', 'In-progress']);
-                foreach($billData as $bill ) {
+                foreach ($billData as $bill) {
                     $tableList[] = $bill->table_id;
                 }
 
                 // check 
-                if (in_array($table_id, $tableList) ) {
+                if (in_array($table_id, $tableList)) {
                     $table_order_name = !empty($tableItem) ? $tableItem->table_order_name : '';
                     $message = "Bàn $table_order_name đã được đặt chổ";
                 } else {
@@ -705,11 +776,10 @@ class Home extends BaseController
                     $area_name = !empty($areaItem) ? $areaItem->area_name : '';
                     $status = true;
                 }
-                
             }
         }
 
-        return json_encode(['status' => $status, 'message' => $message, 'data' => ['area_id' => $area_id, 'area_name' => $area_name] ], JSON_UNESCAPED_UNICODE);
+        return json_encode(['status' => $status, 'message' => $message, 'data' => ['area_id' => $area_id, 'area_name' => $area_name]], JSON_UNESCAPED_UNICODE);
     }
 
     public function getFoodPrice()
@@ -727,21 +797,20 @@ class Home extends BaseController
                 $db = db_connect();
                 $FoodSizeModel = new FoodSizeModel($db);
 
-                $food_id = (strpos($food_name, "__" ) !== false) ? explode("__", $food_name)[0] : 0;
-                $size_unit_code = (strpos($food_size_unit_code, "__" ) !== false) ? explode("__", $food_size_unit_code)[0] : 0;
+                $food_id = (strpos($food_name, "__") !== false) ? explode("__", $food_name)[0] : 0;
+                $size_unit_code = (strpos($food_size_unit_code, "__") !== false) ? explode("__", $food_size_unit_code)[0] : 0;
 
                 $foodSizeItem = $FoodSizeModel->readItem(array('food_id' => $food_id, 'size_unit_code' => $size_unit_code));
-                if (!empty($foodSizeItem) ) {
+                if (!empty($foodSizeItem)) {
                     $promotion_price = $foodSizeItem->promotion_price;
-                    $price = ($promotion_price > 0 ) ? $promotion_price : $foodSizeItem->price;
+                    $price = ($promotion_price > 0) ? $promotion_price : $foodSizeItem->price;
                 }
-                
             }
         }
 
         return json_encode(array('price' => $price), JSON_UNESCAPED_UNICODE);
     }
-    
+
 
 
 

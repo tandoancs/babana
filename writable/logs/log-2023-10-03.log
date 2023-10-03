@@ -12,3 +12,17 @@ in APPPATH\Controllers\Home.php on line 507.
  3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
  4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
  5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-03 20:51:20 --> Undefined array key "money_received"
+in APPPATH\Controllers\Home.php on line 647.
+ 1 APPPATH\Controllers\Home.php(647): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "money_received"', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 647)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveMainOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-03 20:51:57 --> Undefined array key "money_received"
+in APPPATH\Controllers\Home.php on line 647.
+ 1 APPPATH\Controllers\Home.php(647): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "money_received"', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 647)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveMainOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
