@@ -1,0 +1,207 @@
+CRITICAL - 2023-09-15 08:29:17 --> Undefined array key 0
+in APPPATH\Models\FoodModel.php on line 76.
+ 1 APPPATH\Models\FoodModel.php(76): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key 0', 'C:\\xampp\\htdocs\\babana\\app\\Models\\FoodModel.php', 76)
+ 2 APPPATH\Controllers\Home.php(174): App\Models\FoodModel->readItem([...])
+ 3 APPPATH\Controllers\Home.php(81): App\Controllers\Home->getOrderNote('1')
+ 4 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->load()
+ 5 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 6 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-15 08:29:30 --> Undefined array key 0
+in APPPATH\Models\FoodModel.php on line 76.
+ 1 APPPATH\Models\FoodModel.php(76): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key 0', 'C:\\xampp\\htdocs\\babana\\app\\Models\\FoodModel.php', 76)
+ 2 APPPATH\Controllers\Home.php(174): App\Models\FoodModel->readItem([...])
+ 3 APPPATH\Controllers\Home.php(81): App\Controllers\Home->getOrderNote('1')
+ 4 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->load()
+ 5 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 6 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-15 08:29:53 --> Undefined array key 0
+in APPPATH\Models\FoodModel.php on line 76.
+ 1 APPPATH\Models\FoodModel.php(76): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key 0', 'C:\\xampp\\htdocs\\babana\\app\\Models\\FoodModel.php', 76)
+ 2 APPPATH\Controllers\Home.php(174): App\Models\FoodModel->readItem([...])
+ 3 APPPATH\Controllers\Home.php(81): App\Controllers\Home->getOrderNote('1')
+ 4 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->load()
+ 5 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 6 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-15 08:31:06 --> Undefined array key 0
+in APPPATH\Models\FoodModel.php on line 76.
+ 1 APPPATH\Models\FoodModel.php(76): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key 0', 'C:\\xampp\\htdocs\\babana\\app\\Models\\FoodModel.php', 76)
+ 2 APPPATH\Controllers\Home.php(174): App\Models\FoodModel->readItem([...])
+ 3 APPPATH\Controllers\Home.php(81): App\Controllers\Home->getOrderNote('1')
+ 4 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->load()
+ 5 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 6 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-15 08:31:07 --> Undefined array key 0
+in APPPATH\Models\FoodModel.php on line 76.
+ 1 APPPATH\Models\FoodModel.php(76): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key 0', 'C:\\xampp\\htdocs\\babana\\app\\Models\\FoodModel.php', 76)
+ 2 APPPATH\Controllers\Home.php(174): App\Models\FoodModel->readItem([...])
+ 3 APPPATH\Controllers\Home.php(81): App\Controllers\Home->getOrderNote('1')
+ 4 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->load()
+ 5 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 6 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-15 08:31:08 --> Undefined array key 0
+in APPPATH\Models\FoodModel.php on line 76.
+ 1 APPPATH\Models\FoodModel.php(76): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key 0', 'C:\\xampp\\htdocs\\babana\\app\\Models\\FoodModel.php', 76)
+ 2 APPPATH\Controllers\Home.php(174): App\Models\FoodModel->readItem([...])
+ 3 APPPATH\Controllers\Home.php(81): App\Controllers\Home->getOrderNote('1')
+ 4 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->load()
+ 5 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 6 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-15 08:31:15 --> Undefined array key 0
+in APPPATH\Models\FoodModel.php on line 76.
+ 1 APPPATH\Models\FoodModel.php(76): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key 0', 'C:\\xampp\\htdocs\\babana\\app\\Models\\FoodModel.php', 76)
+ 2 APPPATH\Controllers\Home.php(174): App\Models\FoodModel->readItem([...])
+ 3 APPPATH\Controllers\Home.php(81): App\Controllers\Home->getOrderNote('1')
+ 4 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->load()
+ 5 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 6 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-15 08:31:17 --> Undefined array key 0
+in APPPATH\Models\FoodModel.php on line 76.
+ 1 APPPATH\Models\FoodModel.php(76): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key 0', 'C:\\xampp\\htdocs\\babana\\app\\Models\\FoodModel.php', 76)
+ 2 APPPATH\Controllers\Home.php(174): App\Models\FoodModel->readItem([...])
+ 3 APPPATH\Controllers\Home.php(81): App\Controllers\Home->getOrderNote('1')
+ 4 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->load()
+ 5 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 6 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-15 08:31:50 --> Undefined array key 0
+in APPPATH\Models\FoodModel.php on line 76.
+ 1 APPPATH\Models\FoodModel.php(76): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key 0', 'C:\\xampp\\htdocs\\babana\\app\\Models\\FoodModel.php', 76)
+ 2 APPPATH\Controllers\Home.php(174): App\Models\FoodModel->readItem([...])
+ 3 APPPATH\Controllers\Home.php(81): App\Controllers\Home->getOrderNote('1')
+ 4 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->load()
+ 5 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 6 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-15 08:32:32 --> Undefined array key 0
+in APPPATH\Models\FoodModel.php on line 76.
+ 1 APPPATH\Models\FoodModel.php(76): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key 0', 'C:\\xampp\\htdocs\\babana\\app\\Models\\FoodModel.php', 76)
+ 2 APPPATH\Controllers\Home.php(174): App\Models\FoodModel->readItem([...])
+ 3 APPPATH\Controllers\Home.php(81): App\Controllers\Home->getOrderNote('1')
+ 4 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->load()
+ 5 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 6 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-15 08:33:37 --> Undefined array key 0
+in APPPATH\Models\FoodModel.php on line 76.
+ 1 APPPATH\Models\FoodModel.php(76): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key 0', 'C:\\xampp\\htdocs\\babana\\app\\Models\\FoodModel.php', 76)
+ 2 APPPATH\Controllers\Home.php(174): App\Models\FoodModel->readItem([...])
+ 3 APPPATH\Controllers\Home.php(81): App\Controllers\Home->getOrderNote('1')
+ 4 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->load()
+ 5 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 6 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-15 08:34:55 --> Undefined array key 0
+in APPPATH\Models\FoodModel.php on line 76.
+ 1 APPPATH\Models\FoodModel.php(76): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key 0', 'C:\\xampp\\htdocs\\babana\\app\\Models\\FoodModel.php', 76)
+ 2 APPPATH\Controllers\Home.php(174): App\Models\FoodModel->readItem([...])
+ 3 APPPATH\Controllers\Home.php(81): App\Controllers\Home->getOrderNote('1')
+ 4 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->load()
+ 5 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 6 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-15 08:35:13 --> Undefined array key 0
+in APPPATH\Models\FoodModel.php on line 76.
+ 1 APPPATH\Models\FoodModel.php(76): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key 0', 'C:\\xampp\\htdocs\\babana\\app\\Models\\FoodModel.php', 76)
+ 2 APPPATH\Controllers\Home.php(174): App\Models\FoodModel->readItem([...])
+ 3 APPPATH\Controllers\Home.php(81): App\Controllers\Home->getOrderNote('1')
+ 4 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->load()
+ 5 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 6 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-15 08:37:06 --> Undefined array key 0
+in APPPATH\Models\FoodModel.php on line 76.
+ 1 APPPATH\Models\FoodModel.php(76): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key 0', 'C:\\xampp\\htdocs\\babana\\app\\Models\\FoodModel.php', 76)
+ 2 APPPATH\Controllers\Home.php(174): App\Models\FoodModel->readItem([...])
+ 3 APPPATH\Controllers\Home.php(81): App\Controllers\Home->getOrderNote('1')
+ 4 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->load()
+ 5 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 6 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-15 08:37:48 --> Undefined array key 0
+in APPPATH\Models\FoodModel.php on line 76.
+ 1 APPPATH\Models\FoodModel.php(76): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key 0', 'C:\\xampp\\htdocs\\babana\\app\\Models\\FoodModel.php', 76)
+ 2 APPPATH\Controllers\Home.php(174): App\Models\FoodModel->readItem([...])
+ 3 APPPATH\Controllers\Home.php(81): App\Controllers\Home->getOrderNote('1')
+ 4 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->load()
+ 5 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 6 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-15 08:38:12 --> Undefined array key 0
+in APPPATH\Models\FoodModel.php on line 76.
+ 1 APPPATH\Models\FoodModel.php(76): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key 0', 'C:\\xampp\\htdocs\\babana\\app\\Models\\FoodModel.php', 76)
+ 2 APPPATH\Controllers\Home.php(174): App\Models\FoodModel->readItem([...])
+ 3 APPPATH\Controllers\Home.php(81): App\Controllers\Home->getOrderNote('1')
+ 4 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->load()
+ 5 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 6 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-15 08:38:25 --> Undefined array key 0
+in APPPATH\Models\FoodModel.php on line 76.
+ 1 APPPATH\Models\FoodModel.php(76): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key 0', 'C:\\xampp\\htdocs\\babana\\app\\Models\\FoodModel.php', 76)
+ 2 APPPATH\Controllers\Home.php(175): App\Models\FoodModel->readItem([...])
+ 3 APPPATH\Controllers\Home.php(81): App\Controllers\Home->getOrderNote('1')
+ 4 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->load()
+ 5 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 6 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-15 08:39:01 --> Undefined array key 0
+in APPPATH\Models\FoodModel.php on line 76.
+ 1 APPPATH\Models\FoodModel.php(76): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key 0', 'C:\\xampp\\htdocs\\babana\\app\\Models\\FoodModel.php', 76)
+ 2 APPPATH\Controllers\Home.php(175): App\Models\FoodModel->readItem([...])
+ 3 APPPATH\Controllers\Home.php(81): App\Controllers\Home->getOrderNote('1')
+ 4 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->load()
+ 5 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 6 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-15 08:39:04 --> Undefined array key 0
+in APPPATH\Models\FoodModel.php on line 76.
+ 1 APPPATH\Models\FoodModel.php(76): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key 0', 'C:\\xampp\\htdocs\\babana\\app\\Models\\FoodModel.php', 76)
+ 2 APPPATH\Controllers\Home.php(175): App\Models\FoodModel->readItem([...])
+ 3 APPPATH\Controllers\Home.php(81): App\Controllers\Home->getOrderNote('1')
+ 4 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->load()
+ 5 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 6 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-15 08:39:16 --> Undefined array key 0
+in APPPATH\Models\FoodModel.php on line 76.
+ 1 APPPATH\Models\FoodModel.php(76): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key 0', 'C:\\xampp\\htdocs\\babana\\app\\Models\\FoodModel.php', 76)
+ 2 APPPATH\Controllers\Home.php(174): App\Models\FoodModel->readItem([...])
+ 3 APPPATH\Controllers\Home.php(81): App\Controllers\Home->getOrderNote('1')
+ 4 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->load()
+ 5 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 6 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-15 08:39:53 --> Undefined array key 0
+in APPPATH\Models\FoodModel.php on line 76.
+ 1 APPPATH\Models\FoodModel.php(76): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key 0', 'C:\\xampp\\htdocs\\babana\\app\\Models\\FoodModel.php', 76)
+ 2 APPPATH\Controllers\Home.php(174): App\Models\FoodModel->readItem([...])
+ 3 APPPATH\Controllers\Home.php(81): App\Controllers\Home->getOrderNote('1')
+ 4 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->load()
+ 5 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 6 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-15 08:40:06 --> Undefined array key 0
+in APPPATH\Models\FoodModel.php on line 76.
+ 1 APPPATH\Models\FoodModel.php(76): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key 0', 'C:\\xampp\\htdocs\\babana\\app\\Models\\FoodModel.php', 76)
+ 2 APPPATH\Controllers\Home.php(174): App\Models\FoodModel->readItem([...])
+ 3 APPPATH\Controllers\Home.php(81): App\Controllers\Home->getOrderNote('1')
+ 4 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->load()
+ 5 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 6 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-15 08:42:42 --> Undefined array key 0
+in APPPATH\Models\FoodModel.php on line 76.
+ 1 APPPATH\Models\FoodModel.php(76): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key 0', 'C:\\xampp\\htdocs\\babana\\app\\Models\\FoodModel.php', 76)
+ 2 APPPATH\Controllers\Home.php(174): App\Models\FoodModel->readItem([...])
+ 3 APPPATH\Controllers\Home.php(81): App\Controllers\Home->getOrderNote('1')
+ 4 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->load()
+ 5 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 6 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()

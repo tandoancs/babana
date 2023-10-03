@@ -1,0 +1,11 @@
+CRITICAL - 2023-09-05 09:26:09 --> json_decode(): Argument #1 ($json) must be of type string, array given
+in APPPATH\Views\index.php on line 634.
+ 1 APPPATH\Views\index.php(634): json_decode([...], 256)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\babana\\app\\Views\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1176): CodeIgniter\View\View->render('index', [], true)
+ 5 APPPATH\Controllers\Home.php(80): view('index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->index()
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 8 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()

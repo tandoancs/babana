@@ -1,0 +1,600 @@
+CRITICAL - 2023-10-02 03:01:17 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 475.
+ 1 APPPATH\Controllers\Home.php(475): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 475)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 03:01:17 --> Undefined array key "food_size_unit_code"
+in APPPATH\Controllers\Home.php on line 510.
+ 1 APPPATH\Controllers\Home.php(510): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "food_size_unit_code"', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 510)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 03:05:44 --> Cannot access offset of type string on string
+in APPPATH\Controllers\Home.php on line 476.
+ 1 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 2 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 3 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 03:05:44 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 476.
+ 1 APPPATH\Controllers\Home.php(476): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 476)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 03:09:36 --> Undefined array key "[table_order_name]"
+in APPPATH\Controllers\Home.php on line 480.
+ 1 APPPATH\Controllers\Home.php(480): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "[table_order_name]"', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 480)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 03:09:36 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 480.
+ 1 APPPATH\Controllers\Home.php(480): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 480)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 03:19:29 --> Cannot access offset of type string on string
+in APPPATH\Controllers\Home.php on line 481.
+ 1 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 2 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 3 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 03:19:29 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 474.
+ 1 APPPATH\Controllers\Home.php(474): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 474)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 03:21:09 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 477.
+ 1 APPPATH\Controllers\Home.php(477): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 477)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 03:21:52 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 477.
+ 1 APPPATH\Controllers\Home.php(477): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 477)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 03:21:52 --> Undefined array key "food_size_unit_code"
+in APPPATH\Controllers\Home.php on line 522.
+ 1 APPPATH\Controllers\Home.php(522): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "food_size_unit_code"', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 522)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 03:24:51 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 477.
+ 1 APPPATH\Controllers\Home.php(477): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 477)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 03:25:16 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 477.
+ 1 APPPATH\Controllers\Home.php(477): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 477)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 03:25:50 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 477.
+ 1 APPPATH\Controllers\Home.php(477): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 477)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 03:34:05 --> Undefined array key 0
+in APPPATH\Controllers\Home.php on line 477.
+ 1 APPPATH\Controllers\Home.php(477): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key 0', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 477)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 03:34:06 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 477.
+ 1 APPPATH\Controllers\Home.php(477): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 477)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 03:34:37 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 485.
+ 1 APPPATH\Controllers\Home.php(485): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 485)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 03:37:22 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 485.
+ 1 APPPATH\Controllers\Home.php(485): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 485)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 03:37:22 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 485.
+ 1 APPPATH\Controllers\Home.php(485): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 485)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 03:39:23 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 485.
+ 1 APPPATH\Controllers\Home.php(485): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 485)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 03:39:23 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 485.
+ 1 APPPATH\Controllers\Home.php(485): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 485)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 03:40:05 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 477.
+ 1 APPPATH\Controllers\Home.php(477): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 477)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 03:58:37 --> foreach() argument must be of type array|object, null given
+in APPPATH\Controllers\Home.php on line 518.
+ 1 APPPATH\Controllers\Home.php(518): CodeIgniter\Debug\Exceptions->errorHandler(2, 'foreach() argument must be of type array|object, null given', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 518)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 03:58:37 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 477.
+ 1 APPPATH\Controllers\Home.php(477): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 477)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 04:03:24 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 477.
+ 1 APPPATH\Controllers\Home.php(477): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 477)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 04:03:24 --> foreach() argument must be of type array|object, null given
+in APPPATH\Controllers\Home.php on line 510.
+ 1 APPPATH\Controllers\Home.php(510): CodeIgniter\Debug\Exceptions->errorHandler(2, 'foreach() argument must be of type array|object, null given', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 510)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 11:22:54 --> foreach() argument must be of type array|object, null given
+in APPPATH\Controllers\Home.php on line 512.
+ 1 APPPATH\Controllers\Home.php(512): CodeIgniter\Debug\Exceptions->errorHandler(2, 'foreach() argument must be of type array|object, null given', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 512)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 11:22:54 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 479.
+ 1 APPPATH\Controllers\Home.php(479): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 479)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 11:25:45 --> foreach() argument must be of type array|object, null given
+in APPPATH\Controllers\Home.php on line 514.
+ 1 APPPATH\Controllers\Home.php(514): CodeIgniter\Debug\Exceptions->errorHandler(2, 'foreach() argument must be of type array|object, null given', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 514)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 11:26:16 --> Undefined array key "food_size_unit_code"
+in APPPATH\Controllers\Home.php on line 520.
+ 1 APPPATH\Controllers\Home.php(520): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "food_size_unit_code"', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 520)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 11:30:43 --> Undefined array key "food_size_unit_code"
+in APPPATH\Controllers\Home.php on line 520.
+ 1 APPPATH\Controllers\Home.php(520): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "food_size_unit_code"', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 520)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 11:31:50 --> Undefined array key "food_size_unit_code"
+in APPPATH\Controllers\Home.php on line 520.
+ 1 APPPATH\Controllers\Home.php(520): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "food_size_unit_code"', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 520)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 11:33:07 --> Undefined array key "food_size_unit_code"
+in APPPATH\Controllers\Home.php on line 520.
+ 1 APPPATH\Controllers\Home.php(520): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "food_size_unit_code"', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 520)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 11:33:07 --> Undefined array key "food_size_unit_code"
+in APPPATH\Controllers\Home.php on line 520.
+ 1 APPPATH\Controllers\Home.php(520): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "food_size_unit_code"', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 520)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 11:33:13 --> Undefined array key "food_size_unit_code"
+in APPPATH\Controllers\Home.php on line 520.
+ 1 APPPATH\Controllers\Home.php(520): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "food_size_unit_code"', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 520)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 11:34:11 --> Undefined array key "food_size_unit_code"
+in APPPATH\Controllers\Home.php on line 520.
+ 1 APPPATH\Controllers\Home.php(520): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "food_size_unit_code"', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 520)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 11:34:11 --> Undefined array key "food_size_unit_code"
+in APPPATH\Controllers\Home.php on line 520.
+ 1 APPPATH\Controllers\Home.php(520): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "food_size_unit_code"', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 520)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 11:35:18 --> Undefined array key "food_size_unit_code"
+in APPPATH\Controllers\Home.php on line 520.
+ 1 APPPATH\Controllers\Home.php(520): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "food_size_unit_code"', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 520)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 11:35:43 --> Undefined array key "food_note"
+in APPPATH\Controllers\Home.php on line 521.
+ 1 APPPATH\Controllers\Home.php(521): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "food_note"', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 521)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 11:36:52 --> Undefined array key "food_name"
+in APPPATH\Controllers\Home.php on line 530.
+ 1 APPPATH\Controllers\Home.php(530): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "food_name"', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 530)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+ERROR - 2023-10-02 11:38:10 --> mysqli_sql_exception: Unknown column 'id' in 'field list' in C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php:295
+Stack trace:
+#0 C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`i...', 0)
+#1 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`i...')
+#2 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`i...')
+#3 C:\xampp\htdocs\babana\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`i...', Array, false)
+#4 C:\xampp\htdocs\babana\app\Models\BillDetailModel.php(95): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\babana\app\Controllers\Home.php(554): App\Models\BillDetailModel->isAlreadyExist(Array)
+#6 C:\xampp\htdocs\babana\system\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+#7 C:\xampp\htdocs\babana\system\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#8 C:\xampp\htdocs\babana\system\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\babana\index.php(68): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-10-02 11:38:10 --> Unknown column 'id' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 295.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`id`) AS `id`
+FROM `bill_detail`
+WHERE `bill_id` = \'26\'
+AND `food_id` = 2', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`id`) AS `id`
+FROM `bill_detail`
+WHERE `bill_id` = \'26\'
+AND `food_id` = 2')
+ 3 SYSTEMPATH\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`id`) AS `id`
+FROM `bill_detail`
+WHERE `bill_id` = \'26\'
+AND `food_id` = 2')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`id`) AS `id`
+FROM `bill_detail`
+WHERE `bill_id` = :bill_id:
+AND `food_id` = :food_id:', [...], false)
+ 5 APPPATH\Models\BillDetailModel.php(95): CodeIgniter\Database\BaseBuilder->get()
+ 6 APPPATH\Controllers\Home.php(554): App\Models\BillDetailModel->isAlreadyExist([...])
+ 7 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 9 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+ERROR - 2023-10-02 11:39:01 --> mysqli_sql_exception: Unknown column 'id' in 'field list' in C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php:295
+Stack trace:
+#0 C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`i...', 0)
+#1 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`i...')
+#2 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`i...')
+#3 C:\xampp\htdocs\babana\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`i...', Array, false)
+#4 C:\xampp\htdocs\babana\app\Models\BillDetailModel.php(95): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\babana\app\Controllers\Home.php(554): App\Models\BillDetailModel->isAlreadyExist(Array)
+#6 C:\xampp\htdocs\babana\system\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+#7 C:\xampp\htdocs\babana\system\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#8 C:\xampp\htdocs\babana\system\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\babana\index.php(68): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-10-02 11:39:01 --> Unknown column 'id' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 295.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`id`) AS `id`
+FROM `bill_detail`
+WHERE `bill_id` = \'27\'
+AND `food_id` = 2', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`id`) AS `id`
+FROM `bill_detail`
+WHERE `bill_id` = \'27\'
+AND `food_id` = 2')
+ 3 SYSTEMPATH\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`id`) AS `id`
+FROM `bill_detail`
+WHERE `bill_id` = \'27\'
+AND `food_id` = 2')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`id`) AS `id`
+FROM `bill_detail`
+WHERE `bill_id` = :bill_id:
+AND `food_id` = :food_id:', [...], false)
+ 5 APPPATH\Models\BillDetailModel.php(95): CodeIgniter\Database\BaseBuilder->get()
+ 6 APPPATH\Controllers\Home.php(554): App\Models\BillDetailModel->isAlreadyExist([...])
+ 7 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 9 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+ERROR - 2023-10-02 11:42:30 --> mysqli_sql_exception: Unknown column 'id' in 'field list' in C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php:295
+Stack trace:
+#0 C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`i...', 0)
+#1 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`i...')
+#2 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`i...')
+#3 C:\xampp\htdocs\babana\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`i...', Array, false)
+#4 C:\xampp\htdocs\babana\app\Models\BillDetailModel.php(95): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\babana\app\Controllers\Home.php(554): App\Models\BillDetailModel->isAlreadyExist(Array)
+#6 C:\xampp\htdocs\babana\system\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+#7 C:\xampp\htdocs\babana\system\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#8 C:\xampp\htdocs\babana\system\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\babana\index.php(68): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-10-02 11:42:30 --> Unknown column 'id' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 295.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`id`) AS `id`
+FROM `bill_detail`
+WHERE `bill_id` = \'28\'
+AND `food_id` = 2', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`id`) AS `id`
+FROM `bill_detail`
+WHERE `bill_id` = \'28\'
+AND `food_id` = 2')
+ 3 SYSTEMPATH\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`id`) AS `id`
+FROM `bill_detail`
+WHERE `bill_id` = \'28\'
+AND `food_id` = 2')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`id`) AS `id`
+FROM `bill_detail`
+WHERE `bill_id` = :bill_id:
+AND `food_id` = :food_id:', [...], false)
+ 5 APPPATH\Models\BillDetailModel.php(95): CodeIgniter\Database\BaseBuilder->get()
+ 6 APPPATH\Controllers\Home.php(554): App\Models\BillDetailModel->isAlreadyExist([...])
+ 7 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 9 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 11:43:24 --> Object of class App\Models\BillDetailModel could not be converted to string
+in APPPATH\Models\BillDetailModel.php on line 95.
+ 1 APPPATH\Controllers\Home.php(554): App\Models\BillDetailModel->isAlreadyExist([...])
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 11:43:38 --> syntax error, unexpected token "(", expecting identifier or variable or "{" or "$"
+in APPPATH\Models\BillDetailModel.php on line 95.
+ 1 SYSTEMPATH\Autoloader\Autoloader.php(291): CodeIgniter\Autoloader\Autoloader->includeFile('C:\\xampp\\htdocs\\babana\\app\\Models\\BillDetailModel.php')
+ 2 SYSTEMPATH\Autoloader\Autoloader.php(269): CodeIgniter\Autoloader\Autoloader->loadInNamespace('App\\Models\\BillDetailModel')
+ 3 APPPATH\Controllers\Home.php(471): CodeIgniter\Autoloader\Autoloader->loadClass('App\\Models\\BillDetailModel')
+ 4 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 5 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 6 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 11:43:47 --> Undefined property: stdClass::$primaryKey
+in APPPATH\Models\BillDetailModel.php on line 95.
+ 1 APPPATH\Models\BillDetailModel.php(95): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: stdClass::$primaryKey', 'C:\\xampp\\htdocs\\babana\\app\\Models\\BillDetailModel.php', 95)
+ 2 APPPATH\Controllers\Home.php(554): App\Models\BillDetailModel->isAlreadyExist([...])
+ 3 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 4 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 5 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 11:45:57 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 481.
+ 1 APPPATH\Controllers\Home.php(481): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 481)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 11:47:10 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 481.
+ 1 APPPATH\Controllers\Home.php(481): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 481)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+ERROR - 2023-10-02 11:47:36 --> mysqli_sql_exception: Duplicate entry '1000' for key 'bill.PRIMARY' in C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php:295
+Stack trace:
+#0 C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php(295): mysqli->query('INSERT INTO `bi...', 0)
+#1 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `bi...')
+#2 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `bi...')
+#3 C:\xampp\htdocs\babana\system\Database\BaseBuilder.php(2309): CodeIgniter\Database\BaseConnection->query('INSERT INTO `bi...', Array, false)
+#4 C:\xampp\htdocs\babana\app\Models\BillModel.php(80): CodeIgniter\Database\BaseBuilder->insert(Array)
+#5 C:\xampp\htdocs\babana\app\Controllers\Home.php(501): App\Models\BillModel->create(Array)
+#6 C:\xampp\htdocs\babana\system\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+#7 C:\xampp\htdocs\babana\system\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#8 C:\xampp\htdocs\babana\system\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\babana\index.php(68): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-10-02 11:47:36 --> Duplicate entry '1000' for key 'bill.PRIMARY'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 295.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(295): mysqli->query('INSERT INTO `bill` (`date_check_in`, `count_orders`, `sum_orders`, `total`, `status`, `table_id`, `promotion_id`) VALUES (\'2023-10-02 11:47:36\', 2, 2, \'31,000\', \'In-progress\', \'3\', \'\')', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `bill` (`date_check_in`, `count_orders`, `sum_orders`, `total`, `status`, `table_id`, `promotion_id`) VALUES (\'2023-10-02 11:47:36\', 2, 2, \'31,000\', \'In-progress\', \'3\', \'\')')
+ 3 SYSTEMPATH\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `bill` (`date_check_in`, `count_orders`, `sum_orders`, `total`, `status`, `table_id`, `promotion_id`) VALUES (\'2023-10-02 11:47:36\', 2, 2, \'31,000\', \'In-progress\', \'3\', \'\')')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(2309): CodeIgniter\Database\BaseConnection->query('INSERT INTO `bill` (`date_check_in`, `count_orders`, `sum_orders`, `total`, `status`, `table_id`, `promotion_id`) VALUES (:date_check_in:, :count_orders:, :sum_orders:, :total:, :status:, :table_id:, :promotion_id:)', [...], false)
+ 5 APPPATH\Models\BillModel.php(80): CodeIgniter\Database\BaseBuilder->insert([...])
+ 6 APPPATH\Controllers\Home.php(501): App\Models\BillModel->create([...])
+ 7 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 9 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 11:47:36 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 481.
+ 1 APPPATH\Controllers\Home.php(481): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 481)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 11:48:06 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 481.
+ 1 APPPATH\Controllers\Home.php(481): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 481)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 11:52:23 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 481.
+ 1 APPPATH\Controllers\Home.php(481): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 481)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 11:52:59 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 481.
+ 1 APPPATH\Controllers\Home.php(481): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 481)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 11:55:10 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 481.
+ 1 APPPATH\Controllers\Home.php(481): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 481)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 13:16:33 --> Undefined property: stdClass::$size_unit_code
+in APPPATH\Controllers\Home.php on line 365.
+ 1 APPPATH\Controllers\Home.php(365): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: stdClass::$size_unit_code', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 365)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->getDataToAddForm()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 13:58:51 --> Undefined array key 0
+in APPPATH\Models\FoodSizeModel.php on line 76.
+ 1 APPPATH\Models\FoodSizeModel.php(76): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key 0', 'C:\\xampp\\htdocs\\babana\\app\\Models\\FoodSizeModel.php', 76)
+ 2 APPPATH\Controllers\Home.php(655): App\Models\FoodSizeModel->readItem([...])
+ 3 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->getFoodPrice()
+ 4 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 5 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 13:59:34 --> Undefined array key 0
+in APPPATH\Models\FoodSizeModel.php on line 76.
+ 1 APPPATH\Models\FoodSizeModel.php(76): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key 0', 'C:\\xampp\\htdocs\\babana\\app\\Models\\FoodSizeModel.php', 76)
+ 2 APPPATH\Controllers\Home.php(655): App\Models\FoodSizeModel->readItem([...])
+ 3 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->getFoodPrice()
+ 4 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 5 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 14:01:52 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 499.
+ 1 APPPATH\Controllers\Home.php(499): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 499)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 14:32:16 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 499.
+ 1 APPPATH\Controllers\Home.php(499): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 499)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 14:32:43 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 499.
+ 1 APPPATH\Controllers\Home.php(499): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 499)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 14:33:58 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 499.
+ 1 APPPATH\Controllers\Home.php(499): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 499)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 14:34:25 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 499.
+ 1 APPPATH\Controllers\Home.php(499): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 499)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 14:34:46 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 499.
+ 1 APPPATH\Controllers\Home.php(499): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 499)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 15:20:55 --> Undefined array key 0
+in APPPATH\Models\FoodSizeModel.php on line 76.
+ 1 APPPATH\Models\FoodSizeModel.php(76): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key 0', 'C:\\xampp\\htdocs\\babana\\app\\Models\\FoodSizeModel.php', 76)
+ 2 APPPATH\Controllers\Home.php(470): App\Models\FoodSizeModel->readItem([...])
+ 3 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->getDetailDataToAdd()
+ 4 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 5 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 15:21:10 --> Undefined array key 0
+in APPPATH\Models\FoodSizeModel.php on line 76.
+ 1 APPPATH\Models\FoodSizeModel.php(76): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key 0', 'C:\\xampp\\htdocs\\babana\\app\\Models\\FoodSizeModel.php', 76)
+ 2 APPPATH\Controllers\Home.php(470): App\Models\FoodSizeModel->readItem([...])
+ 3 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->getDetailDataToAdd()
+ 4 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 5 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 15:22:06 --> Undefined array key 0
+in APPPATH\Models\FoodSizeModel.php on line 76.
+ 1 APPPATH\Models\FoodSizeModel.php(76): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key 0', 'C:\\xampp\\htdocs\\babana\\app\\Models\\FoodSizeModel.php', 76)
+ 2 APPPATH\Controllers\Home.php(469): App\Models\FoodSizeModel->readItem([...])
+ 3 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->getDetailDataToAdd()
+ 4 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 5 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 15:22:21 --> Undefined array key 0
+in APPPATH\Models\FoodSizeModel.php on line 76.
+ 1 APPPATH\Models\FoodSizeModel.php(76): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key 0', 'C:\\xampp\\htdocs\\babana\\app\\Models\\FoodSizeModel.php', 76)
+ 2 APPPATH\Controllers\Home.php(469): App\Models\FoodSizeModel->readItem([...])
+ 3 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->getDetailDataToAdd()
+ 4 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 5 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 15:22:26 --> Undefined array key 0
+in APPPATH\Models\FoodSizeModel.php on line 76.
+ 1 APPPATH\Models\FoodSizeModel.php(76): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key 0', 'C:\\xampp\\htdocs\\babana\\app\\Models\\FoodSizeModel.php', 76)
+ 2 APPPATH\Controllers\Home.php(469): App\Models\FoodSizeModel->readItem([...])
+ 3 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->getDetailDataToAdd()
+ 4 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 5 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-02 15:23:04 --> Undefined array key 0
+in APPPATH\Models\FoodSizeModel.php on line 76.
+ 1 APPPATH\Models\FoodSizeModel.php(76): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key 0', 'C:\\xampp\\htdocs\\babana\\app\\Models\\FoodSizeModel.php', 76)
+ 2 APPPATH\Controllers\Home.php(469): App\Models\FoodSizeModel->readItem([...])
+ 3 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->getDetailDataToAdd()
+ 4 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 5 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()

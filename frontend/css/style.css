@@ -1,0 +1,191 @@
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+td {
+    padding: 10px 15px !important;
+}
+
+th {
+    padding: 10px 15px !important;
+}
+
+#layout {
+    position: relative;
+    padding: 25px 20px;
+    min-height: 400px;
+}
+
+#sidebar {
+    width: 20%;
+    background: yellow;
+}
+
+#main {
+    position: absolute;
+    top: 25px;
+    left: 20%;
+    background: tomato;
+    width: 79%;
+}
+
+.sidebar-customer {
+    background-color: pink;
+    width: 100%;
+}
+
+.main {
+    padding: 20px;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.food-action-buttons {
+    width: 90% !important;
+    height: 60% !important;
+    position: relative;
+    top: -6px;
+}
+
+/* .btn-add-food {
+            width: 90%;
+            height: 35px;
+        } */
+
+.dhx_demo-grid .print-button {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: var(--dhx-font-size-normal) !important;
+    width: 40% !important;
+    height: 100% !important;
+    padding: 0;
+    color: white !important;
+}
+
+.dhx_demo-grid .edit-button {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: var(--dhx-font-size-normal) !important;
+    width: 25% !important;
+    height: 80% !important;
+    padding: 0;
+    color: white !important;
+}
+
+.dhx_demo-grid .remove-button {
+    cursor: pointer;
+    color: white !important;
+    transition: all 0.3s ease;
+    font-size: var(--dhx-font-size-normal) !important;
+    width: 25% !important;
+    height: 80% !important;
+    padding: 0;
+}
+
+.dhx_demo-grid .detail-button {
+    cursor: pointer;
+    color: white !important;
+    transition: all 0.3s ease;
+    font-size: var(--dhx-font-size-normal) !important;
+    width: 100% !important;
+    height: 80% !important;
+    padding: 0;
+    color: white;
+}
+
+.dhx_demo-grid .detail-edit-button {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: var(--dhx-font-size-normal) !important;
+    width: 45% !important;
+    height: 80% !important;
+    padding: 0;
+    color: white !important;
+}
+
+.dhx_demo-grid .detail-remove-button {
+    cursor: pointer;
+    color: white !important;
+    transition: all 0.3s ease;
+    font-size: var(--dhx-font-size-normal) !important;
+    width: 45% !important;
+    height: 80% !important;
+    padding: 0;
+}
+
+.dhx_demo-grid .detail-add-button {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: var(--dhx-font-size-normal) !important;
+    width: 90% !important;
+    height: 80% !important;
+    padding: 0;
+    color: white !important;
+}
+
+.highlight-date {
+    color: #fff;
+}
+
+.highlight-date:after {
+    background-color: #ff5252;
+    opacity: 1;
+    z-index: -3;
+}
+
+.dhx-demo_grid-template {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.dhx-demo_grid-status {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    margin-right: 6px;
+    font-size: var(--dhx-font-size-small);
+}
+
+.dhx-demo_grid-status--done {
+    background-color: var(--dhx-color-success);
+}
+
+.dhx-demo_grid-status--delivered {
+    /* background-color: #0dcaf0!important; */
+    background-color: var(--dhx-color-primary);
+}
+
+.dhx-demo_grid-status--in-progress {
+    /* background-color: var(--dhx-color-primary); */
+    background-color: #ffc107 !important;
+}
+
+.dhx-demo_grid-status--not-started {
+    /* background-color: var(--dhx-color-danger); */
+    background-color: #6c757d !important;
+}
+
+.dhx-demo_grid-status--cancelled {
+    background-color: var(--dhx-color-danger);
+    /* background-color: #6c757d!important; */
+}
+
+.detail-btn {
+    width: 100% !important;
+    height: 80% !important;
+    padding: 0;
+    color: white;
+}
+
+.dhx_grid-body {
+    height: 100% !important;
+}

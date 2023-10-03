@@ -1,0 +1,112 @@
+CRITICAL - 2023-09-14 04:32:05 --> Call to undefined method App\Models\TableOrderModel::AreaModel
+in SYSTEMPATH\Model.php on line 838.
+ 1 APPPATH\Controllers\Home.php(182): CodeIgniter\Model->__call('AreaModel', [...])
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->getOptionsOfOrderGrid()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-14 04:32:50 --> Call to undefined method App\Models\TableOrderModel::AreaModel
+in SYSTEMPATH\Model.php on line 838.
+ 1 APPPATH\Controllers\Home.php(182): CodeIgniter\Model->__call('AreaModel', [...])
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->getOptionsOfOrderGrid()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-14 04:33:26 --> Call to undefined method App\Models\TableOrderModel::AreaModel
+in SYSTEMPATH\Model.php on line 838.
+ 1 APPPATH\Controllers\Home.php(182): CodeIgniter\Model->__call('AreaModel', [...])
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->getOptionsOfOrderGrid()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-14 04:33:26 --> Call to undefined method App\Models\TableOrderModel::AreaModel
+in SYSTEMPATH\Model.php on line 838.
+ 1 APPPATH\Controllers\Home.php(182): CodeIgniter\Model->__call('AreaModel', [...])
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->getOptionsOfOrderGrid()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-14 04:33:32 --> Undefined variable $tableOrderData
+in APPPATH\Controllers\Home.php on line 203.
+ 1 APPPATH\Controllers\Home.php(203): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $tableOrderData', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 203)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->getOptionsOfOrderGrid()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-14 04:33:53 --> Call to undefined method App\Models\TableOrderModel::AreaModel
+in SYSTEMPATH\Model.php on line 838.
+ 1 APPPATH\Controllers\Home.php(182): CodeIgniter\Model->__call('AreaModel', [...])
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->getOptionsOfOrderGrid()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-14 04:34:15 --> Cannot use object of type stdClass as array
+in APPPATH\Controllers\Home.php on line 185.
+ 1 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->getOptionsOfOrderGrid()
+ 2 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 3 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-14 04:34:43 --> Undefined property: stdClass::$table_order_name
+in APPPATH\Controllers\Home.php on line 185.
+ 1 APPPATH\Controllers\Home.php(185): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: stdClass::$table_order_name', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 185)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->getOptionsOfOrderGrid()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-14 04:35:18 --> Undefined property: stdClass::$table_order_name
+in APPPATH\Controllers\Home.php on line 186.
+ 1 APPPATH\Controllers\Home.php(186): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: stdClass::$table_order_name', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 186)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->getOptionsOfOrderGrid()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-14 04:36:06 --> Undefined property: stdClass::$table_order_name
+in APPPATH\Controllers\Home.php on line 186.
+ 1 APPPATH\Controllers\Home.php(186): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: stdClass::$table_order_name', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 186)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->getOptionsOfOrderGrid()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-14 04:36:36 --> Undefined property: stdClass::$table_order_name
+in APPPATH\Controllers\Home.php on line 186.
+ 1 APPPATH\Controllers\Home.php(186): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: stdClass::$table_order_name', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 186)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->getOptionsOfOrderGrid()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-14 04:37:38 --> Cannot use object of type stdClass as array
+in APPPATH\Controllers\Home.php on line 193.
+ 1 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->getOptionsOfOrderGrid()
+ 2 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 3 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-14 04:37:47 --> Cannot use object of type stdClass as array
+in APPPATH\Controllers\Home.php on line 193.
+ 1 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->getOptionsOfOrderGrid()
+ 2 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 3 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-14 04:37:57 --> Cannot use object of type stdClass as array
+in APPPATH\Controllers\Home.php on line 193.
+ 1 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->getOptionsOfOrderGrid()
+ 2 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 3 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-14 04:38:11 --> Cannot use object of type stdClass as array
+in APPPATH\Controllers\Home.php on line 192.
+ 1 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->getOptionsOfOrderGrid()
+ 2 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 3 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-14 04:38:23 --> Cannot use object of type stdClass as array
+in APPPATH\Controllers\Home.php on line 192.
+ 1 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->getOptionsOfOrderGrid()
+ 2 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 3 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-14 04:39:05 --> Cannot use object of type stdClass as array
+in APPPATH\Controllers\Home.php on line 193.
+ 1 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->getOptionsOfOrderGrid()
+ 2 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 3 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()

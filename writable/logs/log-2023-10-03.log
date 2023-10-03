@@ -1,0 +1,14 @@
+CRITICAL - 2023-10-03 10:13:39 --> Object of class stdClass could not be converted to string
+in APPPATH\Controllers\Home.php on line 92.
+ 1 APPPATH\Controllers\Home.php(258): App\Controllers\Home->load()
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->getOptionsOfOrderGrid()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-03 10:21:01 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 507.
+ 1 APPPATH\Controllers\Home.php(507): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 507)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()

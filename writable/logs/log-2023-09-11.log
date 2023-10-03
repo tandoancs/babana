@@ -1,0 +1,230 @@
+CRITICAL - 2023-09-11 06:40:03 --> include_once(): http:// wrapper is disabled in the server configuration by allow_url_include=0
+in APPPATH\Views\index.php on line 1.
+ 1 APPPATH\Views\index.php(1): CodeIgniter\Debug\Exceptions->errorHandler(2, 'include_once(): http:// wrapper is disabled in the server configuration by allow_url_include=0', 'C:\\xampp\\htdocs\\babana\\app\\Views\\index.php', 1)
+ 2 APPPATH\Views\index.php(1): include_once()
+ 3 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\babana\\app\\Views\\index.php')
+ 4 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 5 SYSTEMPATH\Common.php(1176): CodeIgniter\View\View->render('index', [], true)
+ 6 APPPATH\Controllers\Home.php(46): view('index')
+ 7 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->index()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 9 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-11 06:40:10 --> include_once(): http:// wrapper is disabled in the server configuration by allow_url_include=0
+in APPPATH\Views\index.php on line 1.
+ 1 APPPATH\Views\index.php(1): CodeIgniter\Debug\Exceptions->errorHandler(2, 'include_once(): http:// wrapper is disabled in the server configuration by allow_url_include=0', 'C:\\xampp\\htdocs\\babana\\app\\Views\\index.php', 1)
+ 2 APPPATH\Views\index.php(1): include_once()
+ 3 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\babana\\app\\Views\\index.php')
+ 4 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 5 SYSTEMPATH\Common.php(1176): CodeIgniter\View\View->render('index', [], true)
+ 6 APPPATH\Controllers\Home.php(46): view('index')
+ 7 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->index()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 9 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-11 06:40:37 --> include_once(../templatejs/jsFunction.php): Failed to open stream: No such file or directory
+in APPPATH\Views\index.php on line 1.
+ 1 APPPATH\Views\index.php(1): CodeIgniter\Debug\Exceptions->errorHandler(2, 'include_once(../templatejs/jsFunction.php): Failed to open stream: No such file or directory', 'C:\\xampp\\htdocs\\babana\\app\\Views\\index.php', 1)
+ 2 APPPATH\Views\index.php(1): include_once()
+ 3 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\babana\\app\\Views\\index.php')
+ 4 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 5 SYSTEMPATH\Common.php(1176): CodeIgniter\View\View->render('index', [], true)
+ 6 APPPATH\Controllers\Home.php(46): view('index')
+ 7 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->index()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 9 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-11 06:40:38 --> include_once(../templatejs/jsFunction.php): Failed to open stream: No such file or directory
+in APPPATH\Views\index.php on line 1.
+ 1 APPPATH\Views\index.php(1): CodeIgniter\Debug\Exceptions->errorHandler(2, 'include_once(../templatejs/jsFunction.php): Failed to open stream: No such file or directory', 'C:\\xampp\\htdocs\\babana\\app\\Views\\index.php', 1)
+ 2 APPPATH\Views\index.php(1): include_once()
+ 3 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\babana\\app\\Views\\index.php')
+ 4 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 5 SYSTEMPATH\Common.php(1176): CodeIgniter\View\View->render('index', [], true)
+ 6 APPPATH\Controllers\Home.php(46): view('index')
+ 7 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->index()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 9 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-11 06:40:38 --> include_once(../templatejs/jsFunction.php): Failed to open stream: No such file or directory
+in APPPATH\Views\index.php on line 1.
+ 1 APPPATH\Views\index.php(1): CodeIgniter\Debug\Exceptions->errorHandler(2, 'include_once(../templatejs/jsFunction.php): Failed to open stream: No such file or directory', 'C:\\xampp\\htdocs\\babana\\app\\Views\\index.php', 1)
+ 2 APPPATH\Views\index.php(1): include_once()
+ 3 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\babana\\app\\Views\\index.php')
+ 4 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 5 SYSTEMPATH\Common.php(1176): CodeIgniter\View\View->render('index', [], true)
+ 6 APPPATH\Controllers\Home.php(46): view('index')
+ 7 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->index()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 9 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-11 06:40:38 --> include_once(../templatejs/jsFunction.php): Failed to open stream: No such file or directory
+in APPPATH\Views\index.php on line 1.
+ 1 APPPATH\Views\index.php(1): CodeIgniter\Debug\Exceptions->errorHandler(2, 'include_once(../templatejs/jsFunction.php): Failed to open stream: No such file or directory', 'C:\\xampp\\htdocs\\babana\\app\\Views\\index.php', 1)
+ 2 APPPATH\Views\index.php(1): include_once()
+ 3 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\babana\\app\\Views\\index.php')
+ 4 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 5 SYSTEMPATH\Common.php(1176): CodeIgniter\View\View->render('index', [], true)
+ 6 APPPATH\Controllers\Home.php(46): view('index')
+ 7 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->index()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 9 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-11 06:40:42 --> include_once(../../templatejs/jsFunction.php): Failed to open stream: No such file or directory
+in APPPATH\Views\index.php on line 1.
+ 1 APPPATH\Views\index.php(1): CodeIgniter\Debug\Exceptions->errorHandler(2, 'include_once(../../templatejs/jsFunction.php): Failed to open stream: No such file or directory', 'C:\\xampp\\htdocs\\babana\\app\\Views\\index.php', 1)
+ 2 APPPATH\Views\index.php(1): include_once()
+ 3 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\babana\\app\\Views\\index.php')
+ 4 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 5 SYSTEMPATH\Common.php(1176): CodeIgniter\View\View->render('index', [], true)
+ 6 APPPATH\Controllers\Home.php(46): view('index')
+ 7 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->index()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 9 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-11 06:40:43 --> include_once(../../templatejs/jsFunction.php): Failed to open stream: No such file or directory
+in APPPATH\Views\index.php on line 1.
+ 1 APPPATH\Views\index.php(1): CodeIgniter\Debug\Exceptions->errorHandler(2, 'include_once(../../templatejs/jsFunction.php): Failed to open stream: No such file or directory', 'C:\\xampp\\htdocs\\babana\\app\\Views\\index.php', 1)
+ 2 APPPATH\Views\index.php(1): include_once()
+ 3 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\babana\\app\\Views\\index.php')
+ 4 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 5 SYSTEMPATH\Common.php(1176): CodeIgniter\View\View->render('index', [], true)
+ 6 APPPATH\Controllers\Home.php(46): view('index')
+ 7 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->index()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 9 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-11 06:57:55 --> syntax error, unexpected double-quoted string "rows", expecting "]"
+in APPPATH\Controllers\Home.php on line 275.
+ 1 SYSTEMPATH\Autoloader\Autoloader.php(291): CodeIgniter\Autoloader\Autoloader->includeFile('C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php')
+ 2 SYSTEMPATH\Autoloader\Autoloader.php(269): CodeIgniter\Autoloader\Autoloader->loadInNamespace('App\\Controllers\\Home')
+ 3 [internal function]: CodeIgniter\Autoloader\Autoloader->loadClass('App\\Controllers\\Home')
+ 4 SYSTEMPATH\CodeIgniter.php(890): class_exists('\\App\\Controllers\\Home', true)
+ 5 SYSTEMPATH\CodeIgniter.php(484): CodeIgniter\CodeIgniter->startController()
+ 6 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-11 07:37:01 --> Undefined variable $structure
+in APPPATH\Views\index.php on line 694.
+ 1 APPPATH\Views\index.php(694): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $structure', 'C:\\xampp\\htdocs\\babana\\app\\Views\\index.php', 694)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\babana\\app\\Views\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1176): CodeIgniter\View\View->render('index', [], true)
+ 5 APPPATH\Controllers\Home.php(46): view('index')
+ 6 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->index()
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 8 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-11 07:38:12 --> Undefined variable $structure
+in APPPATH\Views\index.php on line 694.
+ 1 APPPATH\Views\index.php(694): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $structure', 'C:\\xampp\\htdocs\\babana\\app\\Views\\index.php', 694)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\babana\\app\\Views\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1176): CodeIgniter\View\View->render('index', [], true)
+ 5 APPPATH\Controllers\Home.php(46): view('index')
+ 6 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->index()
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 8 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-11 07:38:28 --> Undefined variable $structure
+in APPPATH\Views\index.php on line 694.
+ 1 APPPATH\Views\index.php(694): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $structure', 'C:\\xampp\\htdocs\\babana\\app\\Views\\index.php', 694)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\babana\\app\\Views\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1176): CodeIgniter\View\View->render('index', [], true)
+ 5 APPPATH\Controllers\Home.php(46): view('index')
+ 6 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->index()
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 8 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-11 07:38:33 --> Undefined variable $structure
+in APPPATH\Views\index.php on line 694.
+ 1 APPPATH\Views\index.php(694): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $structure', 'C:\\xampp\\htdocs\\babana\\app\\Views\\index.php', 694)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\babana\\app\\Views\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1176): CodeIgniter\View\View->render('index', [], true)
+ 5 APPPATH\Controllers\Home.php(46): view('index')
+ 6 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->index()
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 8 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-11 07:40:00 --> Undefined variable $structure
+in APPPATH\Views\index.php on line 694.
+ 1 APPPATH\Views\index.php(694): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $structure', 'C:\\xampp\\htdocs\\babana\\app\\Views\\index.php', 694)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\babana\\app\\Views\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1176): CodeIgniter\View\View->render('index', [], true)
+ 5 APPPATH\Controllers\Home.php(46): view('index')
+ 6 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->index()
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 8 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-11 07:40:02 --> Undefined variable $structure
+in APPPATH\Views\index.php on line 694.
+ 1 APPPATH\Views\index.php(694): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $structure', 'C:\\xampp\\htdocs\\babana\\app\\Views\\index.php', 694)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\babana\\app\\Views\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1176): CodeIgniter\View\View->render('index', [], true)
+ 5 APPPATH\Controllers\Home.php(46): view('index')
+ 6 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->index()
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 8 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-11 07:40:07 --> Undefined variable $structure
+in APPPATH\Views\index.php on line 694.
+ 1 APPPATH\Views\index.php(694): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $structure', 'C:\\xampp\\htdocs\\babana\\app\\Views\\index.php', 694)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\babana\\app\\Views\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1176): CodeIgniter\View\View->render('index', [], true)
+ 5 APPPATH\Controllers\Home.php(46): view('index')
+ 6 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->index()
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 8 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-11 08:35:41 --> Class "App\Models\FoodModel" not found
+in APPPATH\Controllers\Home.php on line 153.
+ 1 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->detailLoad()
+ 2 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 3 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-11 08:36:02 --> Class "App\Models\FoodModel" not found
+in APPPATH\Controllers\Home.php on line 153.
+ 1 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->detailLoad()
+ 2 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 3 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-11 08:38:15 --> Class "App\Models\FoodModel" not found
+in APPPATH\Controllers\Home.php on line 153.
+ 1 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->detailLoad()
+ 2 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 3 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-11 08:38:45 --> Class "App\Models\FoodModel" not found
+in APPPATH\Controllers\Home.php on line 153.
+ 1 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->detailLoad()
+ 2 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 3 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-11 08:39:09 --> Class "App\Models\FoodModel" not found
+in APPPATH\Controllers\Home.php on line 153.
+ 1 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->detailLoad()
+ 2 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 3 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-11 08:39:51 --> Class "App\Models\FoodModel" not found
+in APPPATH\Controllers\Home.php on line 153.
+ 1 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->detailLoad()
+ 2 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 3 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-11 08:40:09 --> Class "App\Models\FoodModel" not found
+in APPPATH\Controllers\Home.php on line 153.
+ 1 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->detailLoad()
+ 2 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 3 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-09-11 08:40:35 --> Class "App\Models\FoodModel" not found
+in APPPATH\Controllers\Home.php on line 155.
+ 1 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->detailLoad()
+ 2 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 3 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
