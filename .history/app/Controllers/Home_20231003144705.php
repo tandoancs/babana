@@ -634,9 +634,7 @@ class Home extends BaseController
             $BillModel = new BillModel($db);
             $BillDetailModel = new BillDetailModel($db);
 
-            foreach( $data as $key => $value ) {
-                
-            }
+            
 
         }
 

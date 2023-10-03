@@ -619,7 +619,7 @@ class Home extends BaseController
     }
 
     // * *************************************** Lưu thông tin chung đơn hàng  ********************************
-    public function saveMainOrder()
+    public function saveMainData()
     {
         $status = false;
         $message = 'Đơn hàng chưa lưu';
@@ -634,9 +634,7 @@ class Home extends BaseController
             $BillModel = new BillModel($db);
             $BillDetailModel = new BillDetailModel($db);
 
-            foreach( $data as $key => $value ) {
-                
-            }
+            
 
         }
 

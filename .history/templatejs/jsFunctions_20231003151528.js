@@ -161,21 +161,21 @@ function orderGrid() {
                             console.log(`data saved: ${JSON.stringify([data.row])}`);
                             console.log(`Đang cập nhật main order ... `);
 
-                            getAjaxData2(function (data) {
+                            // getAjaxData2(function (data) {
 
-                                var result = JSON.parse(data);
-                                var price = Number(result.price);
+                            //     var result = JSON.parse(data);
+                            //     var price = Number(result.price);
 
 
-                                if (price == '0') {
-                                    dhx.alert({ header: "Cập nhật đơn hàng", text: "Chưa lấy được giá của sản phẩm", buttonsAlignment: "center", });
-                                }
+                            //     if (price == '0') {
+                            //         dhx.alert({ header: "Cập nhật đơn hàng", text: "Chưa lấy được giá của sản phẩm", buttonsAlignment: "center", });
+                            //     }
 
-                                row.detail_price = price
-                                row.detail_total = row.detail_count * price
-                                row.detail_bill_id = bill_id
+                            //     row.detail_price = price
+                            //     row.detail_total = row.detail_count * price
+                            //     row.detail_bill_id = bill_id
 
-                            }, "saveMainOrder", [data.row]);
+                            // }, "saveMainOrder", [data.row]);
 
                         },
                         "print-button": function (e, data) {
@@ -208,7 +208,6 @@ function orderGrid() {
                     if (!isNumber(money_received)) {
                         dhx.alert({ header: "Cập nhậ Đơn hàng", text: "Vui nhập nhập kiểu số", buttonsAlignment: "center", buttons: ["Đồng ý"] });
                         dhx.alert({ header: "Cập nhậ Đơn hàng", text: "Vui nhập nhập kiểu số", buttonsAlignment: "center", buttons: ["Đồng ý"]});
-                        row.money_refund = 0
                     } else {
                         if (money_received < row.total) {
                             dhx.alert({
@@ -222,8 +221,6 @@ function orderGrid() {
                                 text: "Số tiền khách đưa phải lớn hơn hoặc bằng tổng thanh toán",
                                 buttonsAlignment: "center",
                             });
-
-                            row.money_refund = 0
                         } else {
                             row.money_refund = value - row.total
                         }

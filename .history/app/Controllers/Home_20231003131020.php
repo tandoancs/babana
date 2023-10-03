@@ -618,31 +618,6 @@ class Home extends BaseController
         return json_encode(array('status' => $status, 'message' => $message), JSON_UNESCAPED_UNICODE);
     }
 
-    // * *************************************** Lưu thông tin chung đơn hàng  ********************************
-    public function saveMainOrder()
-    {
-        $status = false;
-        $message = 'Đơn hàng chưa lưu';
-
-        $request = \Config\Services::request();
-        if ($request->is('post')) {
-
-            $data = $this->request->getVar('data');
-            $data = json_decode($data, true);
-            
-            $db = db_connect();
-            $BillModel = new BillModel($db);
-            $BillDetailModel = new BillDetailModel($db);
-
-            foreach( $data as $key => $value ) {
-                
-            }
-
-        }
-
-
-    }
-
     // * *************************************** Lưu chi tiết đơn hàng  ********************************
     public function saveDetail()
     {
@@ -658,8 +633,6 @@ class Home extends BaseController
             $db = db_connect();
             $BillModel = new BillModel($db);
             $BillDetailModel = new BillDetailModel($db);
-
-
 
         }
 

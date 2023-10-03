@@ -161,21 +161,21 @@ function orderGrid() {
                             console.log(`data saved: ${JSON.stringify([data.row])}`);
                             console.log(`Đang cập nhật main order ... `);
 
-                            getAjaxData2(function (data) {
+                            // getAjaxData2(function (data) {
 
-                                var result = JSON.parse(data);
-                                var price = Number(result.price);
+                            //     var result = JSON.parse(data);
+                            //     var price = Number(result.price);
 
 
-                                if (price == '0') {
-                                    dhx.alert({ header: "Cập nhật đơn hàng", text: "Chưa lấy được giá của sản phẩm", buttonsAlignment: "center", });
-                                }
+                            //     if (price == '0') {
+                            //         dhx.alert({ header: "Cập nhật đơn hàng", text: "Chưa lấy được giá của sản phẩm", buttonsAlignment: "center", });
+                            //     }
 
-                                row.detail_price = price
-                                row.detail_total = row.detail_count * price
-                                row.detail_bill_id = bill_id
+                            //     row.detail_price = price
+                            //     row.detail_total = row.detail_count * price
+                            //     row.detail_bill_id = bill_id
 
-                            }, "saveMainOrder", [data.row]);
+                            // }, "saveMainOrder", [data.row]);
 
                         },
                         "print-button": function (e, data) {
