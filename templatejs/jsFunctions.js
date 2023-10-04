@@ -502,11 +502,11 @@ function windows(id, data = null) {
                                     {
                                         rows: [
                                             {
-                                                type: "combo", name: "table_order_name", required: true, label: "Bàn", placeholder: "Chọn Bàn", listHeight: "100px", newOptions: true, labelWidth: "270px", padding: "10px", helpMessage: "Bạn có thể chọn lại danh sách sẵn có hoặc có thể thêm dữ liệu mới",
+                                                type: "combo", name: "table_order_name", required: true, label: "Bàn", placeholder: "Chọn Bàn", listHeight: "100px", newOptions: true, labelWidth: "270px", padding: "10px", helpMessage: "Bạn có thể chọn danh sách sẵn có hoặc có thể thêm dữ liệu mới",
                                                 data: data.tableOptions
                                             },
                                             {
-                                                type: "combo", name: "area_id", required: true, label: "Khu vực", placeholder: "Khu vực bàn được đặt", listHeight: "100px", newOptions: true, labelWidth: "270px", padding: "10px", helpMessage: "Bạn có thể chọn lại danh sách sẵn có hoặc có thể thêm dữ liệu mới",
+                                                type: "combo", name: "area_id", required: true, label: "Khu vực", placeholder: "Khu vực bàn được đặt", listHeight: "100px", newOptions: true, labelWidth: "270px", padding: "10px", helpMessage: "Bạn có thể chọn danh sách sẵn có hoặc có thể thêm dữ liệu mới",
                                                 data: data.areaOptions
                                             },
                                             // { type: "input", inputType: "text", name: "area_name", required: true, label: "Khu vực", placeholder: "Khu vực bàn được đặt", labelWidth: "270px", padding: "10px", readOnly: true },
@@ -719,12 +719,29 @@ function windows(id, data = null) {
                 ];
 
                 // Toolbar initialization
-                detailToolbar = new dhx.Toolbar(null, {});
+                detailToolbar = new dhx.Toolbar(null, {})
+
                 // loading structure into Toolbar
-                detailToolbar.data.parse(toolbarData);
+                detailToolbar.data.parse(toolbarData)
 
                 detailToolbar.events.on("click", function (id, e) {
-                    dhx.alert({ header: "Alert Header", text: "Alert text", buttonsAlignment: "center", });
+                    if (id == "detail-save " ) {
+                        var detailData = detailGrid.data.serialize()
+                        getAjaxData2(function (data) {
+
+                            var result = JSON.parse(data)
+                            let css = (result.status == true) ? 'dhx_message--success' : 'dhx_message--error'
+
+                            // creating DHTMLX Message 
+                            dhx.message({node: "message_container", text: result.message, icon: "dxi dxi-content-save", css: css, expire: 5000 });
+
+                            // đợi 4s sau đó load lại trang
+                            setTimeout(function () { location.reload() }, 4000)
+
+                        }, "saveDetail", detailData)
+                    }
+
+                    // dhx.alert({ header: "Alert Header", text: "Alert text", buttonsAlignment: "center", });
                 });
 
                 /*  detail grid-------------------------------------------------------------------------------------- */
@@ -732,6 +749,7 @@ function windows(id, data = null) {
                     css: "dhx_demo-grid",
 
                     columns: [
+                        { width: 50, id: "bill_detail_id", header: [{ text: "Mã" }], type: "number", format: "#,#" },
                         {
                             width: 270, id: "detail_food_name", header: [{ text: "Sản phẩm" }], editorType: "combobox", editorConfig: {
                                 template: ({ value }) => getOptionsTemplate(value)
@@ -766,12 +784,52 @@ function windows(id, data = null) {
                     eventHandlers: {
                         onclick: {
                             "detail-remove-button": function (e, data) {
-                                // creating DHTMLX Message 
-                                dhx.message({ node: "message_container", text: "Xóa sản phẩm thành công", icon: "dxi dxi-content-save", css: "dhx_message--success", expire: 3000 });
+
+                                
+
+                                getAjaxData2(function (data) {
+
+                                    var result = JSON.parse(data);
+                                    let css = (result.status == true) ? 'dhx_message--success' : 'dhx_message--error';
+                                    // creating DHTMLX Message 
+                                    dhx.message({
+                                        node: "message_container",
+                                        text: result.message,
+                                        icon: "dxi dxi-content-save",
+                                        css: css,
+                                        expire: 5000
+                                    });
+
+                                    // đợi 4s sau đó load lại trang
+                                    setTimeout(function () {
+                                        detailGrid.data.remove(data.row.id);
+                                    }, 1000)
+                                }, "deleteDetail", {'bill_id': data.row});
+
                             },
                             "detail-edit-button": function (e, data) {
-                                // creating DHTMLX Message 
-                                dhx.message({ node: "message_container", text: "Lưu sản phẩm thành công", icon: "dxi dxi-content-save", css: "dhx_message--success", expire: 3000 });
+
+                                getAjaxData2(function (data) {
+
+                                    var result = JSON.parse(data);
+                                    let css = (result.status == true) ? 'dhx_message--success' : 'dhx_message--error';
+                                    // creating DHTMLX Message 
+                                    dhx.message({
+                                        node: "message_container",
+                                        text: result.message,
+                                        icon: "dxi dxi-content-save",
+                                        css: css,
+                                        expire: 5000
+                                    });
+    
+                                    // đợi 4s sau đó load lại trang
+                                    setTimeout(function () {
+                                        location.reload();
+                                    }, 4000)
+                                }, "saveDetail", [data.row]);
+
+                                // // creating DHTMLX Message 
+                                // dhx.message({ node: "message_container", text: "Lưu sản phẩm thành công", icon: "dxi dxi-content-save", css: "dhx_message--success", expire: 3000 });
                             },
                         },
                     },
@@ -985,7 +1043,7 @@ function getAjaxData2(callBack, url, objData) {
             // console.log(data);
         })
         .fail(function () {
-            alert("Không lấy được dữ liệu từ hệ thống");
+            alert("Không lấy được dữ liệu từ hệ thống ");
         })
         .always(function () {
             console.log("Done!!");

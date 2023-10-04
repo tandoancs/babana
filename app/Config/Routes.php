@@ -51,6 +51,7 @@ $routes->add('/getFoodPrice', 'Home::getFoodPrice');
 $routes->add('/saveOrder', 'Home::saveOrder');
 $routes->add('/saveMainOrder', 'Home::saveMainOrder');
 $routes->add('/saveDetail', 'Home::saveDetail');
+$routes->add('/deleteDetail', 'Home::deleteDetail');
 
 // print
 $routes->add('/printer', 'Home::printer');

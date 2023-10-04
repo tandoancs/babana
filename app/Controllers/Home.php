@@ -81,8 +81,10 @@ class Home extends BaseController
             $status = isset($bill->status) ? $bill->status : '';
             $status = $this->getOrderStatus($status);
 
+            $bill_note = $bill->note;
+
             // // update note data
-            $note = $this->getOrderNote($bill_id);
+            $note = $this->getOrderNote($bill_id, $bill_note);
             $note = str_replace("Trà sữa", "TS", $note);
             $note = str_replace("trà sữa", "ts", $note);
             $BillModel->edit(['bill_id' => $bill_id], ['note' => $note]);
@@ -142,6 +144,7 @@ class Home extends BaseController
                 $sizeUnitItem = !empty($size_unit_code) ? $SizeUnitModel->readItem(array('size_unit_code' => $size_unit_code)) : array();
 
                 $detailData[] = array(
+                    'bill_detail_id' => $billDetail->bill_detail_id,
                     'detail_food_name' => !empty($foodItem) ? ($foodItem->food_id . "__" . $foodItem->food_name) : '',
                     'detail_size_unit_code' => !empty($sizeUnitItem) ? $sizeUnitItem->size_unit_code . "__" . $sizeUnitItem->description : '',
                     'detail_count' => $billDetail->count,
@@ -156,6 +159,7 @@ class Home extends BaseController
 
             for ($i = 0; $i < 9; $i++) {
                 $detailData[] = array(
+                    'bill_detail_id' => "",
                     'detail_food_name' => "",
                     'detail_size_unit_code' => "1:M__Ly size M",
                     'detail_count' => "",
@@ -191,28 +195,35 @@ class Home extends BaseController
         return json_encode($data, JSON_UNESCAPED_UNICODE);
     }
 
-    public function getOrderNote($bill_id)
+    public function getOrderNote($bill_id, $bill_note)
     {
-        $data = array();
-        // connect database and models
-        $db = db_connect();
-        $BillDetailModel = new BillDetailModel($db);
-        $FoodModel = new FoodModel($db);
+        $result = "";
+        if (!empty($bill_note)) {
+            $result = $bill_note;
+        } else {
 
-        // // get data
-        $billDetailData = $BillDetailModel->readOptions(array('bill_id' => $bill_id), 'bill_detail_id');
-        foreach ($billDetailData as $billDetail) {
+            // connect database and models
+            $db = db_connect();
+            $BillDetailModel = new BillDetailModel($db);
+            $FoodModel = new FoodModel($db);
 
-            $note = $billDetail->note;
-            $food_id = $billDetail->food_id;
-            $foodItem = !empty($food_id) ? $FoodModel->readItem(array('food_id' => $food_id)) : array();
-            $detail_food_description = !empty($foodItem) ? $foodItem->description : '';
-            if (!empty($note)) {
-                $data[] = $detail_food_description . ": " . $note;
+            // // get data
+            $billDetailData = $BillDetailModel->readOptions(array('bill_id' => $bill_id), 'bill_detail_id');
+            foreach ($billDetailData as $billDetail) {
+
+                $note = $billDetail->note;
+                $food_id = $billDetail->food_id;
+                $foodItem = !empty($food_id) ? $FoodModel->readItem(array('food_id' => $food_id)) : array();
+                $detail_food_description = !empty($foodItem) ? $foodItem->description : '';
+                if (!empty($note)) {
+                    $result .= ($detail_food_description . ": " . $note) . "; ";
+                }
             }
+
+            $db->close();
         }
 
-        return implode(";", $data);
+        return $result;
     }
 
     public function getOptionsOfOrderGrid()
@@ -335,14 +346,24 @@ class Home extends BaseController
         $FoodModel = new FoodModel($db);
         $SizeUnitModel = new SizeUnitModel($db);
         $FoodSizeModel = new FoodSizeModel($db);
+        $BillModel = new BillModel($db);
+
+        // lấy các bàn đã tồn tại trong Bill đang trạng thái In-progress để loại bỏ khỏi danh sách bàn hiển thị
+        $billData = $BillModel->readOptionsIn('status', ['In-progress', 'Delivered']);
+        $tableInOrders = [];
+        foreach ($billData as $bill) {
+            $tableInOrders[] = $bill->table_id;
+        }
 
         $tableOrderData = $TableOrderModel->readAll('table_order_name');
         if (!empty($tableOrderData)) {
             foreach ($tableOrderData as $value) {
-                $tableOptions[] = [
-                    'value' => $value->table_order_name,
-                    'id' => $value->table_id
-                ];
+                if (!in_array($value->table_id, $tableInOrders)) {
+                    $tableOptions[] = [
+                        'value' => $value->table_order_name,
+                        'id' => $value->table_id
+                    ];
+                }
             }
         }
 
@@ -477,6 +498,8 @@ class Home extends BaseController
                         $price = ($promotion_price > 0) ? $promotion_price : $foodSizeData->price;
                     }
                 }
+
+                $db->close();
             }
         }
 
@@ -496,6 +519,7 @@ class Home extends BaseController
             $db = db_connect();
             $BillModel = new BillModel($db);
             $BillDetailModel = new BillDetailModel($db);
+            $FoodSizeModel = new FoodSizeModel($db);
 
             /** -----------------------------------------------------------------------------------------
              * save thông tin chung đơn hàng
@@ -544,11 +568,17 @@ class Home extends BaseController
                     $price = $item['detail_price_add'];
 
                     $bill_detail_total = is_int($item['detail_total_add']) ? (int)$item['detail_total_add'] : 0;
-                    $size_unit_code = (strpos($item['detail_size_unit'], "__") !== false) ? explode("__", $item['detail_size_unit'])[0] : '';
-                    $bill_detail_description = $item['detail_note_add'];
+                    $size_unit_code = (strpos($item['detail_size_unit'], "__") !== false) ? explode("__", $item['detail_size_unit'])[0] : "1:M";
+
 
                     $food_id = (strpos($item['detail_food_name_add'], "__") !== false) ? explode("__", $item['detail_food_name_add'])[0] : 0;
                     $food_id = (int)$food_id;
+                    $note = $item['detail_note_add'];
+
+                    // Cập nhật detail description để in bill, có dạng: TS truyền thống (Vừa), Trà sữa Matcha (Lớn)
+                    // dữ liệu này lấy từ cột description trong bảng food_size
+                    $foodSizeItem = $FoodSizeModel->readItem(['food_id' => $food_id, 'size_unit_code' => $size_unit_code]);
+                    $bill_detail_description = !empty($foodSizeItem) ? $foodSizeItem->description : "";
 
                     // check data
                     if ($count == 0) {
@@ -571,7 +601,8 @@ class Home extends BaseController
                             'size_unit_code' => $size_unit_code,
                             'bill_detail_description' => $bill_detail_description,
                             'bill_id' => $bill_id,
-                            'food_id' => $food_id
+                            'food_id' => $food_id,
+                            'note' => $note,
 
                         );
 
@@ -611,6 +642,8 @@ class Home extends BaseController
                     }
                 }
             }
+
+            $db->close();
         }
 
         // return view('save_order');
@@ -631,18 +664,14 @@ class Home extends BaseController
 
             $db = db_connect();
             $BillModel = new BillModel($db);
-            $BillDetailModel = new BillDetailModel($db);
 
             $bill_id = $data['bill_id'];
-            // // $area_id = (!empty($value['area_name']) && strpos($value['area_name'], '__') !== false) ? explode('__', $value['area_name'])[0] : 0;
-            // // $table_id = (!empty($value['table_order_name']) && strpos($value['table_order_name'], '__') !== false) ? explode('__', $value['table_order_name'])[0] : 0;
-            // // $money_received = $data['money_received'];
-            // // $money_refund = $data['money_refund'];
 
             $status = $this->getOrderStatus($data['status'], 1);
             $note = $data['note'];
 
             $saveData = [
+                'date_check_out' => date('Y-m-d H:i:s'),
                 'status' => $status,
                 'money_received' => isset($data['money_received']) ? $data['money_received'] : 0,
                 'money_refund' => isset($data['money_refund']) ? $data['money_refund'] : 0,
@@ -660,10 +689,11 @@ class Home extends BaseController
                     $message = 'Đơn hàng đã cập nhật thành công';
                 }
             }
+
+            $db->close();
         }
 
         return json_encode(array('status' => $status, 'message' => $message), JSON_UNESCAPED_UNICODE);
-
     }
 
     // * *************************************** Lưu chi tiết đơn hàng  ********************************
@@ -678,64 +708,164 @@ class Home extends BaseController
             $data = $this->request->getVar('data');
             $data = json_decode($data, true);
 
+            // open connection and models
             $db = db_connect();
             $BillModel = new BillModel($db);
             $BillDetailModel = new BillDetailModel($db);
+            $FoodSizeModel = new FoodSizeModel($db);
 
+
+            $count = count($data);
+
+            $error_count = 0;
             foreach ($data as $key => $value) {
 
-                $bill_id = $value['bill_id'];
-                // // $area_id = (!empty($value['area_name']) && strpos($value['area_name'], '__') !== false) ? explode('__', $value['area_name'])[0] : 0;
-                // // $table_id = (!empty($value['table_order_name']) && strpos($value['table_order_name'], '__') !== false) ? explode('__', $value['table_order_name'])[0] : 0;
-                $money_received = $value['money_received'];
-                $money_refund = $value['money_refund'];
-                $status = $this->getOrderStatus($value['status'], 1);
-                $note = $value['note'];
+                // check 
+                if (empty($value['detail_food_name']) || empty($value['detail_size_unit_code'])) {
+                    if ($error_count <= 3) {
+                        $error_count++;
+                        continue;
+                    } else {
+                        break;
+                    }
+                }
+
+                $count = $value['detail_count'];
+                $price = $value['detail_price'];
+                $bill_detail_total = $value['detail_total'];
+                $size_unit_code = (!empty($value['detail_size_unit_code']) && strpos($value['detail_size_unit_code'], '__') !== false) ? explode('__', $value['detail_size_unit_code'])[0] : "1:M";
+
+
+                $bill_id = $value['detail_bill_id'];
+                $food_id = (!empty($value['detail_food_name']) && strpos($value['detail_food_name'], '__') !== false) ? explode('__', $value['detail_food_name'])[0] : 0;
+                $note = $value['detail_note'];
+
+                // Cập nhật detail description để in bill, có dạng: TS truyền thống (Vừa), Trà sữa Matcha (Lớn)
+                // dữ liệu này lấy từ cột description trong bảng food_size
+                $foodSizeItem = $FoodSizeModel->readItem(['food_id' => $food_id, 'size_unit_code' => $size_unit_code]);
+                $bill_detail_description = !empty($foodSizeItem) ? $foodSizeItem->description : "";
+
+                // cập nhật lại tổng đơn và ghi chú đơn
+                // $bill_total += $bill_detail_total;
+                // $bill_note .= !empty($note) ? ($note . "; ") : "";
 
                 $saveData = [
-                    'status' => $status,
-                    'money_received' => $money_received,
-                    'money_refund' => $money_refund,
+                    'count' => $count,
+                    'price' => $price,
+                    'bill_detail_total' => $bill_detail_total,
+                    'size_unit_code' => $size_unit_code,
+                    'bill_detail_description' => $bill_detail_description,
+                    'bill_id' => $bill_id,
+                    'food_id' => $food_id,
                     'note' => $note
                 ];
 
-                $where = ['bill_id' => $bill_id];
-                if ($BillModel->isAlreadyExist($where)) {
-                    $result = $BillModel->edit($where, $saveData);
-                    if (!$result) {
-                        // return error message
-                        $status = false;
-                        $message = 'Có lỗi khi lưu dữ liệu đơn hàng';
-                        break;
-                    } else {
-                        $status = true;
-                        $message = 'Đơn hàng đã cập nhật thành công';
-                    }
+                $where = ['bill_id' => $bill_id, 'food_id' => $food_id];
+                if ($BillDetailModel->isAlreadyExist($where)) {
+                    $sub = "(Update)";
+                    $result = $BillDetailModel->edit($where, $saveData);
+                } else {
+                    $sub = "(Insert)";
+                    $result = $BillDetailModel->create($saveData);
+                }
+
+                if (!$result) {
+                    // return error message
+                    $status = false;
+                    $message = 'Có lỗi khi lưu dữ liệu đơn hàng' . $sub;
+                    break;
+                } else {
+                    $status = true;
+                    $message = 'Đơn hàng đã cập nhật thành công';
                 }
             }
+
+            // close connection
+            $db->close();
+
+            // update lại tổng và các thông số khác cho bill
+            $result = $this->billUpdateAuto($bill_id);
+            if (!$result) {
+                // return error message
+                $status = false;
+                $message = 'Có lỗi khi lưu dữ liệu đơn hàng (Bill)';
+            }
+
+
+            // // $bill_total = 0;
+            // // $bill_note = "";
+            // // if ($status) {
+            // //     $where = ['bill_id' => $bill_id];
+            // //     if ($BillModel->isAlreadyExist($where) ) {
+
+            // //         $bill_note = $this->getOrderNote($bill_id, "");
+            // //         $billData = ['total' => $bill_total, 'note' => $bill_note];
+            // //         if (empty($bill_note) ) {
+            // //             $billData = ['total' => $bill_total];
+            // //         }
+            // //         $result = $BillModel->edit($where, $billData);
+            // //         if (!$result) {
+            // //             // return error message
+            // //             $status = false;
+            // //             $message = 'Có lỗi khi lưu dữ liệu đơn hàng (Bill)';
+            // //         }
+            // //     }
+
+            // // }
+
+
+
+
         }
+
+        return json_encode(array('status' => $status, 'message' => $message), JSON_UNESCAPED_UNICODE);
     }
-    // // public function saveDetail()
-    // // {
-    // //     $status = false;
-    // //     $message = 'Đơn hàng chưa lưu';
 
-    // //     $request = \Config\Services::request();
-    // //     if ($request->is('post')) {
+    public function deleteDetail()
+    {
+        $status = false;
+        $message = 'Đơn hàng chưa lưu';
 
-    // //         $data = $this->request->getVar('data');
-    // //         $data = json_decode($data, true);
+        $request = \Config\Services::request();
+        if ($request->is('post')) {
 
-    // //         $db = db_connect();
-    // //         $BillModel = new BillModel($db);
-    // //         $BillDetailModel = new BillDetailModel($db);
+            $data = $this->request->getVar('data');
+            $data = json_decode($data, true);
 
+            if (!empty($data['bill_id'])) {
 
+                // open connection and models
+                $db = db_connect();
+                $BillDetailModel = new BillDetailModel($db);
 
-    // //     }
+                $bill_id = $data['detail_bill_id'];
+                $bill_detail_id = $data['bill_detail_id'];
 
+                if ($BillDetailModel->isAlreadyExist(['bill_detail_id' => $bill_detail_id])) {
+                    $result = $BillDetailModel->del(['bill_detail_id' => $bill_detail_id]);
+                    if (!$result) {
+                        $status = false;
+                        $message = 'Có lỗi khi xóa sản phẩm trong đơn hàng';
+                    } else {
+                        // update lại tổng và các thông số khác cho bill
+                        $result = $this->billUpdateAuto($bill_id);
+                        if (!$result) {
+                            $message = 'Có lỗi khi xóa sản phẩm trong đơn hàng (Bill)';
+                        } else {
+                            $status = true;
+                            $message = 'Sản phẩm đã xóa thành công';
+                        }
+                    }
+                }
 
-    // // }
+                // close connection
+                $db->close();
+            }
+        }
+
+        return json_encode(array('status' => $status, 'message' => $message), JSON_UNESCAPED_UNICODE);
+    }
+
 
     public function getAreaId()
     {
@@ -776,6 +906,8 @@ class Home extends BaseController
                     $area_name = !empty($areaItem) ? $areaItem->area_name : '';
                     $status = true;
                 }
+
+                $db->close();
             }
         }
 
@@ -805,10 +937,46 @@ class Home extends BaseController
                     $promotion_price = $foodSizeItem->promotion_price;
                     $price = ($promotion_price > 0) ? $promotion_price : $foodSizeItem->price;
                 }
+
+                $db->close();
             }
         }
 
         return json_encode(array('price' => $price), JSON_UNESCAPED_UNICODE);
+    }
+
+    // Sử dụng để cập nhật lại các thông tin trong bảng bill khi các thông tin bill detail thay đổi
+    public function billUpdateAuto($bill_id)
+    {
+        $result = false;
+
+        $db = db_connect();
+        $BillModel = new BillModel($db);
+        $BillDetailModel = new BillDetailModel($db);
+
+        $where = ['bill_id' => $bill_id];
+        if ($BillDetailModel->isAlreadyExist($where)) {
+
+            $detailData = $BillDetailModel->readOptions($where, 'bill_detail_id');
+            $total = 0;
+            $count_orders = count($detailData);
+            $sum_orders = 0;
+            $note = '';
+            foreach ($detailData as $item) {
+                $total += $item->bill_detail_total;
+                $sum_orders += $item->count;
+                if (!empty($item->note)) {
+                    $note .= ($item->bill_detail_description . ": " . $item->note) . "; ";
+                }
+            }
+
+            // update bill table
+            $result = $BillModel->edit($where, ['total' => $total, 'count_orders' => $count_orders, 'sum_orders' => $sum_orders]);
+        }
+
+        $db->close();
+
+        return $result;
     }
 
 

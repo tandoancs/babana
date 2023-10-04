@@ -1,0 +1,65 @@
+CRITICAL - 2023-10-04 10:15:24 --> Undefined array key "bill_id"
+in APPPATH\Controllers\Home.php on line 636.
+ 1 APPPATH\Controllers\Home.php(636): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "bill_id"', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 636)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveMainOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-04 10:16:32 --> Undefined array key "bill_id"
+in APPPATH\Controllers\Home.php on line 636.
+ 1 APPPATH\Controllers\Home.php(636): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "bill_id"', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 636)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveMainOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-04 10:25:25 --> Too few arguments to function App\Controllers\Home::getOrderNote(), 1 passed in C:\xampp\htdocs\babana\app\Controllers\Home.php on line 85 and exactly 2 expected
+in APPPATH\Controllers\Home.php on line 194.
+ 1 APPPATH\Controllers\Home.php(85): App\Controllers\Home->getOrderNote('2')
+ 2 APPPATH\Controllers\Home.php(270): App\Controllers\Home->load()
+ 3 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->getOptionsOfOrderGrid()
+ 4 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 5 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-04 11:24:33 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 518.
+ 1 APPPATH\Controllers\Home.php(518): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 518)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-04 15:44:57 --> Cannot use object of type stdClass as array
+in APPPATH\Controllers\Home.php on line 947.
+ 1 APPPATH\Controllers\Home.php(791): App\Controllers\Home->billUpdateAuto('6')
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveDetail()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-04 15:47:11 --> Cannot use object of type stdClass as array
+in APPPATH\Controllers\Home.php on line 947.
+ 1 APPPATH\Controllers\Home.php(791): App\Controllers\Home->billUpdateAuto('6')
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveDetail()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-04 15:48:21 --> Cannot use object of type stdClass as array
+in APPPATH\Controllers\Home.php on line 947.
+ 1 APPPATH\Controllers\Home.php(791): App\Controllers\Home->billUpdateAuto('6')
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveDetail()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-04 15:48:39 --> Cannot use object of type stdClass as array
+in APPPATH\Controllers\Home.php on line 947.
+ 1 APPPATH\Controllers\Home.php(791): App\Controllers\Home->billUpdateAuto('6')
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveDetail()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-04 15:49:41 --> Undefined property: stdClass::$detail_food_description
+in APPPATH\Controllers\Home.php on line 950.
+ 1 APPPATH\Controllers\Home.php(950): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: stdClass::$detail_food_description', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 950)
+ 2 APPPATH\Controllers\Home.php(791): App\Controllers\Home->billUpdateAuto('6')
+ 3 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveDetail()
+ 4 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 5 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
