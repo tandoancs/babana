@@ -1,0 +1,197 @@
+CRITICAL - 2023-10-05 08:43:28 --> Undefined array key "detail_bill_id"
+in APPPATH\Controllers\Home.php on line 841.
+ 1 APPPATH\Controllers\Home.php(841): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "detail_bill_id"', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 841)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->deleteDetail()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-05 08:44:10 --> Undefined array key "detail_bill_id"
+in APPPATH\Controllers\Home.php on line 841.
+ 1 APPPATH\Controllers\Home.php(841): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "detail_bill_id"', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 841)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->deleteDetail()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-05 08:45:12 --> Undefined array key "detail_bill_id"
+in APPPATH\Controllers\Home.php on line 843.
+ 1 APPPATH\Controllers\Home.php(843): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "detail_bill_id"', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 843)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->deleteDetail()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-05 08:47:15 --> Undefined array key "detail_bill_id"
+in APPPATH\Controllers\Home.php on line 843.
+ 1 APPPATH\Controllers\Home.php(843): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "detail_bill_id"', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 843)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->deleteDetail()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-05 08:47:24 --> Undefined array key "detail_bill_id"
+in APPPATH\Controllers\Home.php on line 843.
+ 1 APPPATH\Controllers\Home.php(843): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "detail_bill_id"', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 843)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->deleteDetail()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-05 08:47:44 --> Undefined array key "detail_bill_id"
+in APPPATH\Controllers\Home.php on line 843.
+ 1 APPPATH\Controllers\Home.php(843): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "detail_bill_id"', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 843)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->deleteDetail()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-05 08:48:02 --> Undefined array key "detail_bill_id"
+in APPPATH\Controllers\Home.php on line 843.
+ 1 APPPATH\Controllers\Home.php(843): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "detail_bill_id"', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 843)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->deleteDetail()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-05 09:36:13 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 532.
+ 1 APPPATH\Controllers\Home.php(532): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 532)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-05 10:44:41 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 543.
+ 1 APPPATH\Controllers\Home.php(543): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 543)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+ERROR - 2023-10-05 11:44:34 --> mysqli_sql_exception: Unknown column 'id' in 'field list' in C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php:295
+Stack trace:
+#0 C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`i...', 0)
+#1 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`i...')
+#2 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`i...')
+#3 C:\xampp\htdocs\babana\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`i...', Array, false)
+#4 C:\xampp\htdocs\babana\app\Models\TableOrderModel.php(99): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\babana\app\Controllers\Home.php(505): App\Models\TableOrderModel->isAlreadyExist(Array)
+#6 C:\xampp\htdocs\babana\system\CodeIgniter.php(932): App\Controllers\Home->printer()
+#7 C:\xampp\htdocs\babana\system\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#8 C:\xampp\htdocs\babana\system\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\babana\index.php(68): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-10-05 11:44:34 --> Unknown column 'id' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 295.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`id`) AS `id`
+FROM `table_order`
+WHERE `table_id` = \'2\'', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`id`) AS `id`
+FROM `table_order`
+WHERE `table_id` = \'2\'')
+ 3 SYSTEMPATH\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`id`) AS `id`
+FROM `table_order`
+WHERE `table_id` = \'2\'')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`id`) AS `id`
+FROM `table_order`
+WHERE `table_id` = :table_id:', [...], false)
+ 5 APPPATH\Models\TableOrderModel.php(99): CodeIgniter\Database\BaseBuilder->get()
+ 6 APPPATH\Controllers\Home.php(505): App\Models\TableOrderModel->isAlreadyExist([...])
+ 7 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->printer()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 9 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+ERROR - 2023-10-05 11:46:09 --> mysqli_sql_exception: Unknown column 'id' in 'field list' in C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php:295
+Stack trace:
+#0 C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`i...', 0)
+#1 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`i...')
+#2 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`i...')
+#3 C:\xampp\htdocs\babana\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`i...', Array, false)
+#4 C:\xampp\htdocs\babana\app\Models\TableOrderModel.php(99): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\babana\app\Controllers\Home.php(505): App\Models\TableOrderModel->isAlreadyExist(Array)
+#6 C:\xampp\htdocs\babana\system\CodeIgniter.php(932): App\Controllers\Home->printer()
+#7 C:\xampp\htdocs\babana\system\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#8 C:\xampp\htdocs\babana\system\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\babana\index.php(68): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-10-05 11:46:09 --> Unknown column 'id' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 295.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`id`) AS `id`
+FROM `table_order`
+WHERE `table_id` = \'2\'', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`id`) AS `id`
+FROM `table_order`
+WHERE `table_id` = \'2\'')
+ 3 SYSTEMPATH\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`id`) AS `id`
+FROM `table_order`
+WHERE `table_id` = \'2\'')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`id`) AS `id`
+FROM `table_order`
+WHERE `table_id` = :table_id:', [...], false)
+ 5 APPPATH\Models\TableOrderModel.php(99): CodeIgniter\Database\BaseBuilder->get()
+ 6 APPPATH\Controllers\Home.php(505): App\Models\TableOrderModel->isAlreadyExist([...])
+ 7 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->printer()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 9 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+ERROR - 2023-10-05 11:46:12 --> mysqli_sql_exception: Unknown column 'id' in 'field list' in C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php:295
+Stack trace:
+#0 C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`i...', 0)
+#1 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`i...')
+#2 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`i...')
+#3 C:\xampp\htdocs\babana\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`i...', Array, false)
+#4 C:\xampp\htdocs\babana\app\Models\TableOrderModel.php(99): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\babana\app\Controllers\Home.php(505): App\Models\TableOrderModel->isAlreadyExist(Array)
+#6 C:\xampp\htdocs\babana\system\CodeIgniter.php(932): App\Controllers\Home->printer()
+#7 C:\xampp\htdocs\babana\system\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#8 C:\xampp\htdocs\babana\system\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\babana\index.php(68): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-10-05 11:46:12 --> Unknown column 'id' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 295.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`id`) AS `id`
+FROM `table_order`
+WHERE `table_id` = \'2\'', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`id`) AS `id`
+FROM `table_order`
+WHERE `table_id` = \'2\'')
+ 3 SYSTEMPATH\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`id`) AS `id`
+FROM `table_order`
+WHERE `table_id` = \'2\'')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`id`) AS `id`
+FROM `table_order`
+WHERE `table_id` = :table_id:', [...], false)
+ 5 APPPATH\Models\TableOrderModel.php(99): CodeIgniter\Database\BaseBuilder->get()
+ 6 APPPATH\Controllers\Home.php(505): App\Models\TableOrderModel->isAlreadyExist([...])
+ 7 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->printer()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 9 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-05 11:46:47 --> CodeIgniter\Database\BaseBuilder::orderBy(): Argument #1 ($orderBy) must be of type string, null given, called in C:\xampp\htdocs\babana\app\Models\BillDetailModel.php on line 62
+in SYSTEMPATH\Database\BaseBuilder.php on line 1438.
+ 1 APPPATH\Models\BillDetailModel.php(62): CodeIgniter\Database\BaseBuilder->orderBy(null, 'asc')
+ 2 APPPATH\Controllers\Home.php(516): App\Models\BillDetailModel->readOptions([...])
+ 3 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->printer()
+ 4 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 5 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-05 11:47:49 --> CodeIgniter\Database\BaseBuilder::orderBy(): Argument #1 ($orderBy) must be of type string, null given, called in C:\xampp\htdocs\babana\app\Models\BillDetailModel.php on line 62
+in SYSTEMPATH\Database\BaseBuilder.php on line 1438.
+ 1 APPPATH\Models\BillDetailModel.php(62): CodeIgniter\Database\BaseBuilder->orderBy(null, 'asc')
+ 2 APPPATH\Controllers\Home.php(516): App\Models\BillDetailModel->readOptions([...])
+ 3 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->printer()
+ 4 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 5 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-05 11:47:50 --> CodeIgniter\Database\BaseBuilder::orderBy(): Argument #1 ($orderBy) must be of type string, null given, called in C:\xampp\htdocs\babana\app\Models\BillDetailModel.php on line 62
+in SYSTEMPATH\Database\BaseBuilder.php on line 1438.
+ 1 APPPATH\Models\BillDetailModel.php(62): CodeIgniter\Database\BaseBuilder->orderBy(null, 'asc')
+ 2 APPPATH\Controllers\Home.php(516): App\Models\BillDetailModel->readOptions([...])
+ 3 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->printer()
+ 4 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 5 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-05 11:48:21 --> Undefined variable $status
+in APPPATH\Views\printer.php on line 35.
+ 1 APPPATH\Views\printer.php(35): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $status', 'C:\\xampp\\htdocs\\babana\\app\\Views\\printer.php', 35)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\babana\\app\\Views\\printer.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1176): CodeIgniter\View\View->render('printer', [], true)
+ 5 APPPATH\Controllers\Home.php(546): view('printer', [])
+ 6 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->printer()
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 8 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()

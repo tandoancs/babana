@@ -51,7 +51,7 @@ class Home extends BaseController
         return view('index');
     }
 
-    public function load()
+    public function load($done)
     {
         // init
         $data = array();
@@ -65,6 +65,9 @@ class Home extends BaseController
         // get data
         // $billData = $BillModel->readOptions(array('status <>' => 'Done'), 'bill_id');
         $billData = $BillModel->readOptionsIn('status', ['In-progress', 'Delivered'], 'date_check_in');
+        if ($done == "done" ) {
+            $billData = $BillModel->readOptionsIn('status', ['Done'], 'date_check_in');
+        }
 
         foreach ($billData as $bill) {
 
@@ -124,6 +127,7 @@ class Home extends BaseController
         if ($request->is('get')) {
 
             $bill_id = $this->request->getVar('bill_id');
+            $done = $this->request->getVar('done');
 
             $db = db_connect();
             $BillDetailModel = new BillDetailModel($db);
@@ -157,19 +161,22 @@ class Home extends BaseController
                 );
             }
 
-            for ($i = 0; $i < 9; $i++) {
-                $detailData[] = array(
-                    'bill_detail_id' => "",
-                    'detail_food_name' => "",
-                    'detail_size_unit_code' => "1:M__Ly size M",
-                    'detail_count' => "",
-                    'detail_price' => "",
-                    'detail_total' => "",
-                    'detail_bill_id' => "",
-
-                    'detail_note' => ""
-                );
+            if ($done != "done" ) {
+                for ($i = 0; $i < 9; $i++) {
+                    $detailData[] = array(
+                        'bill_detail_id' => "",
+                        'detail_food_name' => "",
+                        'detail_size_unit_code' => "1:M__Ly size M",
+                        'detail_count' => "",
+                        'detail_price' => "",
+                        'detail_total' => "",
+                        'detail_bill_id' => "",
+    
+                        'detail_note' => ""
+                    );
+                }
             }
+            
 
             // close db
             $db->close();
@@ -228,6 +235,10 @@ class Home extends BaseController
 
     public function getOptionsOfOrderGrid()
     {
+
+        // get bill id
+        $done = $this->request->getVar('done');
+
         // init
         $data = array();
         $tableOptions = array();
@@ -269,7 +280,7 @@ class Home extends BaseController
             }
         }
 
-        $data['dataset'] = $this->load();
+        $data['dataset'] = $this->load($done);
         $data['tableOptions'] = $tableOptions;
         $data['promotionOptions'] = $promotionOptions;
         $data['areaOptions'] = $areaOptions;
@@ -458,15 +469,86 @@ class Home extends BaseController
     // dữ liệu in hóa đơn
     public function printer()
     {
-        $data = array();
+        // init
+        $data = [];
+        $billData = [];
+        $detailData = [];
+
+        $status = false;
+        $message = "Chưa lấy được thông tin đơn hàng để in";
+
 
         // get bill id
         $bill_id = $this->request->getVar('bill_id');
+        
 
-        $data['bill_id'] = $bill_id;
+        // set bill data
+        $billData['bill_id'] = $bill_id;
+        $billData['bill_id_show'] = '100000' . $bill_id;
+        $billData['cashier'] = 'Admin';
+        $billData['customer'] = 'Guest';
+        $billData['address'] = 'Dốc Quýt (đầu đường xuống Phước Hậu)';
+        $billData['phone'] = '0986 486 602';
 
+        // open connection and models
+        $db = db_connect();
+        $BillModel = new BillModel($db);
+        $BillDetailModel = new BillDetailModel($db);
+        $TableOrderModel = new TableOrderModel($db);
 
-        return view('printer', $data);
+        // check 
+        $where = ['bill_id' => $bill_id];
+        if ($BillModel->isAlreadyExist($where) && $BillDetailModel->isAlreadyExist($where) ) {
+            $billItem = $BillModel->readItem($where);
+
+            $table_id = $billItem->table_id;
+            $table_order_name = '';
+            if ($TableOrderModel->isAlreadyExist(['table_id' => $table_id]) ) {
+                $tableItem = $TableOrderModel->readItem(['table_id' => $table_id]);
+                $table_order_name = $tableItem->table_order_name;
+            }
+
+            // set bill data
+            $billData['table_order_name'] = $table_order_name;
+            $billData['date_check_out'] = date('d-m-Y H:i:s', strtotime($billItem->date_check_out));
+            $billData['total'] = $billItem->total;
+            $billData['money_received'] = $billItem->money_received;
+            $billData['money_refund'] = $billItem->money_refund;
+            
+
+            // bill details
+            $billDetailData = $BillDetailModel->readOptions($where);
+
+            $index = 0;
+            $total_check = 0;
+            foreach ($billDetailData as $detail) {
+
+                $index++;
+
+                $bill_detail_total = $detail->bill_detail_total;
+                $total_check += $bill_detail_total;
+
+                $detailData[] = [
+                    'index' => $index,
+                    'bill_detail_description' => str_replace("Trà sữa", "TS", $detail->bill_detail_description),
+                    'count' => $detail->count,
+                    'price' => $detail->price,
+                    'bill_detail_total' => $bill_detail_total
+                ];
+
+            }
+
+            $status = true;
+            $message = "Lấy thông tin đơn hàng để in thành công";
+
+            if ($billData['total'] != $total_check ) {
+                $message = "Đơn hàng không đúng tổng số tiền, vui lòng kiểm tra lại";
+                $status = false;
+            }
+            
+        }
+
+        return view('printer', ['status' => $status, 'message' => $message, 'billData' => $billData, 'detailData' => $detailData]);
     }
 
     public function getDetailDataToAdd()
@@ -832,7 +914,7 @@ class Home extends BaseController
             $data = $this->request->getVar('data');
             $data = json_decode($data, true);
 
-            if (!empty($data['bill_id'])) {
+            if (!empty($data['bill_detail_id'])) {
 
                 // open connection and models
                 $db = db_connect();
@@ -865,7 +947,53 @@ class Home extends BaseController
 
         return json_encode(array('status' => $status, 'message' => $message), JSON_UNESCAPED_UNICODE);
     }
+    
+    public function deleteMainOrder()
+    {
+        $status = false;
+        $message = 'Đơn hàng chưa lưu';
 
+        $request = \Config\Services::request();
+        if ($request->is('post')) {
+
+            $data = $this->request->getVar('data');
+            $data = json_decode($data, true);
+
+            if (!empty($data['bill_id'])) {
+
+                // open connection and models
+                $db = db_connect();
+                $BillModel = new BillModel($db);
+                $BillDetailModel = new BillDetailModel($db);
+
+                $where = ['bill_id' => $data['bill_id']];
+                if ($BillModel->isAlreadyExist($where)) {
+                    $result = $BillModel->del($where);
+                    if (!$result) {
+                        $status = false;
+                        $message = 'Có lỗi khi xóa đơn hàng';
+                    } else {
+                        if ($BillDetailModel->isAlreadyExist($where)) {
+                            $result = $BillDetailModel->del($where);
+                            if (!$result) {
+                                $status = false;
+                                $message = 'Có lỗi khi xóa các sản phẩm của đơn hàng (Details)';
+                            } else {
+                                $status = true;
+                                $message = 'Đơn hàng đã xóa thành công';
+                            }
+                        }
+
+                    }
+                }
+
+                // close connection
+                $db->close();
+            }
+        }
+
+        return json_encode(array('status' => $status, 'message' => $message), JSON_UNESCAPED_UNICODE);
+    }
 
     public function getAreaId()
     {
@@ -972,6 +1100,9 @@ class Home extends BaseController
 
             // update bill table
             $result = $BillModel->edit($where, ['total' => $total, 'count_orders' => $count_orders, 'sum_orders' => $sum_orders]);
+        } else {
+            // trường hợp này là không còn sản phẩm nào của đơn ==> xóa bỏ đơn này luôn
+            $result = $BillModel->del($where);
         }
 
         $db->close();

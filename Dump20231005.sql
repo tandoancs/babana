@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: babana
+-- Host: localhost    Database: babana
 -- ------------------------------------------------------
--- Server version	8.0.34
+-- Server version	8.0.33
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -91,7 +91,7 @@ CREATE TABLE `bill` (
   `promotion_id` int DEFAULT NULL,
   `note` varchar(155) DEFAULT NULL,
   PRIMARY KEY (`bill_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -100,7 +100,7 @@ CREATE TABLE `bill` (
 
 LOCK TABLES `bill` WRITE;
 /*!40000 ALTER TABLE `bill` DISABLE KEYS */;
-INSERT INTO `bill` VALUES (1,'2023-08-30 12:10:00','2023-08-30 14:10:00',NULL,2,145000,'Done',150000,5000,1,NULL,'TS truyền thống: Ít đường;TS trân châu đường đen: Đường nhiều'),(2,'2023-09-01 07:14:00','2023-09-01 08:15:00',NULL,3,45000,'Done',50000,5000,2,NULL,'TS trân châu đường đen: Bình thường;TS truyền thống: Thêm đường;TS Matcha: Nhiều đá'),(6,'2023-10-02 11:52:23',NULL,2,5,76000,'Done',100000,24000,3,0,''),(7,'2023-10-02 11:52:59',NULL,1,4,64000,'Done',100000,36000,4,0,''),(8,'2023-10-02 11:55:10',NULL,1,4,76000,'Delivered',0,0,5,0,''),(9,'2023-10-02 14:01:52',NULL,1,1,19000,'Done',50000,31000,6,0,''),(10,'2023-10-02 14:32:16',NULL,1,1,19000,'Delivered',0,0,21,0,''),(11,'2023-10-02 14:32:43',NULL,1,1,15000,'In-progress',NULL,NULL,9,0,''),(12,'2023-10-02 14:33:58',NULL,1,1,15000,'In-progress',NULL,NULL,10,0,''),(13,'2023-10-02 14:34:25',NULL,1,1,15000,'In-progress',NULL,NULL,11,0,''),(14,'2023-10-02 14:34:46',NULL,1,1,15000,'In-progress',NULL,NULL,14,0,''),(15,'2023-10-03 10:21:01',NULL,1,1,15000,'In-progress',NULL,NULL,20,0,'');
+INSERT INTO `bill` VALUES (1,'2023-10-04 09:10:00','2023-10-04 10:21:34',2,2,145000,'Done',150000,5000,1,NULL,'TS truyền thống: Ít đường; TS trân châu đường đen: Đường nhiều;'),(2,'2023-10-04 10:10:00',NULL,1,1,15000,'In-progress',0,0,2,NULL,'TS trân châu đường đen: Bình thường; TS truyền thống: Thêm đường; TS Matcha: Nhiều đá; '),(17,'2023-10-05 09:36:13','2023-10-05 13:19:43',2,5,75000,'Done',100000,25000,1,0,''),(18,'2023-10-05 10:44:41',NULL,2,4,60000,'In-progress',NULL,NULL,3,0,'');
 /*!40000 ALTER TABLE `bill` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -123,7 +123,7 @@ CREATE TABLE `bill_detail` (
   `food_id` int DEFAULT NULL,
   `note` varchar(55) DEFAULT NULL,
   PRIMARY KEY (`bill_detail_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -132,7 +132,7 @@ CREATE TABLE `bill_detail` (
 
 LOCK TABLES `bill_detail` WRITE;
 /*!40000 ALTER TABLE `bill_detail` DISABLE KEYS */;
-INSERT INTO `bill_detail` VALUES (1,2,15000,'1',NULL,'1:M',NULL,1,1,'Ít đường'),(2,1,15000,'1',NULL,'1:M',NULL,1,2,'Đường nhiều'),(4,1,15000,'1',NULL,'1:M',NULL,2,2,'Bình thường'),(5,1,15000,'1',NULL,'1:M',NULL,2,1,'Thêm đường'),(6,1,15000,'1',NULL,'1:M',NULL,2,4,'Nhiều đá'),(7,1,12000,'1',12000,'1:M','',6,1,NULL),(8,4,16000,'1',64000,'1:M','',6,2,NULL),(9,4,16000,'1',64000,'1:M','',7,2,NULL),(10,4,19000,'1',76000,'1:M','',8,4,NULL),(11,1,19000,'1',19000,'1:L','',9,1,NULL),(12,1,19000,'1',19000,'1:L','',10,1,NULL),(13,1,15000,'1',15000,'1:M','',11,1,NULL),(14,1,15000,'1',15000,'1:M','',12,3,NULL),(15,1,15000,'1',15000,'1:M','',13,4,NULL),(16,1,15000,'1',15000,'1:M','',14,2,NULL),(17,1,15000,'1',15000,'1:M','',15,4,NULL);
+INSERT INTO `bill_detail` VALUES (1,2,15000,'1',15000,'1:M',NULL,1,1,'Ít đường'),(2,1,15000,'1',15000,'1:M',NULL,1,2,'Đường nhiều'),(4,1,15000,'1',15000,'1:M',NULL,2,2,'Bình thường'),(21,2,15000,'1',30000,'1:M','Trà sữa truyền thống (Vừa)',17,1,''),(22,3,15000,'1',45000,'1:M','Trà sữa trân châu đường đen (Vừa)',17,2,''),(23,2,15000,'1',30000,'1:M','Trà sữa kem (Vừa)',18,3,''),(24,2,15000,'1',30000,'1:M','Trà sữa Matcha (Vừa)',18,4,'');
 /*!40000 ALTER TABLE `bill_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -212,7 +212,7 @@ CREATE TABLE `food_size` (
 
 LOCK TABLES `food_size` WRITE;
 /*!40000 ALTER TABLE `food_size` DISABLE KEYS */;
-INSERT INTO `food_size` VALUES (1,15000,NULL,'Trà sữa truyền thống (M)',1,'1:M'),(2,15000,NULL,'Trà sữa trân châu đường đen (M)',2,'1:M'),(3,15000,NULL,'Trà sữa kem (M)',3,'1:M'),(4,15000,NULL,'Trà sữa Matcha (M)',4,'1:M'),(5,19000,NULL,'Trà sữa truyền thống (Vừa)',1,'1:L');
+INSERT INTO `food_size` VALUES (1,15000,NULL,'Trà sữa truyền thống (Vừa)',1,'1:M'),(2,15000,NULL,'Trà sữa trân châu đường đen (Vừa)',2,'1:M'),(3,15000,NULL,'Trà sữa kem (Vừa)',3,'1:M'),(4,15000,NULL,'Trà sữa Matcha (Vừa)',4,'1:M'),(5,19000,NULL,'Trà sữa truyền thống (Lớn)',1,'1:L');
 /*!40000 ALTER TABLE `food_size` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -381,4 +381,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-03 21:04:57
+-- Dump completed on 2023-10-05 15:56:24

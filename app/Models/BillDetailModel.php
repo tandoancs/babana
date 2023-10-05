@@ -59,7 +59,8 @@ class BillDetailModel extends Model
     public function readOptions($where, $col = null) 
     {
         $this->builder->where($where);
-        $this->builder->orderBy($col, 'asc');
+        if ($col != null )
+            $this->builder->orderBy($col, 'asc');
         return $this->builder->get()->getResult();
     }
 

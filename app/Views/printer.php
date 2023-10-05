@@ -28,8 +28,15 @@
 </head>
 
 <body>
+
     <div class="container">
 
+    <?php
+        if ($status == false ) {
+            echo $message;
+        } else {
+    ?>
+    <!-- start ----------------------------------------------------------------------------------------------- -->
         <div class="ticket">
             <!-- header -->
             <div class="header">
@@ -39,12 +46,12 @@
 
             <!-- address -->
             <div class="address">
-                Dốc Quýt (đầu đường xuống Phước Hậu)
+                <?= $billData['address'] ?>
             </div>
 
             <!-- table-order -->
             <div class="table-order">
-                BÀN: <span class="fw-bolder fs-4">01</span>
+                BÀN: <span class="fw-bolder fs-4"><?= $billData['table_order_name'] ?></span>
             </div>
 
             <!-- table-order -->
@@ -56,7 +63,7 @@
                             Thời gian:
                         </div>
                         <div class="col-8">
-                            28-09-2023 13:45:12
+                            <?= $billData['date_check_out'] ?>
                         </div>
                     </div>
 
@@ -65,13 +72,13 @@
                             T.Ngân:
                         </div>
                         <div class="col">
-                            Admin
+                            <?= $billData['cashier'] ?>
                         </div>
                         <div class="col">
                             Số bill:
                         </div>
                         <div class="col">
-                            10000001234
+                            <?= $billData['bill_id_show'] ?>
                         </div>
                     </div>
 
@@ -80,7 +87,7 @@
                             Khách hàng
                         </div>
                         <div class="col-8">
-                            Guest
+                            <?= $billData['customer'] ?>
                         </div>
                     </div>
 
@@ -99,44 +106,45 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="no">1</td>
-                        <td class="description">Trà sữa truyền thống</td>
-                        <td class="quantity">1.00</td>
-                        <td class="price">15,000</td>
-                        <td class="total-detail">15,000</td>
-                    </tr>
+                    <?php
+                        $total = ($billData['total']>0) ? number_format($billData['total'], 0) : $billData['total'];
+                        $money_received = ($billData['money_received']>0) ? number_format($billData['money_received'], 0) : $billData['money_received'];
+                        $money_refund = ($billData['money_refund']>0) ? number_format($billData['money_refund'], 0) : $billData['money_refund'];
+                        
 
-                    <tr>
-                        <td class="no">2</td>
-                        <td class="description">Trà sữa Matcha</td>
-                        <td class="quantity">1.00</td>
-                        <td class="price">15,000</td>
-                        <td class="total-detail">15,000</td>
-                    </tr>
+                        if (!empty($detailData) ) {
+                            $total_check = 0;
+                            foreach ($detailData as $detail) {
 
-                    <tr>
-                        <td class="no">3</td>
-                        <td class="description">Sinh tố dưa hấu</td>
-                        <td class="quantity">2.00</td>
-                        <td class="price">15,000</td>
-                        <td class="total-detail">30,000</td>
-                    </tr>
+                                $total_check += $detail['bill_detail_total'];
+                                $count = ($detail['count']>0) ? number_format($detail['count'], 2) : $detail['count'];
+                                $price = ($detail['price']>0) ? number_format($detail['price'], 0) : $detail['price'];
+                                $bill_detail_total = ($detail['bill_detail_total']>0) ? number_format($detail['bill_detail_total'], 0) : $detail['bill_detail_total'];
+                                echo '<tr>';
+                                    echo '<td class="no">' . $detail['index'] . '</td>';
+                                    echo '<td class="description" style="width: auto;">' . $detail['bill_detail_description'] . '</td>';
+                                    echo '<td class="quantity">' . $count . '</td>';
+                                    echo '<td class="price">' . $price . '</td>';
+                                    echo '<td class="total-detail">' . $bill_detail_total . '</td>';
+                                    
+                                echo '</tr>';
+                            }
+                            
+                            // check total
+                            if ($total_check != $billData['total'] ) {
+                                $total = 'Checking...';
+                            }
+                        }
 
-                    <tr>
-                        <td class="no">4</td>
-                        <td class="description">Nước ép bưởi</td>
-                        <td class="quantity">2.00</td>
-                        <td class="price">20,000</td>
-                        <td class="total-detail">40,000</td>
-                    </tr>
+                    ?>
+                    
 
                     <tr>
                         <td class="no"></td>
                         <td class="description bill-total" colspan="3">Thanh toán:</td>
                         <!-- <td class="quantity"></td>
                         <td class="price"></td> -->
-                        <td class="total-detail fw-bolder">120,000</td>
+                        <td class="total-detail fw-bolder"><?= $total ?></td>
                     </tr>
 
                     <tr>
@@ -144,7 +152,7 @@
                         <td class="description bill-total" colspan="3">Tiền khách đưa:</td>
                         <!-- <td class="quantity"></td>
                         <td class="price"></td> -->
-                        <td class="total-detail fw-bolder">120,000</td>
+                        <td class="total-detail fw-bolder"><?= $money_received ?></td>
                     </tr>
 
                     <tr class="border-bottom border-success">
@@ -152,7 +160,7 @@
                         <td class="description give-back-cust" colspan="3">Tiền thừa:</td>
                         <!-- <td class="quantity"></td>
                         <td class="price"></td> -->
-                        <td class="total-detail">0</td>
+                        <td class="total-detail"><?= $money_refund ?></td>
                     </tr>
 
 
@@ -160,7 +168,7 @@
                 </tbody>
             </table>
             <p class="centered">
-                Liên hệ đặt hàng: 0986 486 602
+                Liên hệ đặt hàng: <?= $billData['phone'] ?>
                 <br>
                 Theo dõi facebook để đón ưu đãi mới!
                 <br>
@@ -170,6 +178,10 @@
 
             </p>
         </div>
+    <!-- end ----------------------------------------------------------------------------------------------- -->
+    <?php
+        }
+    ?>
 
     </div>
 

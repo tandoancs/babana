@@ -98,3 +98,18 @@ html, body {
 .give-back-cust {
     text-align: right;
 }
+
+.no {
+    width: 30px !important;
+    /* font-size:smaller !important; */
+}
+
+.quantity {
+    width: 30px !important;
+}
+
+.description {
+    padding: 0 !important;
+    margin: 0 !important;
+    text-align: left !important;
+}

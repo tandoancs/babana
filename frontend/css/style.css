@@ -68,6 +68,17 @@ th {
     color: white !important;
 }
 
+
+.dhx_demo-grid .print-button-done {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: var(--dhx-font-size-normal) !important;
+    width: 80% !important;
+    height: 100% !important;
+    padding: 0;
+    color: white !important;
+}
+
 .dhx_demo-grid .edit-button {
     cursor: pointer;
     transition: all 0.3s ease;

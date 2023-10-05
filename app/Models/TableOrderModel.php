@@ -94,9 +94,9 @@ class TableOrderModel extends Model
 
     public function isAlreadyExist($where)
     {
-        $this->builder->selectCount('id');
+        $this->builder->selectCount('table_id');
         $this->builder->where($where);
-        return (($this->builder->get()->getResult()[0]->id) > 0) ? true : false;   
+        return (($this->builder->get()->getResult()[0]->table_id) > 0) ? true : false;   
     }
 
 
