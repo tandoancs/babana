@@ -200,3 +200,24 @@ th {
 .dhx_grid-body {
     height: 100% !important;
 }
+
+
+.dhx_demo-grid .md-edit-button {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: var(--dhx-font-size-normal) !important;
+    width: 45% !important;
+    height: 80% !important;
+    padding: 0;
+    color: white !important;
+}
+
+.dhx_demo-grid .md-remove-button {
+    cursor: pointer;
+    color: white !important;
+    transition: all 0.3s ease;
+    font-size: var(--dhx-font-size-normal) !important;
+    width: 45% !important;
+    height: 80% !important;
+    padding: 0;
+}

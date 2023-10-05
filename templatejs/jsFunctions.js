@@ -668,29 +668,6 @@ function windows(id, data = null) {
 
                 });
 
-                // // $.post("getAreaId", { table_id: ids })
-                // //     .done(function (result) {
-
-                // //         let areaData = JSON.parse(result);
-                // //         if (areaData.status == false) {
-                // //             dhx.alert({ header: "Tạo Đơn hàng", text: areaData.message, buttonsAlignment: "center", });
-                // //         } else {
-
-                // //             // creating DHTMLX Message 
-                // //             dhx.message({ node: "message_container", text: "Lấy Khu vực của bàn thành công", icon: "dxi dxi-content-save", css: "dhx_message--success", expire: 3000 });
-                // //             // set area data
-                // //             addForm.setValue({
-                // //                 "area_id": areaData.data.area_id
-                // //             });
-                // //         }
-
-
-                // //     }).fail(function () {
-                // //         dhx.alert({ header: "Tạo Đơn hàng", text: "Chưa lấy được dữ liệu Bàn để tìm Khu vực", buttonsAlignment: "center", });
-                // //     })
-                // //     .always(function () {
-                // //         console.log("finished");
-                // //     });
             });
         });
     } else {
@@ -1009,165 +986,6 @@ function setAddFormData() {
 
 }
 
-
-function orderDoneGrid() {
-    // to get data
-    $.ajax("./getOptionsOfOrderGrid")
-        .done(function (data) {
-            var data = JSON.parse(data);
-
-            // console.log("data options: " + JSON.stringify(data));
-
-            // creating DHTMLX Grid
-            grid = new dhx.Grid("grid_container", {
-                css: "dhx_demo-grid",
-                columns: [
-                    { width: 70, id: "bill_id", header: [{ text: "Mã Bill", align: "center" }], align: "center" },
-                    {
-                        width: 110, id: "area_name", header: [{ text: "Khu vực" }, { content: "comboFilter" }], editorType: "combobox", editorConfig: {
-                            template: ({ value }) => getOptionsTemplate(value)
-                        },
-                        options: data.areaOptions,
-                        template: (value) => getOptionsTemplate(value),
-                        htmlEnable: true
-                    },
-                    {
-                        width: 150, id: "table_order_name", header: [{ text: "Bàn" }, { content: "comboFilter" }], editorType: "combobox", editorConfig: {
-                            template: ({ value }) => getOptionsTemplate(value)
-                        },
-                        options: data.tableOptions,
-                        template: (value) => getOptionsTemplate(value),
-                        htmlEnable: true
-                    },
-                    { width: 150, id: "date_check_in", header: [{ text: "Giờ vào", align: "center" }, { content: "comboFilter" }], align: "center", editable: false },
-                    { width: 100, id: "sum_orders", header: [{ text: "Số món", align: "center" }, { content: "comboFilter" }], align: "center", editable: false },
-                    { width: 100, id: "total", header: [{ text: "Thành tiền", align: "center" }, { content: "comboFilter" }], align: "right", type: "number", format: "#,#", editable: false },
-                    { width: 100, id: "money_received", header: [{ text: "Tiền nhận", align: "center" }, { content: "comboFilter" }], type: "number", format: "#,#", align: "left", autoHeight: true, editable: true },
-                    { width: 100, id: "money_refund", header: [{ text: "Tiền thừa", align: "center" }, { content: "comboFilter" }], type: "number", format: "#,#", align: "left", autoHeight: true, editable: false },
-                    {
-                        width: 150, id: "status", header: [{ text: "Trạng thái" }, { content: "comboFilter" }], editorType: "combobox", editorConfig: {
-                            template: ({ value }) => getPriorityTemplate(value)
-                        },
-                        options: ["Đã thanh toán", "Đã giao món", "Đang đợi", "Hủy"],
-                        template: (value) => getPriorityTemplate(value),
-                        htmlEnable: true,
-                        minWidth: 100
-                    },
-
-                    {
-                        width: 200, id: "promotion_description", header: [{ text: "Khuyến mãi" }, { content: "comboFilter" }], editorType: "combobox", editorConfig: {
-                            template: ({ value }) => getOptionsTemplate(value)
-                        },
-                        options: data.promotionOptions,
-                        template: (value) => getOptionsTemplate(value),
-                        htmlEnable: true,
-                        minWidth: 100,
-                    },
-                    { id: "note", header: [{ text: "Ghi chú", align: "center" }], type: "textarea", align: "left", editorType: "textarea", autoHeight: true, editable: true },
-                    // { id: "note", header: [{ text: "Ghi chú" }, { content: "comboFilter" }], align: "left", type: "textarea", editorType: "textarea", editable: true },
-
-                    {
-                        width: 70, id: "detail", gravity: 1.5, header: [{ text: "Chi tiết", align: "center" }], htmlEnable: true, align: "center",
-                        template: function () {
-                            return "<span class='action-buttons'><a class='btn btn-info detail-btn detail-button'>Xem</a></span>";
-                        },
-                    },
-                    {
-                        width: 200, id: "action", gravity: 1.5, header: [{ text: "Actions", align: "center" }], htmlEnable: true, align: "center",
-                        template: function () {
-                            return "<span class='action-buttons'><a class='btn btn-primary print-button'>In Hóa đơn</a>";
-                        },
-                    },
-                ],
-                editable: true,
-                autoWidth: true,
-                autoHeight: true,
-                resizable: true,
-                eventHandlers: {
-                    onclick: {
-                        "detail-button": function (e, data) {
-                            windows("detail_order", data.row);
-                        },
-                        "print-button": function (e, data) {
-                            let selectedCell = grid.selection.getCell();
-                            let bill_id = selectedCell.row.bill_id;
-                            window.open("printer?bill_id=" + bill_id, "blank");
-                        },
-                    },
-                },
-                data: data.dataset
-            });
-
-
-            // grid.events.on("cellMouseOver", function (row, column, e) {
-            //     windows('detail_order')
-            // })
-
-            grid.selection.enable();
-
-            grid.selection.events.on("AfterSelect", function (row, col) {
-                console.log("afterSelect", row, col);
-            });
-
-            // edit events
-            grid.events.on("afterEditEnd", function (value, row, column) {
-
-                // console.log('Đang cập nhật dữ liệu chung ... ');
-                var money_received = row.money_received
-
-
-
-                if (money_received) {
-
-                    if (!isNumber(money_received)) {
-                        dhx.alert({ header: "Cập nhậ Đơn hàng", text: "Vui nhập nhập kiểu số", buttonsAlignment: "center", buttons: ["Đồng ý"] });
-                        // dhx.alert({ header: "Cập nhậ Đơn hàng", text: "Vui nhập nhập kiểu số", buttonsAlignment: "center", buttons: ["Đồng ý"] });
-                        row.money_refund = 0
-                    } else {
-
-                        let money_received_check = row.money_received
-                        // trường hợp nhập số tiền đơn vị là 1000 đồng
-                        if (money_received_check.toString().length == 2 || money_received_check.toString().length == 3) {
-                            money_received = money_received * 1000
-                            row.money_received = money_received
-                        }
-
-
-                        if (money_received < row.total) {
-                            dhx.alert({
-                                header: "Cập nhật Đơn hàng",
-                                text: "Số tiền khách đưa phải lớn hơn hoặc bằng tổng thanh toán",
-                                buttonsAlignment: "center",
-                                buttons: ["Đồng ý"]
-                            });
-                            dhx.alert({
-                                header: "Cập nhật đơn hàng",
-                                text: "Số tiền khách đưa phải lớn hơn hoặc bằng tổng thanh toán",
-                                buttonsAlignment: "center",
-                            });
-
-                            // row.money_refund = 0
-                        } else {
-
-
-                            row.money_refund = money_received - row.total
-                        }
-                    }
-
-
-                }
-
-
-            });
-        })
-        .fail(function () {
-            alert("Không lấy được dữ liệu từ hệ thống");
-        })
-        .always(function () {
-            console.log("Done!");
-        });
-}
-
 function orderDoneWindow() {
 
     // to get data
@@ -1221,6 +1039,7 @@ function orderDoneWindow() {
                         minWidth: 100,
                     },
                     { id: "note", header: [{ text: "Ghi chú", align: "center" }], type: "textarea", align: "left", editorType: "textarea", autoHeight: true, editable: true },
+                    { width: 80, id: "printed", header: [{ text: "Lần in", align: "center" }], align: "center", autoHeight: true, editable: false },
                     // { id: "note", header: [{ text: "Ghi chú" }, { content: "comboFilter" }], align: "left", type: "textarea", editorType: "textarea", editable: true },
 
                     {
@@ -1332,6 +1151,237 @@ function orderDoneWindow() {
 
 }
 
+/* -------------------------------------------------------------------------------------------------------------------------------------------
+    |
+    | master data
+    |
+*/
+
+var areaWinddow;
+var areaToolbar;
+var areaGrid;
+var areaLayout;
+function area() {
+
+    getAjaxData2(function (data) {
+
+        var result = JSON.parse(data)
+
+
+        /*  window -------------------------------------------------------------------------------------- */
+        areaWinddow = new dhx.Window({ width: 1048, height: 620, closable: true, movable: true, modal: true, title: "Khu vực chổ ngồi", });
+
+        /*  toolbar-------------------------------------------------------------------------------------- */
+        var structure = [
+            { type: "button", view: "flat", color: "primary", circle: true, icon: "mdi mdi-menu" },
+            { id: "dashboard", value: "Dashboard", icon: "mdi mdi-view-dashboard", group: "page", twoState: true, active: true },
+            { type: "spacer" },
+            { id: "detail-save", type: "button", circle: true, value: "Lưu tất cả", size: "small", icon: "mdi mdi-content-save-all", full: true },
+            { id: "settings2", icon: "mdi mdi-cog", type: "button", view: "link", color: "secondary", circle: true },
+            { type: "text", icon: "mdi mdi-help-circle", value: "Hướng dẫn", tooltip: "Chức năng:: Lưu tất cả các sản phẩm đã sửa." },
+        ];
+
+        // Toolbar initialization
+        areaToolbar = new dhx.Toolbar(null, {})
+
+        // loading structure into Toolbar
+        areaToolbar.data.parse(structure)
+
+        areaToolbar.events.on("click", function (id, e) {
+            if (id == "detail-save ") {
+                var detailData = detailGrid.data.serialize()
+                getAjaxData2(function (data) {
+
+                    var result = JSON.parse(data)
+                    let css = (result.status == true) ? 'dhx_message--success' : 'dhx_message--error'
+
+                    // creating DHTMLX Message 
+                    dhx.message({ node: "message_container", text: result.message, icon: "dxi dxi-content-save", css: css, expire: 5000 });
+
+                    // đợi 4s sau đó load lại trang
+                    setTimeout(function () { location.reload() }, 4000)
+
+                }, "saveDetail", detailData)
+            }
+
+            // dhx.alert({ header: "Alert Header", text: "Alert text", buttonsAlignment: "center", });
+        });
+
+        /*  grid-------------------------------------------------------------------------------------- */
+        areaGrid = new dhx.Grid(null, {
+            css: "dhx_demo-grid",
+
+            columns: [
+                { width: 150, id: "area_id", header: [{ text: "Mã Khu vực", align: "center" }], align: "center", editable: false },
+                { id: "area_name", header: [{ text: "Tên khu vực" }], type: "text" },
+                {
+                    width: 200, id: "detail_action", gravity: 1.5, header: [{ text: "Actions", align: "center" }], htmlEnable: true, align: "center",
+                    template: function () {
+                        return "<span class='action-buttons'><a class='btn btn-warning md-edit-button'>Lưu</a><a class='btn btn-danger md-remove-button'>Xóa</a></span>";
+                    }
+                }
+            ],
+            editable: true,
+            autoWidth: true,
+            resizable: true,
+            selection: "row",
+            multiselection: true,
+            eventHandlers: {
+                onclick: {
+                    "md-remove-button": function (e, dataR) {
+                        console.log(`md data: ${JSON.stringify(dataR.row)}`);
+                        let area_id = dataR.row.area_id;
+                        if (area_id == 'new' ) {
+                            dhx.alert({ header: "Thông báo", text: "Đây là dòng dữ liệu trống, vui lòng chọn lại", buttonsAlignment: "center", });
+                        } else {
+
+                            getAjaxData2(function (data) {
+
+                                var result = JSON.parse(data)
+                                var css = 'dhx_message--error'
+                                if (result.status) {
+                                    css = 'dhx_message--success'
+                                    areaGrid.data.remove(dataR.row.id)
+                                }
+                                // creating DHTMLX Message 
+                                dhx.message({ node: "message_container", text: result.message, icon: "mdi mdi-delete-empty-outline", css: css, expire: 5000 })
+                                
+                            }, "deleteArea", dataR.row);
+                        }
+
+                    },
+                    "md-edit-button": function (e, data) {
+
+                        console.log(`md data: ${JSON.stringify(data.row)}`);
+                        let area_name = data.row.area_name;
+                        if (!area_name) {
+                            dhx.alert({ header: "Thông báo", text: "Dữ liệu: Tên Khu Vực không được trống", buttonsAlignment: "center", });
+                        } else {
+
+                            
+
+                            getAjaxData2(function (data) {
+
+                                var result = JSON.parse(data);
+                                let css = (result.status == true) ? 'dhx_message--success' : 'dhx_message--error';
+                                // creating DHTMLX Message 
+                                dhx.message({ node: "message_container", text: result.message, icon: "mdi mdi-square-edit-outline", css: css, expire: 5000 });
+
+                                if (result.status) {
+                                    area();
+                                }
+                                // // đợi 4s sau đó load lại trang
+                                // setTimeout(function () {
+                                //     location.reload();
+                                // }, 4000)
+                            }, "saveArea", data.row);
+                        }
+
+                    },
+                },
+            },
+            data: result.data
+        });
+
+        areaGrid.selection.enable();
+
+        areaGrid.events.on("afterEditEnd", function (value, row, column) {
+
+            // // if ((column.id == "detail_count" && row.detail_count > 0) || (column.id == "detail_price" && row.detail_price > 0)) {
+
+            // //     row.detail_total = row.detail_count * row.detail_price
+
+            // // } else if ((column.id == "detail_size_unit_code") && (row.detail_size_unit_code)) {
+
+            // //     if (row.detail_food_name) {
+
+            // //         row.detail_count = 1;
+
+            // //         getAjaxData(function (data) {
+
+            // //             var result = JSON.parse(data);
+            // //             var price = Number(result.price);
+
+            // //             console.log(`Đang cập nhật lại giá ... `);
+            // //             if (price == '0') {
+            // //                 dhx.alert({ header: "Cập nhật đơn hàng", text: "Chưa lấy được giá của sản phẩm", buttonsAlignment: "center", });
+            // //             }
+
+            // //             row.detail_price = price
+            // //             row.detail_total = row.detail_count * price
+            // //             row.detail_bill_id = bill_id
+
+            // //         }, "getDetailDataToAdd?detail_food_name=" + row.detail_food_name + "&detail_size_unit_code=" + row.detail_size_unit_code);
+            // //     }
+
+            // // } else if ((column.id == "detail_food_name") && (row.detail_food_name)) {
+
+
+            // //     if (row.detail_size_unit_code) {
+
+            // //         row.detail_count = 1;
+
+            // //         getAjaxData(function (data) {
+
+            // //             var result = JSON.parse(data);
+            // //             var price = Number(result.price);
+
+            // //             if (price == '0') {
+            // //                 dhx.alert({ header: "Cập nhật đơn hàng", text: "Chưa lấy được giá của sản phẩm", buttonsAlignment: "center", });
+            // //             }
+
+            // //             row.detail_price = price
+            // //             row.detail_total = row.detail_count * price
+            // //             row.detail_bill_id = bill_id
+
+            // //         }, "getDetailDataToAdd?detail_food_name=" + row.detail_food_name + "&detail_size_unit_code=" + row.detail_size_unit_code);
+            // //     }
+
+            // // }
+
+        });
+
+        /*  layout -------------------------------------------------------------------------------------- */
+        areaLayout = new dhx.Layout(null, {
+            type: "line",
+            cols: [
+                {
+                    rows: [
+                        { id: "toolbar", height: "content" },
+                        { type: "space", rows: [{ id: "grid" }] }
+                    ],
+                },
+            ],
+        });
+
+        // attaching widgets to Layout cells
+        areaLayout.getCell("toolbar").attach(areaToolbar);
+        areaLayout.getCell("grid").attach(areaGrid);
+
+
+        areaWinddow.attach(areaLayout);
+        // areaWinddow.setFullScreen();
+        areaWinddow.show();
+
+        // // var result = JSON.parse(data)
+        // // let css = (result.status == true) ? 'dhx_message--success' : 'dhx_message--error'
+
+        // // // creating DHTMLX Message 
+        // // dhx.message({ node: "message_container", text: result.message, icon: "dxi dxi-content-save", css: css, expire: 5000 });
+
+        // // // đợi 4s sau đó load lại trang
+        // // setTimeout(function () { location.reload() }, 4000)
+
+    }, "area")
+
+}
+
+
+/* -------------------------------------------------------------------------------------------------------------------------------------------
+    |
+    | jQuery
+    |
+*/
 
 function getWindowData(callBack) {
     $.ajax("getDataToAddForm")
@@ -1361,7 +1411,7 @@ function getAjaxData(callBack, url) {
         });
 }
 
-function getAjaxData2(callBack, url, objData) {
+function getAjaxData2(callBack, url, objData = null) {
 
     $.ajax({ method: "POST", url: url, data: { data: JSON.stringify(objData) } })
         .done(function (data) {
@@ -1378,7 +1428,7 @@ function getAjaxData2(callBack, url, objData) {
 }
 
 
-/*
+/* -------------------------------------------------------------------------------------------------------------------------------------------
     |
     | running
     |
@@ -1388,4 +1438,9 @@ function getAjaxData2(callBack, url, objData) {
 toolbar();
 // grid()
 orderGrid();
+
+// area
+$("#area").on("click", function () {
+    area();
+});
 

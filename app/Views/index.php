@@ -103,7 +103,7 @@
                                     <span class="bot-line"></span>Chức năng</a>
                                 <ul class="header3-sub-list list-unstyled">
                                     <li>
-                                        <a href="frontend/login.html">Khu vực chổ ngồi</a>
+                                        <a href="#area" id="area">Khu vực chổ ngồi</a>
                                     </li>
                                     <li>
                                         <a href="frontend/register.html">Bàn</a>

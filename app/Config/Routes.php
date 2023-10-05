@@ -58,6 +58,13 @@ $routes->add('/deleteDetail', 'Home::deleteDetail');
 // print
 $routes->add('/printer', 'Home::printer');
 
+// master data
+$routes->add('/area', 'Home::area');
+$routes->add('/saveArea', 'Home::saveArea');
+$routes->add('/deleteArea', 'Home::deleteArea');
+
+
+
 // import
 $routes->add('/imports', 'Home::imports');
 

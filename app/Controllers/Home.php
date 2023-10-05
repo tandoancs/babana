@@ -104,8 +104,10 @@ class Home extends BaseController
                 // 'area_name' => '',
                 'promotion_description' => !empty($promotionItem) ? $promotionItem->description : 'Không',
                 'note' => $note,
+                'printed' => $bill->printed,
                 // 'detail' => '<button class="btn btn-info detail-btn">Xem</button>'
             );
+            
         }
 
         // close db
@@ -473,6 +475,7 @@ class Home extends BaseController
         $data = [];
         $billData = [];
         $detailData = [];
+        $printed = 0;
 
         $status = false;
         $message = "Chưa lấy được thông tin đơn hàng để in";
@@ -500,6 +503,8 @@ class Home extends BaseController
         $where = ['bill_id' => $bill_id];
         if ($BillModel->isAlreadyExist($where) && $BillDetailModel->isAlreadyExist($where) ) {
             $billItem = $BillModel->readItem($where);
+
+            $printed = $billItem->printed;
 
             $table_id = $billItem->table_id;
             $table_order_name = '';
@@ -547,6 +552,11 @@ class Home extends BaseController
             }
             
         }
+
+        $printed++;
+
+        // update print
+        $BillModel->edit($where, ['printed' => $printed]);
 
         return view('printer', ['status' => $status, 'message' => $message, 'billData' => $billData, 'detailData' => $detailData]);
     }
@@ -873,31 +883,6 @@ class Home extends BaseController
                 $message = 'Có lỗi khi lưu dữ liệu đơn hàng (Bill)';
             }
 
-
-            // // $bill_total = 0;
-            // // $bill_note = "";
-            // // if ($status) {
-            // //     $where = ['bill_id' => $bill_id];
-            // //     if ($BillModel->isAlreadyExist($where) ) {
-
-            // //         $bill_note = $this->getOrderNote($bill_id, "");
-            // //         $billData = ['total' => $bill_total, 'note' => $bill_note];
-            // //         if (empty($bill_note) ) {
-            // //             $billData = ['total' => $bill_total];
-            // //         }
-            // //         $result = $BillModel->edit($where, $billData);
-            // //         if (!$result) {
-            // //             // return error message
-            // //             $status = false;
-            // //             $message = 'Có lỗi khi lưu dữ liệu đơn hàng (Bill)';
-            // //         }
-            // //     }
-
-            // // }
-
-
-
-
         }
 
         return json_encode(array('status' => $status, 'message' => $message), JSON_UNESCAPED_UNICODE);
@@ -1110,6 +1095,139 @@ class Home extends BaseController
         return $result;
     }
 
+    /* ------------------------------------------------------------------------------------------------
+        |
+        | Master data
+        |
+
+    */
+
+    public function area()
+    {
+        $data = [];
+        $status = false;
+        $message = 'Không lấy được Khu vực của Bàn đã chọn';
+
+        $db = db_connect();
+        $AreaModel = new AreaModel($db);
+
+        $areaData = $AreaModel->readAll('area_id', 'asc');
+        if (!empty($areaData) ) {
+            foreach ($areaData as $area) {
+                $data[] = [
+                    'area_id' => $area->area_id,
+                    'area_name' => $area->area_name
+                ];
+            }
+        }
+
+        // thêm 5 dòng trống để User thêm area mới
+        for ($i = 0; $i<5; $i++) {
+            $data[] = [
+                'area_id' => 'new',
+                'area_name' => ''
+            ];
+        }
+
+        $db->close();
+    
+        return json_encode(['status' => $status, 'message' => $message, 'data' => $data], JSON_UNESCAPED_UNICODE);
+    }
+
+    public function saveArea()
+    {
+        $result = false;
+        $status = false;
+        $message = 'Chưa lấy được thông tin xử lý';
+
+        $request = \Config\Services::request();
+        if ($request->is('post')) {
+
+            $data = $this->request->getVar('data');
+            $data = json_decode($data, true);
+
+            // open connection and models
+            $db = db_connect();
+            $AreaModel = new AreaModel($db);
+            
+            $area_id = $data['area_id'];
+            $area_name = $data['area_name'];
+
+            if (empty($area_name) ) {
+                $message = 'Dữ liệu không được trống';
+            } else {
+                $saveData = [
+                    'area_name' => $area_name
+                ];
+    
+                if ($area_id != 'new' ) {
+                    $where = ['area_id' => $area_id];
+                    if ($AreaModel->isAlreadyExist($where)) {
+                        $sub = "(Update)";
+                        $result = $AreaModel->edit($where, $saveData);
+                    }
+                } else {
+                    $sub = "(Insert)";
+                    $result = $AreaModel->create($saveData);
+                }
+    
+                
+                if (!$result) {
+                    $message = 'Có lỗi khi lưu dữ liệu' . $sub;
+                } else {
+                    $status = true;
+                    $message = 'Cập nhật dữ liệu thành công';
+                }
+            }
+            
+            // close connection
+            $db->close();
+
+        }
+
+        return json_encode(array('status' => $status, 'message' => $message), JSON_UNESCAPED_UNICODE);
+    }
+
+    public function deleteArea()
+    {
+        $result = false;
+        $status = false;
+        $message = 'Chưa lấy được thông tin xử lý';
+
+        $request = \Config\Services::request();
+        if ($request->is('post')) {
+
+            $data = $this->request->getVar('data');
+            $data = json_decode($data, true);
+
+            // open connection and models
+            $db = db_connect();
+            $AreaModel = new AreaModel($db);
+            
+            $area_id = $data['area_id'];
+
+            if ($area_id == 'new' ) {
+                $message = 'Dữ liệu không tồn tại trong hệ thống';
+            } else {
+                $where = ['area_id' => $area_id];
+                if ($AreaModel->isAlreadyExist($where)) {
+                    $result = $AreaModel->del($where);
+                    if (!$result) {
+                        $message = 'Có lỗi khi xóa dữ liệu';
+                    } else {
+                        $status = true;
+                        $message = 'Xóa dữ liệu thành công';
+                    }
+                }
+            }
+
+            // close connection
+            $db->close();
+
+        }
+
+        return json_encode(array('status' => $status, 'message' => $message), JSON_UNESCAPED_UNICODE);
+    }
 
 
 
