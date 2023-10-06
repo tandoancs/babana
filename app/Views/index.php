@@ -106,24 +106,24 @@
                                         <a href="#area" id="area">Khu vực chổ ngồi</a>
                                     </li>
                                     <li>
-                                        <a href="frontend/register.html">Bàn</a>
+                                        <a href="#table" id="table-order">Bàn</a>
                                     </li>
                                     <li>
-                                        <a href="frontend/forget-pass.html">Đồ ăn/Thức uống</a>
+                                        <a href="#food" id="food">Đồ ăn/Thức uống</a>
                                     </li>
 
 
                                     <li>
-                                        <a href="frontend/login.html">Khuyến mãi</a>
+                                        <a href="#" id="promotion">Khuyến mãi</a>
                                     </li>
                                     <li>
-                                        <a href="frontend/register.html">Kích thước (Size)</a>
+                                        <a href="#">Kích thước (Size)</a>
                                     </li>
                                     <li>
-                                        <a href="frontend/forget-pass.html">Đơn vị sản phẩm</a>
+                                        <a href="#">Đơn vị sản phẩm</a>
                                     </li>
                                     <li>
-                                        <a href="frontend/forget-pass.html">Kích thước + Đơn vị</a>
+                                        <a href="#">Kích thước + Đơn vị</a>
                                     </li>
                                 </ul>
                             </li>

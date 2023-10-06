@@ -14,6 +14,8 @@ use App\Models\PromotionModel;
 use App\Models\FoodModel;
 use App\Models\SizeUnitModel;
 use App\Models\FoodSizeModel;
+use App\Models\CatalogModel;
+
 
 // use PhpOffice\PhpSpreadsheet\Spreadsheet;
 // use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -65,7 +67,7 @@ class Home extends BaseController
         // get data
         // $billData = $BillModel->readOptions(array('status <>' => 'Done'), 'bill_id');
         $billData = $BillModel->readOptionsIn('status', ['In-progress', 'Delivered'], 'date_check_in');
-        if ($done == "done" ) {
+        if ($done == "done") {
             $billData = $BillModel->readOptionsIn('status', ['Done'], 'date_check_in');
         }
 
@@ -107,7 +109,6 @@ class Home extends BaseController
                 'printed' => $bill->printed,
                 // 'detail' => '<button class="btn btn-info detail-btn">Xem</button>'
             );
-            
         }
 
         // close db
@@ -163,7 +164,7 @@ class Home extends BaseController
                 );
             }
 
-            if ($done != "done" ) {
+            if ($done != "done") {
                 for ($i = 0; $i < 9; $i++) {
                     $detailData[] = array(
                         'bill_detail_id' => "",
@@ -173,12 +174,12 @@ class Home extends BaseController
                         'detail_price' => "",
                         'detail_total' => "",
                         'detail_bill_id' => "",
-    
+
                         'detail_note' => ""
                     );
                 }
             }
-            
+
 
             // close db
             $db->close();
@@ -410,8 +411,8 @@ class Home extends BaseController
             foreach ($foodData as $food) {
 
                 $food_id = $food->food_id;
-                $catalogy_id = $food->catalogy_id;
-                $food_size_unit_code = $catalogy_id == 1 ? '1:M__Ly size M' : '';
+                $catalog_id = $food->catalog_id;
+                $food_size_unit_code = $catalog_id == 1 ? '1:M__Ly size M' : '';
                 $promotion_price = 0;
                 $price = 0;
                 if (!empty($food_size_unit_code)) {
@@ -483,7 +484,7 @@ class Home extends BaseController
 
         // get bill id
         $bill_id = $this->request->getVar('bill_id');
-        
+
 
         // set bill data
         $billData['bill_id'] = $bill_id;
@@ -501,14 +502,14 @@ class Home extends BaseController
 
         // check 
         $where = ['bill_id' => $bill_id];
-        if ($BillModel->isAlreadyExist($where) && $BillDetailModel->isAlreadyExist($where) ) {
+        if ($BillModel->isAlreadyExist($where) && $BillDetailModel->isAlreadyExist($where)) {
             $billItem = $BillModel->readItem($where);
 
             $printed = $billItem->printed;
 
             $table_id = $billItem->table_id;
             $table_order_name = '';
-            if ($TableOrderModel->isAlreadyExist(['table_id' => $table_id]) ) {
+            if ($TableOrderModel->isAlreadyExist(['table_id' => $table_id])) {
                 $tableItem = $TableOrderModel->readItem(['table_id' => $table_id]);
                 $table_order_name = $tableItem->table_order_name;
             }
@@ -519,7 +520,7 @@ class Home extends BaseController
             $billData['total'] = $billItem->total;
             $billData['money_received'] = $billItem->money_received;
             $billData['money_refund'] = $billItem->money_refund;
-            
+
 
             // bill details
             $billDetailData = $BillDetailModel->readOptions($where);
@@ -540,17 +541,15 @@ class Home extends BaseController
                     'price' => $detail->price,
                     'bill_detail_total' => $bill_detail_total
                 ];
-
             }
 
             $status = true;
             $message = "Lấy thông tin đơn hàng để in thành công";
 
-            if ($billData['total'] != $total_check ) {
+            if ($billData['total'] != $total_check) {
                 $message = "Đơn hàng không đúng tổng số tiền, vui lòng kiểm tra lại";
                 $status = false;
             }
-            
         }
 
         $printed++;
@@ -882,7 +881,6 @@ class Home extends BaseController
                 $status = false;
                 $message = 'Có lỗi khi lưu dữ liệu đơn hàng (Bill)';
             }
-
         }
 
         return json_encode(array('status' => $status, 'message' => $message), JSON_UNESCAPED_UNICODE);
@@ -932,7 +930,7 @@ class Home extends BaseController
 
         return json_encode(array('status' => $status, 'message' => $message), JSON_UNESCAPED_UNICODE);
     }
-    
+
     public function deleteMainOrder()
     {
         $status = false;
@@ -968,7 +966,6 @@ class Home extends BaseController
                                 $message = 'Đơn hàng đã xóa thành công';
                             }
                         }
-
                     }
                 }
 
@@ -1102,17 +1099,18 @@ class Home extends BaseController
 
     */
 
+    // area --------------------------------------------------------------------------------------------------------------------
     public function area()
     {
         $data = [];
         $status = false;
-        $message = 'Không lấy được Khu vực của Bàn đã chọn';
+        $message = 'Chưa lấy được thông tin xử lý';
 
         $db = db_connect();
         $AreaModel = new AreaModel($db);
 
         $areaData = $AreaModel->readAll('area_id', 'asc');
-        if (!empty($areaData) ) {
+        if (!empty($areaData)) {
             foreach ($areaData as $area) {
                 $data[] = [
                     'area_id' => $area->area_id,
@@ -1122,7 +1120,7 @@ class Home extends BaseController
         }
 
         // thêm 5 dòng trống để User thêm area mới
-        for ($i = 0; $i<5; $i++) {
+        for ($i = 0; $i < 5; $i++) {
             $data[] = [
                 'area_id' => 'new',
                 'area_name' => ''
@@ -1130,7 +1128,7 @@ class Home extends BaseController
         }
 
         $db->close();
-    
+
         return json_encode(['status' => $status, 'message' => $message, 'data' => $data], JSON_UNESCAPED_UNICODE);
     }
 
@@ -1149,18 +1147,18 @@ class Home extends BaseController
             // open connection and models
             $db = db_connect();
             $AreaModel = new AreaModel($db);
-            
+
             $area_id = $data['area_id'];
             $area_name = $data['area_name'];
 
-            if (empty($area_name) ) {
+            if (empty($area_name)) {
                 $message = 'Dữ liệu không được trống';
             } else {
                 $saveData = [
                     'area_name' => $area_name
                 ];
-    
-                if ($area_id != 'new' ) {
+
+                if ($area_id != 'new') {
                     $where = ['area_id' => $area_id];
                     if ($AreaModel->isAlreadyExist($where)) {
                         $sub = "(Update)";
@@ -1170,8 +1168,8 @@ class Home extends BaseController
                     $sub = "(Insert)";
                     $result = $AreaModel->create($saveData);
                 }
-    
-                
+
+
                 if (!$result) {
                     $message = 'Có lỗi khi lưu dữ liệu' . $sub;
                 } else {
@@ -1179,10 +1177,9 @@ class Home extends BaseController
                     $message = 'Cập nhật dữ liệu thành công';
                 }
             }
-            
+
             // close connection
             $db->close();
-
         }
 
         return json_encode(array('status' => $status, 'message' => $message), JSON_UNESCAPED_UNICODE);
@@ -1203,10 +1200,10 @@ class Home extends BaseController
             // open connection and models
             $db = db_connect();
             $AreaModel = new AreaModel($db);
-            
+
             $area_id = $data['area_id'];
 
-            if ($area_id == 'new' ) {
+            if ($area_id == 'new') {
                 $message = 'Dữ liệu không tồn tại trong hệ thống';
             } else {
                 $where = ['area_id' => $area_id];
@@ -1223,16 +1220,465 @@ class Home extends BaseController
 
             // close connection
             $db->close();
+        }
 
+        return json_encode(array('status' => $status, 'message' => $message), JSON_UNESCAPED_UNICODE);
+    }
+
+    // table --------------------------------------------------------------------------------------------------------------------
+    public function tableOrder()
+    {
+        $data = [];
+        $areaOptions = [];
+        $status = false;
+        $message = 'Chưa lấy được thông tin xử lý';
+
+        $db = db_connect();
+        $AreaModel = new AreaModel($db);
+        $TableOrderModel = new TableOrderModel($db);
+
+        $tableOrderData = $TableOrderModel->readAll('table_id', 'asc');
+        if (!empty($tableOrderData)) {
+            foreach ($tableOrderData as $item) {
+
+                $area_id = $item->area_id;
+                $where = ['area_id' => $area_id];
+                $area_name = '';
+                if ($AreaModel->isAlreadyExist($where)) {
+                    $areaItem = $AreaModel->readItem($where);
+                    $area_name = $areaItem->area_id . "__" . $areaItem->area_name;
+                }
+                $data[] = [
+                    'table_id' => $item->table_id,
+                    'table_order_name' => $item->table_order_name,
+                    'area_name' => $area_name
+                ];
+            }
+        }
+
+        // thêm 5 dòng trống để User thêm area mới
+        for ($i = 0; $i < 5; $i++) {
+            $data[] = [
+                'table_id' => 'new',
+                'table_order_name' => '',
+                'area_name' => ''
+            ];
+        }
+
+        // area all
+        $areaData = $AreaModel->readAll('area_id', 'asc');
+        foreach ($areaData as $value) {
+            $areaOptions[] = $value->area_id . "__" . $value->area_name;
+        }
+
+        $db->close();
+
+        return json_encode(['status' => $status, 'message' => $message, 'data' => $data, 'areaOptions' => $areaOptions], JSON_UNESCAPED_UNICODE);
+    }
+
+    public function saveTableOrder()
+    {
+        $result = false;
+        $status = false;
+        $message = 'Chưa lấy được thông tin xử lý';
+
+        $request = \Config\Services::request();
+        if ($request->is('post')) {
+
+            $data = $this->request->getVar('data');
+            $data = json_decode($data, true);
+
+            // open connection and models
+            $db = db_connect();
+            $TableOrderModel = new TableOrderModel($db);
+
+            $table_id = $data['table_id'];
+            $table_order_name = $data['table_order_name'];
+            $area_name = $data['area_name'];
+
+            if (empty($table_order_name) || empty($area_name)) {
+                $message = 'Dữ liệu không được trống';
+            } else {
+
+                $area_id = (strpos($area_name, '__') !== false) ? explode('__', $area_name)[0] : 0;
+                $saveData = [
+                    'table_order_name' => $table_order_name,
+                    'area_id' => $area_id
+                ];
+
+                if ($table_id != 'new') {
+                    $where = ['table_id' => $table_id];
+                    if ($TableOrderModel->isAlreadyExist($where)) {
+                        $sub = "(Update)";
+                        $result = $TableOrderModel->edit($where, $saveData);
+                    }
+                } else {
+                    $sub = "(Insert)";
+                    $result = $TableOrderModel->create($saveData);
+                }
+
+                if (!$result) {
+                    $message = 'Có lỗi khi lưu dữ liệu' . $sub;
+                } else {
+                    $status = true;
+                    $message = 'Cập nhật dữ liệu thành công';
+                }
+            }
+
+            // close connection
+            $db->close();
+        }
+
+        return json_encode(array('status' => $status, 'message' => $message), JSON_UNESCAPED_UNICODE);
+    }
+
+    public function deleteTableOrder()
+    {
+        $result = false;
+        $status = false;
+        $message = 'Chưa lấy được thông tin xử lý';
+
+        $request = \Config\Services::request();
+        if ($request->is('post')) {
+
+            $data = $this->request->getVar('data');
+            $data = json_decode($data, true);
+
+            // open connection and models
+            $db = db_connect();
+            $TableOrderModel = new TableOrderModel($db);
+
+            $table_id = $data['table_id'];
+
+            if ($table_id == 'new') {
+                $message = 'Dữ liệu không tồn tại trong hệ thống';
+            } else {
+                $where = ['table_id' => $table_id];
+                if ($TableOrderModel->isAlreadyExist($where)) {
+                    $result = $TableOrderModel->del($where);
+                    if (!$result) {
+                        $message = 'Có lỗi khi xóa dữ liệu';
+                    } else {
+                        $status = true;
+                        $message = 'Xóa dữ liệu thành công';
+                    }
+                }
+            }
+
+            // close connection
+            $db->close();
+        }
+
+        return json_encode(array('status' => $status, 'message' => $message), JSON_UNESCAPED_UNICODE);
+    }
+
+    // food --------------------------------------------------------------------------------------------------------------------
+    public function food()
+    {
+        $data = [];
+        $catalogOptions = [];
+        $status = false;
+        $message = 'Chưa lấy được thông tin xử lý';
+
+        $db = db_connect();
+        $FoodModel = new FoodModel($db);
+        $CatalogModel = new CatalogModel($db);
+
+        $result = $FoodModel->readAll('food_id', 'asc');
+        if (!empty($result)) {
+            foreach ($result as $item) {
+
+                $where = ['catalog_id' => $item->catalog_id];
+                $catalog_name = '';
+                if ($CatalogModel->isAlreadyExist($where)) {
+                    $catalogItem = $CatalogModel->readItem($where);
+                    $catalog_name = $catalogItem->catalog_id . "__" . $catalogItem->catalog_name;
+                }
+                $data[] = [
+                    'food_id' => $item->food_id,
+                    'food_name' => $item->food_name,
+                    'description' => $item->description,
+                    'catalog' => $catalog_name
+                ];
+            }
+        }
+
+        // thêm 5 dòng trống để User thêm area mới
+        for ($i = 0; $i < 5; $i++) {
+            $data[] = [
+                'food_id' => 'new',
+                'food_name' => '',
+                'description' => '',
+                'catalog' => ''
+            ];
+        }
+
+        // area all
+        $catalogData = $CatalogModel->readAll('catalog_id', 'asc');
+        foreach ($catalogData as $value) {
+            $catalogOptions[] = $value->catalog_id . "__" . $value->catalog_name;
+        }
+
+        $db->close();
+
+        return json_encode(['status' => $status, 'message' => $message, 'data' => $data, 'catalogOptions' => $catalogOptions], JSON_UNESCAPED_UNICODE);
+    }
+
+    public function saveFood()
+    {
+        $result = false;
+        $status = false;
+        $message = 'Chưa lấy được thông tin xử lý';
+
+        $request = \Config\Services::request();
+        if ($request->is('post')) {
+
+            $data = $this->request->getVar('data');
+            $data = json_decode($data, true);
+
+            // open connection and models
+            $db = db_connect();
+            $FoodModel = new FoodModel($db);
+
+            $food_id = $data['food_id'];
+            $food_name = $data['food_name'];
+            $description = $data['description'];
+            $catalog =  $data['catalog'];
+
+            if (empty($food_name) || empty($description) || empty($catalog)) {
+                $message = 'Dữ liệu không được trống';
+            } else {
+
+                $catalog_id = (strpos($catalog, '__') !== false) ? explode('__', $catalog)[0] : 0;
+                $saveData = [
+                    'food_name' => $food_name,
+                    'description' => $description,
+                    'catalog_id' => $catalog_id
+                ];
+
+                if ($food_id != 'new') {
+                    $where = ['food_id' => $food_id];
+                    if ($FoodModel->isAlreadyExist($where)) {
+                        $sub = "(Update)";
+                        $result = $FoodModel->edit($where, $saveData);
+                    }
+                } else {
+                    $sub = "(Insert)";
+                    $result = $FoodModel->create($saveData);
+                }
+
+                if (!$result) {
+                    $message = 'Có lỗi khi lưu dữ liệu' . $sub;
+                } else {
+                    $status = true;
+                    $message = 'Cập nhật dữ liệu thành công';
+                }
+            }
+
+            // close connection
+            $db->close();
+        }
+
+        return json_encode(array('status' => $status, 'message' => $message), JSON_UNESCAPED_UNICODE);
+    }
+
+    public function deleteFood()
+    {
+        $result = false;
+        $status = false;
+        $message = 'Chưa lấy được thông tin xử lý';
+
+        $request = \Config\Services::request();
+        if ($request->is('post')) {
+
+            $data = $this->request->getVar('data');
+            $data = json_decode($data, true);
+
+            // open connection and models
+            $db = db_connect();
+            $FoodModel = new FoodModel($db);
+
+            $food_id = $data['food_id'];
+
+            if ($food_id == 'new') {
+                $message = 'Dữ liệu không tồn tại trong hệ thống';
+            } else {
+                $where = ['food_id' => $food_id];
+                if ($FoodModel->isAlreadyExist($where)) {
+                    $result = $FoodModel->del($where);
+                    if (!$result) {
+                        $message = 'Có lỗi khi xóa dữ liệu';
+                    } else {
+                        $status = true;
+                        $message = 'Xóa dữ liệu thành công';
+                    }
+                }
+            }
+
+            // close connection
+            $db->close();
         }
 
         return json_encode(array('status' => $status, 'message' => $message), JSON_UNESCAPED_UNICODE);
     }
 
 
+    // promotion --------------------------------------------------------------------------------------------------------------------
+    public function promotion()
+    {
+        $data = [];
+        $status = false;
+        $message = 'Chưa lấy được thông tin xử lý';
 
+        $db = db_connect();
+        $PromotionModel = new PromotionModel($db);
 
+        $results = $PromotionModel->readAll('promotion_id', 'asc');
+        if (!empty($results)) {
+            foreach ($results as $item) {
+                $data[] = [
+                    'promotion_id' => $item->promotion_id,
+                    'promotion_type' => $item->promotion_type,
+                    'promotion_code' => $item->promotion_code,
+                    'promotion_condition' => $item->promotion_condition,
+                    'parameter' => $item->parameter,
+                    'start_date' => date('d-m-Y H:i:s', strtotime($item->start_date)),
+                    'end_date' => date('d-m-Y H:i:s', strtotime($item->start_date)),
+                    'description' => $item->description,
+                    'calculate_by' => $item->calculate_by,
+                    'status' => ($item->status) ? 'Bật' : 'Tắt'
+                ];
+            }
+        }
 
+        // thêm 5 dòng trống để User thêm area mới
+        for ($i = 0; $i < 5; $i++) {
+            $data[] = [
+                'promotion_id' => 'new',
+                'promotion_type' => '',
+                'promotion_code' => '',
+                'promotion_condition' => '',
+                'parameter' => 0,
+                'start_date' => '',
+                'end_date' => '',
+                'description' => '',
+                'calculate_by' => '',
+                'status' => ''
+            ];
+        }
+
+        $db->close();
+
+        $statusOptions[] = 'Bật';
+        $statusOptions[] = 'Tắt';
+
+        return json_encode(['status' => $status, 'message' => $message, 'data' => $data, 'statusOptions' => $statusOptions], JSON_UNESCAPED_UNICODE);
+    }
+    public function savePromotion()
+    {
+        $result = false;
+        $status = false;
+        $message = 'Chưa lấy được thông tin xử lý';
+
+        $request = \Config\Services::request();
+        if ($request->is('post')) {
+
+            $data = $this->request->getVar('data');
+            $data = json_decode($data, true);
+
+            // open connection and models
+            $db = db_connect();
+            $PromotionModel = new PromotionModel($db);
+
+            $promotion_id = $data['promotion_id'];
+            $start_date = date('Y-m-d H:i:s', strtotime($data['start_date']));
+            $end_date = date('Y-m-d H:i:s', strtotime($data['end_date']));
+
+            $current = date('Y-m-d H:i:s');
+            $promotion_status = ($current >= $start_date && $current <= $end_date) ? 'Bật' : 'Tắt';
+                
+            $promotion_status = $data['status'];
+            if (!empty($promotion_status) ) {
+                $promotion_status = ($promotion_status == "Bật") ? 1 : 0;
+            } else {
+                $promotion_status = 1;
+            }
+
+            $saveData = [
+                'promotion_type' => $data['promotion_type'],
+                'promotion_code' => $data['promotion_code'],
+                'promotion_condition' => $data['promotion_condition'],
+                'parameter' => $data['parameter'],
+                'start_date' => $start_date,
+                'end_date' => $end_date,
+                'description' => $data['description'],
+                'calculate_by' => $data['calculate_by'],
+                'status' => 1
+            ];
+
+            if ($promotion_id != 'new') {
+                $where = ['promotion_id' => $promotion_id];
+                if ($PromotionModel->isAlreadyExist($where)) {
+                    $sub = "(Update)";
+                    $result = $PromotionModel->edit($where, $saveData);
+                }
+            } else {
+                $sub = "(Insert)";
+                $result = $PromotionModel->create($saveData);
+            }
+
+            if (!$result) {
+                $message = 'Có lỗi khi lưu dữ liệu' . $sub;
+            } else {
+                $status = true;
+                $message = 'Cập nhật dữ liệu thành công';
+            }
+
+            // close connection
+            $db->close();
+        }
+
+        return json_encode(array('status' => $status, 'message' => $message), JSON_UNESCAPED_UNICODE);
+    }
+
+    public function deletePromotion()
+    {
+        $result = false;
+        $status = false;
+        $message = 'Chưa lấy được thông tin xử lý';
+
+        $request = \Config\Services::request();
+        if ($request->is('post')) {
+
+            $data = $this->request->getVar('data');
+            $data = json_decode($data, true);
+
+            // open connection and models
+            $db = db_connect();
+            $PromotionModel = new PromotionModel($db);
+
+            $promotion_id = $data['promotion_id'];
+            if ($promotion_id == 'new') {
+                $message = 'Dữ liệu không tồn tại trong hệ thống';
+            } else {
+                $where = ['promotion_id' => $promotion_id];
+                if ($PromotionModel->isAlreadyExist($where)) {
+                    $result = $PromotionModel->del($where);
+                    if (!$result) {
+                        $message = 'Có lỗi khi xóa dữ liệu';
+                    } else {
+                        $status = true;
+                        $message = 'Xóa dữ liệu thành công';
+                    }
+                }
+            }
+
+            // close connection
+            $db->close();
+        }
+
+        return json_encode(array('status' => $status, 'message' => $message), JSON_UNESCAPED_UNICODE);
+    }
 
 
 

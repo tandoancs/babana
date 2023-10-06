@@ -1157,10 +1157,10 @@ function orderDoneWindow() {
     |
 */
 
-var areaWinddow;
-var areaToolbar;
-var areaGrid;
-var areaLayout;
+var areaWinddow, tableWindow, foodWindow, promotionWindow;
+var areaToolbar, tableToolbar, foodToolbar, promotionToolbar;
+var areaGrid, tableGrid, foodGrid, promotionGrid;
+var areaLayout, tableLayout, foodLayout, promotionLayout;
 function area() {
 
     getAjaxData2(function (data) {
@@ -1188,23 +1188,7 @@ function area() {
         areaToolbar.data.parse(structure)
 
         areaToolbar.events.on("click", function (id, e) {
-            if (id == "detail-save ") {
-                var detailData = detailGrid.data.serialize()
-                getAjaxData2(function (data) {
-
-                    var result = JSON.parse(data)
-                    let css = (result.status == true) ? 'dhx_message--success' : 'dhx_message--error'
-
-                    // creating DHTMLX Message 
-                    dhx.message({ node: "message_container", text: result.message, icon: "dxi dxi-content-save", css: css, expire: 5000 });
-
-                    // đợi 4s sau đó load lại trang
-                    setTimeout(function () { location.reload() }, 4000)
-
-                }, "saveDetail", detailData)
-            }
-
-            // dhx.alert({ header: "Alert Header", text: "Alert text", buttonsAlignment: "center", });
+            dhx.alert({ header: "Thông báo", text: "Chức năng chưa được hỗ trợ", buttonsAlignment: "center", });
         });
 
         /*  grid-------------------------------------------------------------------------------------- */
@@ -1231,7 +1215,7 @@ function area() {
                     "md-remove-button": function (e, dataR) {
                         console.log(`md data: ${JSON.stringify(dataR.row)}`);
                         let area_id = dataR.row.area_id;
-                        if (area_id == 'new' ) {
+                        if (area_id == 'new') {
                             dhx.alert({ header: "Thông báo", text: "Đây là dòng dữ liệu trống, vui lòng chọn lại", buttonsAlignment: "center", });
                         } else {
 
@@ -1245,7 +1229,7 @@ function area() {
                                 }
                                 // creating DHTMLX Message 
                                 dhx.message({ node: "message_container", text: result.message, icon: "mdi mdi-delete-empty-outline", css: css, expire: 5000 })
-                                
+
                             }, "deleteArea", dataR.row);
                         }
 
@@ -1257,8 +1241,6 @@ function area() {
                         if (!area_name) {
                             dhx.alert({ header: "Thông báo", text: "Dữ liệu: Tên Khu Vực không được trống", buttonsAlignment: "center", });
                         } else {
-
-                            
 
                             getAjaxData2(function (data) {
 
@@ -1285,61 +1267,7 @@ function area() {
 
         areaGrid.selection.enable();
 
-        areaGrid.events.on("afterEditEnd", function (value, row, column) {
-
-            // // if ((column.id == "detail_count" && row.detail_count > 0) || (column.id == "detail_price" && row.detail_price > 0)) {
-
-            // //     row.detail_total = row.detail_count * row.detail_price
-
-            // // } else if ((column.id == "detail_size_unit_code") && (row.detail_size_unit_code)) {
-
-            // //     if (row.detail_food_name) {
-
-            // //         row.detail_count = 1;
-
-            // //         getAjaxData(function (data) {
-
-            // //             var result = JSON.parse(data);
-            // //             var price = Number(result.price);
-
-            // //             console.log(`Đang cập nhật lại giá ... `);
-            // //             if (price == '0') {
-            // //                 dhx.alert({ header: "Cập nhật đơn hàng", text: "Chưa lấy được giá của sản phẩm", buttonsAlignment: "center", });
-            // //             }
-
-            // //             row.detail_price = price
-            // //             row.detail_total = row.detail_count * price
-            // //             row.detail_bill_id = bill_id
-
-            // //         }, "getDetailDataToAdd?detail_food_name=" + row.detail_food_name + "&detail_size_unit_code=" + row.detail_size_unit_code);
-            // //     }
-
-            // // } else if ((column.id == "detail_food_name") && (row.detail_food_name)) {
-
-
-            // //     if (row.detail_size_unit_code) {
-
-            // //         row.detail_count = 1;
-
-            // //         getAjaxData(function (data) {
-
-            // //             var result = JSON.parse(data);
-            // //             var price = Number(result.price);
-
-            // //             if (price == '0') {
-            // //                 dhx.alert({ header: "Cập nhật đơn hàng", text: "Chưa lấy được giá của sản phẩm", buttonsAlignment: "center", });
-            // //             }
-
-            // //             row.detail_price = price
-            // //             row.detail_total = row.detail_count * price
-            // //             row.detail_bill_id = bill_id
-
-            // //         }, "getDetailDataToAdd?detail_food_name=" + row.detail_food_name + "&detail_size_unit_code=" + row.detail_size_unit_code);
-            // //     }
-
-            // // }
-
-        });
+        areaGrid.events.on("afterEditEnd", function (value, row, column) { });
 
         /*  layout -------------------------------------------------------------------------------------- */
         areaLayout = new dhx.Layout(null, {
@@ -1363,16 +1291,475 @@ function area() {
         // areaWinddow.setFullScreen();
         areaWinddow.show();
 
-        // // var result = JSON.parse(data)
-        // // let css = (result.status == true) ? 'dhx_message--success' : 'dhx_message--error'
-
-        // // // creating DHTMLX Message 
-        // // dhx.message({ node: "message_container", text: result.message, icon: "dxi dxi-content-save", css: css, expire: 5000 });
-
-        // // // đợi 4s sau đó load lại trang
-        // // setTimeout(function () { location.reload() }, 4000)
-
     }, "area")
+
+}
+
+function tableOrder() {
+
+    getAjaxData2(function (data) {
+
+        var result = JSON.parse(data)
+
+
+        /*  window -------------------------------------------------------------------------------------- */
+        tableWindow = new dhx.Window({ width: 1048, height: 620, closable: true, movable: true, modal: true, title: "Bàn", });
+
+        /*  toolbar-------------------------------------------------------------------------------------- */
+        var structure = [
+            { type: "button", view: "flat", color: "primary", circle: true, icon: "mdi mdi-menu" },
+            { id: "dashboard", value: "Dashboard", icon: "mdi mdi-view-dashboard", group: "page", twoState: true, active: true },
+            { type: "spacer" },
+            { id: "detail-save", type: "button", circle: true, value: "Lưu tất cả", size: "small", icon: "mdi mdi-content-save-all", full: true },
+            { id: "settings2", icon: "mdi mdi-cog", type: "button", view: "link", color: "secondary", circle: true },
+            { type: "text", icon: "mdi mdi-help-circle", value: "Hướng dẫn", tooltip: "Chức năng:: Lưu tất cả các sản phẩm đã sửa." },
+        ];
+
+        // Toolbar initialization
+        tableToolbar = new dhx.Toolbar(null, {})
+
+        // loading structure into Toolbar
+        tableToolbar.data.parse(structure)
+
+        tableToolbar.events.on("click", function (id, e) {
+            dhx.alert({ header: "Thông báo", text: "Chức năng chưa được hỗ trợ", buttonsAlignment: "center", });
+        });
+
+        /*  grid-------------------------------------------------------------------------------------- */
+        tableGrid = new dhx.Grid(null, {
+            css: "dhx_demo-grid",
+
+            columns: [
+                { width: 100, id: "table_id", header: [{ text: "Mã Bàn", align: "center" }], align: "center", editable: false },
+                { id: "table_order_name", header: [{ text: "Tên Bàn" }], type: "text" },
+                {
+                    width: 200, id: "area_name", header: [{ text: "Khu vực" }], editorType: "combobox", editorConfig: {
+                        template: ({ value }) => getOptionsTemplate(value)
+                    },
+                    options: result.areaOptions,
+                    template: (value) => getOptionsTemplate(value),
+                    htmlEnable: true
+                },
+                {
+                    width: 200, id: "detail_action", gravity: 1.5, header: [{ text: "Actions", align: "center" }], htmlEnable: true, align: "center",
+                    template: function () {
+                        return "<span class='action-buttons'><a class='btn btn-warning md-edit-button'>Lưu</a><a class='btn btn-danger md-remove-button'>Xóa</a></span>";
+                    }
+                }
+            ],
+            editable: true,
+            autoWidth: true,
+            resizable: true,
+            selection: "row",
+            multiselection: true,
+            eventHandlers: {
+                onclick: {
+                    "md-remove-button": function (e, dataR) {
+                        console.log(`md data: ${JSON.stringify(dataR.row)}`);
+                        if (dataR.row.table_id == 'new') {
+                            dhx.alert({ header: "Thông báo", text: "Đây là dòng dữ liệu trống, vui lòng chọn lại", buttonsAlignment: "center", });
+                        } else {
+
+                            getAjaxData2(function (data) {
+
+                                var result = JSON.parse(data)
+                                var css = 'dhx_message--error'
+                                if (result.status) {
+                                    css = 'dhx_message--success'
+                                    tableGrid.data.remove(dataR.row.id)
+                                }
+                                // creating DHTMLX Message 
+                                dhx.message({ node: "message_container", text: result.message, icon: "mdi mdi-delete-empty-outline", css: css, expire: 5000 })
+
+                            }, "deleteTableOrder", dataR.row);
+                        }
+
+                    },
+                    "md-edit-button": function (e, data) {
+
+                        console.log(`md data: ${JSON.stringify(data.row)}`);
+                        if (!data.row.table_order_name) {
+                            dhx.alert({ header: "Thông báo", text: "Dữ liệu: Tên Bàn không được trống", buttonsAlignment: "center", });
+                        } else if (!data.row.area_name) {
+                            dhx.alert({ header: "Thông báo", text: "Dữ liệu: Khu Vực không được trống", buttonsAlignment: "center", });
+                        } else {
+
+                            getAjaxData2(function (data) {
+
+                                var result = JSON.parse(data);
+                                let css = (result.status == true) ? 'dhx_message--success' : 'dhx_message--error';
+                                // creating DHTMLX Message 
+                                dhx.message({ node: "message_container", text: result.message, icon: "mdi mdi-square-edit-outline", css: css, expire: 5000 });
+
+                                if (result.status) {
+                                    tableOrder();
+                                }
+                                // // đợi 4s sau đó load lại trang
+                                // setTimeout(function () {
+                                //     location.reload();
+                                // }, 4000)
+                            }, "saveTableOrder", data.row);
+                        }
+
+                    },
+                },
+            },
+            data: result.data
+        });
+
+        tableGrid.selection.enable();
+
+        tableGrid.events.on("afterEditEnd", function (value, row, column) { });
+
+        /*  layout -------------------------------------------------------------------------------------- */
+        tableLayout = new dhx.Layout(null, {
+            type: "line",
+            cols: [
+                {
+                    rows: [
+                        { id: "toolbar", height: "content" },
+                        { type: "space", rows: [{ id: "grid" }] }
+                    ],
+                },
+            ],
+        });
+
+        // attaching widgets to Layout cells
+        tableLayout.getCell("toolbar").attach(tableToolbar);
+        tableLayout.getCell("grid").attach(tableGrid);
+
+
+        tableWindow.attach(tableLayout);
+        // tableWinddow.setFullScreen();
+        tableWindow.show();
+
+    }, "tableOrder")
+
+}
+
+function food() {
+
+    getAjaxData2(function (data) {
+
+        var result = JSON.parse(data)
+
+        /*  window -------------------------------------------------------------------------------------- */
+        foodWindow = new dhx.Window({ width: 1048, height: 620, closable: true, movable: true, modal: true, title: "Sản phẩm", })
+
+        /*  toolbar-------------------------------------------------------------------------------------- */
+        var structure = [
+            { type: "button", view: "flat", color: "primary", circle: true, icon: "mdi mdi-menu" },
+            { id: "dashboard", value: "Dashboard", icon: "mdi mdi-view-dashboard", group: "page", twoState: true, active: true },
+            { type: "spacer" },
+            { id: "imports", type: "button", circle: true, value: "Nhập File (Excel)", size: "small", icon: "mdi mdi-file-import", full: true },
+            { id: "exports", type: "button", circle: true, value: "Xuất File (Excel)", size: "small", icon: "mdi mdi-file-export", full: true },
+            { id: "settings2", icon: "mdi mdi-cog", type: "button", view: "link", color: "secondary", circle: true },
+            { type: "text", icon: "mdi mdi-help-circle", value: "Hướng dẫn", tooltip: "Chức năng:: Lưu tất cả các sản phẩm đã sửa." },
+        ]
+
+        // Toolbar initialization
+        foodToolbar = new dhx.Toolbar(null, {})
+
+        // loading structure into Toolbar
+        foodToolbar.data.parse(structure)
+
+        foodToolbar.events.on("click", function (id, e) {
+            dhx.alert({ header: "Thông báo", text: "Chức năng chưa được hỗ trợ", buttonsAlignment: "center", })
+        })
+
+        /*  grid-------------------------------------------------------------------------------------- */
+        foodGrid = new dhx.Grid(null, {
+            css: "dhx_demo-grid",
+
+            columns: [
+                { width: 100, id: "food_id", header: [{ text: "Mã SP", align: "center" }], align: "center", editable: false },
+                { id: "food_name", header: [{ text: "Tên Sản phẩm" }], type: "text" },
+                { id: "description", header: [{ text: "Mô tả Sản phẩm" }], type: "text" },
+                {
+                    width: 200, id: "catalog", header: [{ text: "Loại sản phẩm" }], editorType: "combobox", editorConfig: {
+                        template: ({ value }) => getOptionsTemplate(value)
+                    },
+                    options: result.catalogOptions,
+                    template: (value) => getOptionsTemplate(value),
+                    htmlEnable: true
+                },
+                {
+                    width: 200, id: "detail_action", gravity: 1.5, header: [{ text: "Actions", align: "center" }], htmlEnable: true, align: "center",
+                    template: function () {
+                        return "<span class='action-buttons'><a class='btn btn-warning md-edit-button'>Lưu</a><a class='btn btn-danger md-remove-button'>Xóa</a></span>";
+                    }
+                }
+            ],
+            editable: true,
+            autoWidth: true,
+            resizable: true,
+            selection: "row",
+            multiselection: true,
+            eventHandlers: {
+                onclick: {
+                    "md-remove-button": function (e, dataR) {
+                        console.log(`md data: ${JSON.stringify(dataR.row)}`);
+                        if (dataR.row.food_id == 'new') {
+                            dhx.alert({ header: "Thông báo", text: "Đây là dòng dữ liệu trống, vui lòng chọn lại", buttonsAlignment: "center", });
+                        } else {
+
+                            getAjaxData2(function (data) {
+
+                                var result = JSON.parse(data)
+                                var css = 'dhx_message--error'
+                                if (result.status) {
+                                    css = 'dhx_message--success'
+                                    foodGrid.data.remove(dataR.row.id)
+                                }
+                                // creating DHTMLX Message 
+                                dhx.message({ node: "message_container", text: result.message, icon: "mdi mdi-delete-empty-outline", css: css, expire: 5000 })
+
+                            }, "deleteFood", dataR.row)
+                        }
+
+                    },
+                    "md-edit-button": function (e, data) {
+
+                        console.log(`md data: ${JSON.stringify(data.row)}`);
+                        if (!data.row.food_name) {
+                            dhx.alert({ header: "Thông báo", text: "Dữ liệu: Tên Sản Phẩm không được trống", buttonsAlignment: "center", });
+                        } else if (!data.row.description) {
+                            dhx.alert({ header: "Thông báo", text: "Dữ liệu: Mô tả Sản Phẩm không được trống", buttonsAlignment: "center", });
+                        } else if (!data.row.catalog) {
+                            dhx.alert({ header: "Thông báo", text: "Dữ liệu: Loại Sản Phẩm không được trống", buttonsAlignment: "center", });
+                        } else {
+
+                            getAjaxData2(function (data) {
+
+                                var result = JSON.parse(data);
+                                let css = (result.status == true) ? 'dhx_message--success' : 'dhx_message--error';
+                                // creating DHTMLX Message 
+                                dhx.message({ node: "message_container", text: result.message, icon: "mdi mdi-square-edit-outline", css: css, expire: 5000 });
+
+                                if (result.status) {
+                                    food();
+                                }
+                                // // đợi 4s sau đó load lại trang
+                                // setTimeout(function () {
+                                //     location.reload();
+                                // }, 4000)
+                            }, "saveFood", data.row);
+                        }
+
+                    },
+                },
+            },
+            data: result.data
+        });
+
+        foodGrid.selection.enable();
+
+        foodGrid.events.on("afterEditEnd", function (value, row, column) { });
+
+        /*  layout -------------------------------------------------------------------------------------- */
+        foodLayout = new dhx.Layout(null, {
+            type: "line",
+            cols: [
+                {
+                    rows: [
+                        { id: "toolbar", height: "content" },
+                        { type: "space", rows: [{ id: "grid" }] }
+                    ],
+                },
+            ],
+        });
+
+        // attaching widgets to Layout cells
+        foodLayout.getCell("toolbar").attach(foodToolbar);
+        foodLayout.getCell("grid").attach(foodGrid);
+
+
+        foodWindow.attach(foodLayout);
+        // foodWindow.setFullScreen();
+        foodWindow.show();
+
+    }, "food")
+
+}
+
+function promotion() {
+
+    getAjaxData2(function (data) {
+
+        var result = JSON.parse(data)
+
+        /*  window -------------------------------------------------------------------------------------- */
+        promotionWindow = new dhx.Window({ width: 1548, height: 620, closable: true, movable: true, modal: true, title: "Khuyến mãi", })
+
+        /*  toolbar-------------------------------------------------------------------------------------- */
+        var structure = [
+            { type: "button", view: "flat", color: "primary", circle: true, icon: "mdi mdi-menu" },
+            { id: "dashboard", value: "Dashboard", icon: "mdi mdi-view-dashboard", group: "page", twoState: true, active: true },
+            { type: "spacer" },
+            { id: "detail-save", type: "button", circle: true, value: "Lưu tất cả", size: "small", icon: "mdi mdi-content-save-all", full: true },
+            { id: "settings2", icon: "mdi mdi-cog", type: "button", view: "link", color: "secondary", circle: true },
+            { type: "text", icon: "mdi mdi-help-circle", value: "Hướng dẫn", tooltip: "Chức năng:: Lưu tất cả các sản phẩm đã sửa." },
+        ]
+
+        // Toolbar initialization
+        promotionToolbar = new dhx.Toolbar(null, {})
+
+        // loading structure into Toolbar
+        promotionToolbar.data.parse(structure)
+
+        promotionToolbar.events.on("click", function (id, e) {
+            dhx.alert({ header: "Thông báo", text: "Chức năng chưa được hỗ trợ", buttonsAlignment: "center", })
+        })
+
+        /*  grid-------------------------------------------------------------------------------------- */
+        promotionGrid = new dhx.Grid(null, {
+            css: "dhx_demo-grid",
+            columns: [
+                { width: 70, id: "promotion_id", header: [{ text: "Mã KM", align: "center" }], align: "center", editable: false },
+                { width: 100, id: "promotion_type", header: [{ text: "Loại KM", align: "center" }], type: "text", align: "center" },
+                { width: 170, id: "promotion_code", header: [{ text: "Khuyến mãi", align: "center" }], type: "text", align: "center" },
+                { width: 100, id: "promotion_condition", header: [{ text: "Điều kiện", align: "center" }], type: "text", align: "center" },
+                { width: 100, id: "parameter", header: [{ text: "Tham số", align: "center" }], type: "text", align: "center" },
+
+                {
+                    id: "start_date", header: [{ text: "Từ ngày" }], type: "date", format: "%d-%m-%Y %H:%i:%s",
+                    editorConfig: {
+                        weekStart: "monday", weekNumbers: true, mode: "calendar", timePicker: true, timeFormat: 24, thisMonthOnly: false,
+                        mark: (date) => { if (date.getDay() === 5) return "highlight-date"; },
+                        // disabled dates
+                        disabledDates: (date) => {
+                            const disabled = { 2: true }
+                            return disabled[date.getDay()];
+                        },
+                    }
+                },
+                {
+                    id: "end_date", header: [{ text: "Đến ngày" }], type: "date", format: "%d-%m-%Y %H:%i:%s",
+                    editorConfig: {
+                        weekStart: "monday", weekNumbers: true, mode: "calendar", timePicker: true, timeFormat: 24, thisMonthOnly: false,
+                        mark: (date) => { if (date.getDay() === 5) return "highlight-date"; },
+                        // disabled dates
+                        disabledDates: (date) => {
+                            const disabled = { 2: true }
+                            return disabled[date.getDay()];
+                        },
+                    }
+                },
+                { width: 100, id: "calculate_by", header: [{ text: "Cách tính", align: "center" }], type: "text", align: "center" },
+                {
+                    width: 100, id: "status", header: [{ text: "Trạng thái" }], editorType: "combobox", editorConfig: {
+                        template: ({ value }) => getOptionsTemplate(value)
+                    },
+                    options: result.statusOptions,
+                    template: (value) => getOptionsTemplate(value),
+                    htmlEnable: true
+                },
+
+                // { width: 100, id: "status", header: [{ text: "Trạng thái", align: "center" }], type: "text", align: "center", editable: false },
+                { id: "description", header: [{ text: "Mô tả", align: "center" }], type: "text", align: "center" },
+                {
+                    width: 150, id: "action", gravity: 1.5, header: [{ text: "Actions", align: "center" }], htmlEnable: true, align: "center",
+                    template: function () {
+                        return "<span class='action-buttons'><a class='btn btn-warning md-edit-button'>Lưu</a><a class='btn btn-danger md-remove-button'>Xóa</a></span>";
+                    }
+                }
+            ],
+            editable: true,
+            autoWidth: true,
+            resizable: true,
+            selection: "row",
+            multiselection: true,
+            align: "center",
+            eventHandlers: {
+                onclick: {
+                    "md-remove-button": function (e, dataR) {
+                        console.log(`md data: ${JSON.stringify(dataR.row)}`);
+                        if (dataR.row.promotion_id == 'new') {
+                            dhx.alert({ header: "Thông báo", text: "Đây là dòng dữ liệu trống, vui lòng chọn lại", buttonsAlignment: "center", });
+                        } else {
+
+                            getAjaxData2(function (data) {
+
+                                var result = JSON.parse(data)
+                                var css = 'dhx_message--error'
+                                if (result.status) {
+                                    css = 'dhx_message--success'
+                                    promotionGrid.data.remove(dataR.row.id)
+                                }
+                                // creating DHTMLX Message 
+                                dhx.message({ node: "message_container", text: result.message, icon: "mdi mdi-delete-empty-outline", css: css, expire: 5000 })
+
+                            }, "deletePromotion", dataR.row)
+                        }
+
+                    },
+                    "md-edit-button": function (e, data) {
+
+                        console.log(`md data: ${JSON.stringify(data.row)}`);
+                        if (!data.row.promotion_type) {
+                            dhx.alert({ header: "Thông báo", text: "Dữ liệu: Loại KM không được trống", buttonsAlignment: "center", });
+                        } else if (!data.row.promotion_code) {
+                            dhx.alert({ header: "Thông báo", text: "Dữ liệu: Khuyến Mãi không được trống", buttonsAlignment: "center", });
+                        } else if (!data.row.parameter) {
+                            dhx.alert({ header: "Thông báo", text: "Dữ liệu: Tham Số không được trống", buttonsAlignment: "center", });
+                        } else if (!data.row.start_date) {
+                            dhx.alert({ header: "Thông báo", text: "Dữ liệu: Từ Ngày không được trống", buttonsAlignment: "center", });
+                        } else if (!data.row.end_date) {
+                            dhx.alert({ header: "Thông báo", text: "Dữ liệu: Đến Ngày không được trống", buttonsAlignment: "center", });
+                        } else if (!data.row.calculate_by) {
+                            dhx.alert({ header: "Thông báo", text: "Dữ liệu: Cách Tính không được trống", buttonsAlignment: "center", });
+                        } else {
+
+                            getAjaxData2(function (data) {
+
+                                var result = JSON.parse(data);
+                                let css = (result.status == true) ? 'dhx_message--success' : 'dhx_message--error';
+                                // creating DHTMLX Message 
+                                dhx.message({ node: "message_container", text: result.message, icon: "mdi mdi-square-edit-outline", css: css, expire: 5000 });
+
+                                if (result.status) {
+                                    promotion();
+                                }
+                                // // đợi 4s sau đó load lại trang
+                                // setTimeout(function () {
+                                //     location.reload();
+                                // }, 4000)
+                            }, "savePromotion", data.row);
+                        }
+
+                    },
+                },
+            },
+            data: result.data
+        });
+
+        promotionGrid.selection.enable();
+
+        promotionGrid.events.on("afterEditEnd", function (value, row, column) { });
+
+        /*  layout -------------------------------------------------------------------------------------- */
+        promotionLayout = new dhx.Layout(null, {
+            type: "line",
+            cols: [
+                {
+                    rows: [
+                        { id: "toolbar", height: "content" },
+                        { type: "space", rows: [{ id: "grid" }] }
+                    ],
+                },
+            ],
+        });
+
+        // attaching widgets to Layout cells
+        promotionLayout.getCell("toolbar").attach(promotionToolbar);
+        promotionLayout.getCell("grid").attach(promotionGrid);
+
+
+        promotionWindow.attach(promotionLayout);
+        promotionWindow.setFullScreen();
+        promotionWindow.show();
+
+    }, "promotion")
 
 }
 
@@ -1444,3 +1831,18 @@ $("#area").on("click", function () {
     area();
 });
 
+// table
+$("#table-order").on("click", function () {
+    tableOrder();
+});
+
+// food
+$("#food").on("click", function () {
+    food();
+});
+
+
+// promotion
+$("#promotion").on("click", function () {
+    promotion();
+});

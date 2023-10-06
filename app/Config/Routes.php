@@ -59,10 +59,25 @@ $routes->add('/deleteDetail', 'Home::deleteDetail');
 $routes->add('/printer', 'Home::printer');
 
 // master data
+// area
 $routes->add('/area', 'Home::area');
 $routes->add('/saveArea', 'Home::saveArea');
 $routes->add('/deleteArea', 'Home::deleteArea');
 
+// table
+$routes->add('/tableOrder', 'Home::tableOrder');
+$routes->add('/saveTableOrder', 'Home::saveTableOrder');
+$routes->add('/deleteTableOrder', 'Home::deleteTableOrder');
+
+// food
+$routes->add('/food', 'Home::food');
+$routes->add('/saveFood', 'Home::saveFood');
+$routes->add('/deleteFood', 'Home::deleteFood');
+
+// promotion
+$routes->add('/promotion', 'Home::promotion');
+$routes->add('/savePromotion', 'Home::savePromotion');
+$routes->add('/deletePromotion', 'Home::deletePromotion');
 
 
 // import

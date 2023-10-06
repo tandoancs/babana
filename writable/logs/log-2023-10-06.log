@@ -1,0 +1,16 @@
+CRITICAL - 2023-10-06 11:37:54 --> Undefined property: stdClass::$catalogy_id
+in APPPATH\Models\CatalogModel.php on line 120.
+ 1 APPPATH\Models\CatalogModel.php(120): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: stdClass::$catalogy_id', 'C:\\xampp\\htdocs\\babana\\app\\Models\\CatalogModel.php', 120)
+ 2 APPPATH\Controllers\Home.php(1402): App\Models\CatalogModel->isAlreadyExist([...])
+ 3 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->food()
+ 4 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 5 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-06 11:38:20 --> Undefined property: stdClass::$catalogy_id
+in APPPATH\Models\CatalogModel.php on line 120.
+ 1 APPPATH\Models\CatalogModel.php(120): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: stdClass::$catalogy_id', 'C:\\xampp\\htdocs\\babana\\app\\Models\\CatalogModel.php', 120)
+ 2 APPPATH\Controllers\Home.php(1402): App\Models\CatalogModel->isAlreadyExist([...])
+ 3 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->food()
+ 4 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 5 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()

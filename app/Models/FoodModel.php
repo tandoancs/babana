@@ -18,8 +18,8 @@ class FoodModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['food_id', 'food_name', 'description', 'status', 'catalogy_id' ];
-    protected $fields = 'food_id, food_name, description, status, catalogy_id';
+    protected $allowedFields = ['food_id', 'food_name', 'description', 'status', 'catalog_id' ];
+    protected $fields = 'food_id, food_name, description, status, catalog_id';
 
     // Validation
     protected $validationRules      = [];
@@ -59,12 +59,17 @@ class FoodModel extends Model
         return $this->builder->countAll();
     }
 
-    public function readAll($col = null) 
+    public function readAll($col = null, $order=null) 
     {
         // get: Lấy tất cả thông tin liên quan truy vấn database
         // getResult: trả về kết quả truy vấn
         if ($col != null) 
-            $this->builder->orderBy($col, 'desc');
+            if ($order != null) {
+                $this->builder->orderBy($col, $order);
+            } else {
+                $this->builder->orderBy($col, 'desc');
+            }
+            
         return $this->builder->select($this->fields)->get()->getResult();
     }
 
@@ -110,9 +115,9 @@ class FoodModel extends Model
 
     public function isAlreadyExist($where)
     {
-        $this->builder->selectCount('id');
+        $this->builder->selectCount('food_id');
         $this->builder->where($where);
-        return (($this->builder->get()->getResult()[0]->id) > 0) ? true : false;   
+        return (($this->builder->get()->getResult()[0]->food_id) > 0) ? true : false;   
     }
 
 
