@@ -42,12 +42,17 @@ class SizeUnitModel extends Model
         return $this->builder->countAll();
     }
 
-    public function readAll($col = null) 
+    public function readAll($col = null, $order=null) 
     {
         // get: Lấy tất cả thông tin liên quan truy vấn database
         // getResult: trả về kết quả truy vấn
         if ($col != null) 
-            $this->builder->orderBy($col, 'asc');
+            if ($order != null) {
+                $this->builder->orderBy($col, $order);
+            } else {
+                $this->builder->orderBy($col, 'desc');
+            }
+            
         return $this->builder->select($this->fields)->get()->getResult();
     }
 
@@ -92,9 +97,9 @@ class SizeUnitModel extends Model
 
     public function isAlreadyExist($where)
     {
-        $this->builder->selectCount('id');
+        $this->builder->selectCount('size_unit_code');
         $this->builder->where($where);
-        return (($this->builder->get()->getResult()[0]->id) > 0) ? true : false;   
+        return (($this->builder->get()->getResult()[0]->size_unit_code) > 0) ? true : false;   
     }
 
 

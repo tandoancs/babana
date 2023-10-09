@@ -79,6 +79,25 @@ $routes->add('/promotion', 'Home::promotion');
 $routes->add('/savePromotion', 'Home::savePromotion');
 $routes->add('/deletePromotion', 'Home::deletePromotion');
 
+// size
+$routes->add('/size', 'Home::size');
+$routes->add('/saveSize', 'Home::saveSize');
+$routes->add('/deleteSize', 'Home::deleteSize');
+
+// unit
+$routes->add('/unit', 'Home::unit');
+$routes->add('/saveUnit', 'Home::saveUnit');
+$routes->add('/deleteUnit', 'Home::deleteUnit');
+$routes->add('/sizeUnit', 'Home::sizeUnit');
+$routes->add('/updateUnitSizeAuto', 'Home::updateUnitSizeAuto');
+
+// transaction
+$routes->add('/transaction', 'Home::transaction');
+$routes->add('/saveTransaction', 'Home::saveTransaction');
+$routes->add('/deleteTransaction', 'Home::deleteTransaction');
+
+
+
 
 // import
 $routes->add('/imports', 'Home::imports');

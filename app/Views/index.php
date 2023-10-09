@@ -8,7 +8,7 @@
     <meta name="description" content="babana Trà sữa Mì cay">
     <meta name="author" content="Tan Doan">
     <meta name="keywords" content="babana Trà sữa Mì cay">
-    
+
 
     <!-- Title Page-->
     <title>Babana Admin</title>
@@ -48,7 +48,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/4.4.95/css/materialdesignicons.css?v=6.4.2" media="all" rel="stylesheet" type="text/css">
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@7.2.96/css/materialdesignicons.min.css" media="all" rel="stylesheet" type="text/css">
 
-    
+
 
 
 </head>
@@ -92,15 +92,24 @@
                                     <i class="fas fa-shopping-basket"></i>
                                     <span class="bot-line"></span>eCommerce</a>
                             </li>
-                            <li>
+                            <li class="has-sub">
                                 <a href="#">
-                                    <i class="fas fa-trophy"></i>
-                                    <span class="bot-line"></span>Features</a>
+                                    <i class="fas fa-chart-bar"></i><span class="bot-line"></span>Chức năng
+                                </a>
+                                <ul class="header3-sub-list list-unstyled">
+                                    <li>
+                                        <a href="#area" id="transaction">Quản lý Thu/Chi</a>
+                                    </li>
+                                    <li>
+                                        <a href="#table" id="reports">Báo cáo</a>
+                                    </li>
+                                </ul>
                             </li>
                             <li class="has-sub">
                                 <a href="#">
-                                    <i class="fas fa-copy"></i>
-                                    <span class="bot-line"></span>Chức năng</a>
+                                    <i class="fas fa-database"></i>
+                                    <span class="bot-line"></span>Quản lý dữ liệu
+                                </a>
                                 <ul class="header3-sub-list list-unstyled">
                                     <li>
                                         <a href="#area" id="area">Khu vực chổ ngồi</a>
@@ -109,7 +118,7 @@
                                         <a href="#table" id="table-order">Bàn</a>
                                     </li>
                                     <li>
-                                        <a href="#food" id="food">Đồ ăn/Thức uống</a>
+                                        <a href="#food" id="food">Sản phẩm</a>
                                     </li>
 
 
@@ -117,13 +126,13 @@
                                         <a href="#" id="promotion">Khuyến mãi</a>
                                     </li>
                                     <li>
-                                        <a href="#">Kích thước (Size)</a>
+                                        <a href="#" id="size">Kích cỡ (Size)</a>
                                     </li>
                                     <li>
-                                        <a href="#">Đơn vị sản phẩm</a>
+                                        <a href="#" id="unit">Đơn vị sản phẩm</a>
                                     </li>
                                     <li>
-                                        <a href="#">Kích thước + Đơn vị</a>
+                                        <a href="#" id="size-unit">Kích thước + Đơn vị</a>
                                     </li>
                                 </ul>
                             </li>
@@ -300,8 +309,8 @@
                 <div class="container-fluid">
                     <div class="header-mobile-inner">
                         <a class="logo" href="frontend/index.html">
-                        <img src="frontend/images/icon/logo-icon.png" width="90px" alt="Babana" />
-                        <img src="frontend/images/icon/logo-text.png" width="190px" alt="Babana" style="position: relative; left: -40px;" />
+                            <img src="frontend/images/icon/logo-icon.png" width="90px" alt="Babana" />
+                            <img src="frontend/images/icon/logo-text.png" width="190px" alt="Babana" style="position: relative; left: -40px;" />
                         </a>
                         <button class="hamburger hamburger--slider" type="button">
                             <span class="hamburger-box">
@@ -579,7 +588,7 @@
 
     <!-- Jquery JS-->
     <!-- <script src="frontend/vendor/jquery-3.2.1.min.js"></script> -->
-    <script src="https://code.jquery.com/jquery-3.7.1.js" ></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 
     <!-- Bootstrap JS-->
     <script src="frontend/vendor/bootstrap-4.1/popper.min.js"></script>

@@ -5,21 +5,21 @@ namespace App\Models;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Model;
 
-class UnitModel extends Model
+class TransModel extends Model
 {
     protected $db;
-    protected $table      = 'unit';
+    protected $table      = 'trans';
     protected $builder;
 
-    protected $primaryKey = 'unit_id';
+    protected $primaryKey = 'trans_id';
 
     protected $useAutoIncrement = true;
 
     protected $returnType     = 'array';
     protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['unit_id', 'unit_name', 'description'];
-    protected $fields = 'unit_id, unit_name, description';
+    protected $allowedFields = ['trans_id', 'trans_type', 'trans_name', 'status', 'description'];
+    protected $fields = 'trans_id, trans_type, trans_name, status, description';
 
     private $_insertBatch;
 
@@ -97,9 +97,9 @@ class UnitModel extends Model
 
     public function isAlreadyExist($where)
     {
-        $this->builder->selectCount('unit_id');
+        $this->builder->selectCount('trans_id');
         $this->builder->where($where);
-        return (($this->builder->get()->getResult()[0]->unit_id) > 0) ? true : false;   
+        return (($this->builder->get()->getResult()[0]->trans_id) > 0) ? true : false;   
     }
 
 

@@ -15,7 +15,9 @@ use App\Models\FoodModel;
 use App\Models\SizeUnitModel;
 use App\Models\FoodSizeModel;
 use App\Models\CatalogModel;
-
+use App\Models\SizeModel;
+use App\Models\UnitModel;
+use App\Models\TransModel;
 
 // use PhpOffice\PhpSpreadsheet\Spreadsheet;
 // use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -1596,9 +1598,9 @@ class Home extends BaseController
 
             $current = date('Y-m-d H:i:s');
             $promotion_status = ($current >= $start_date && $current <= $end_date) ? 'Bật' : 'Tắt';
-                
+
             $promotion_status = $data['status'];
-            if (!empty($promotion_status) ) {
+            if (!empty($promotion_status)) {
                 $promotion_status = ($promotion_status == "Bật") ? 1 : 0;
             } else {
                 $promotion_status = 1;
@@ -1679,6 +1681,450 @@ class Home extends BaseController
 
         return json_encode(array('status' => $status, 'message' => $message), JSON_UNESCAPED_UNICODE);
     }
+
+
+    // promotion --------------------------------------------------------------------------------------------------------------------
+    public function size()
+    {
+        $data = [];
+        $status = false;
+        $message = 'Chưa lấy được thông tin xử lý';
+
+        $db = db_connect();
+        $SizeModel = new SizeModel($db);
+
+        $results = $SizeModel->readAll('size', 'asc');
+        if (!empty($results)) {
+            foreach ($results as $item) {
+                $data[] = [
+                    'size' => $item->size,
+                    'description' => $item->description
+                ];
+            }
+        }
+
+        // thêm 5 dòng trống để User thêm area mới
+        for ($i = 0; $i < 5; $i++) {
+            $data[] = [
+                'size' => '',
+                'description' => ''
+            ];
+        }
+
+        $db->close();
+
+        return json_encode(['status' => $status, 'message' => $message, 'data' => $data], JSON_UNESCAPED_UNICODE);
+    }
+
+    public function saveSize()
+    {
+        $result = false;
+        $status = false;
+        $message = 'Chưa lấy được thông tin xử lý';
+
+        $request = \Config\Services::request();
+        if ($request->is('post')) {
+
+            $data = $this->request->getVar('data');
+            $data = json_decode($data, true);
+
+            // open connection and models
+            $db = db_connect();
+            $SizeModel = new SizeModel($db);
+
+            $size = $data['size'];
+            $saveData = [
+                'size' => $size,
+                'description' => $data['description']
+            ];
+
+            if (!empty($size)) {
+                $where = ['size' => $size];
+                if ($SizeModel->isAlreadyExist($where)) {
+                    $sub = "(Update)";
+                    unset($saveData['size']);
+                    $result = $SizeModel->edit($where, $saveData);
+                } else {
+                    $sub = "(Insert)";
+                    $result = $SizeModel->create($saveData);
+                }
+
+                if (!$result) {
+                    $message = 'Có lỗi khi lưu dữ liệu' . $sub;
+                } else {
+                    $status = true;
+                    $message = 'Cập nhật dữ liệu thành công';
+                }
+            }
+
+            // close connection
+            $db->close();
+        }
+
+        return json_encode(array('status' => $status, 'message' => $message), JSON_UNESCAPED_UNICODE);
+    }
+
+    public function deleteSize()
+    {
+        $result = false;
+        $status = false;
+        $message = 'Chưa lấy được thông tin xử lý';
+
+        $request = \Config\Services::request();
+        if ($request->is('post')) {
+
+            $data = $this->request->getVar('data');
+            $data = json_decode($data, true);
+
+            // open connection and models
+            $db = db_connect();
+            $SizeModel = new SizeModel($db);
+
+            $size = $data['size'];
+            $where = ['size' => $size];
+            if ($SizeModel->isAlreadyExist($where)) {
+                $result = $SizeModel->del($where);
+                if (!$result) {
+                    $message = 'Có lỗi khi xóa dữ liệu';
+                } else {
+                    $status = true;
+                    $message = 'Xóa dữ liệu thành công';
+                }
+            }
+
+            // close connection
+            $db->close();
+        }
+
+        return json_encode(array('status' => $status, 'message' => $message), JSON_UNESCAPED_UNICODE);
+    }
+
+    // unit --------------------------------------------------------------------------------------------------------------------
+    public function unit()
+    {
+        $data = [];
+        $status = false;
+        $message = 'Chưa lấy được thông tin xử lý';
+
+        $db = db_connect();
+        $UnitModel = new UnitModel($db);
+
+        $results = $UnitModel->readAll('unit_id', 'asc');
+        if (!empty($results)) {
+            foreach ($results as $item) {
+                $data[] = [
+                    'unit_id' => $item->unit_id,
+                    'unit_name' => $item->unit_name,
+                    'description' => $item->description
+                ];
+            }
+        }
+
+        // thêm 5 dòng trống để User thêm area mới
+        for ($i = 0; $i < 5; $i++) {
+            $data[] = [
+                'unit_id' => 'new',
+                'unit_name' => '',
+                'description' => ''
+            ];
+        }
+
+        $db->close();
+
+        return json_encode(['status' => $status, 'message' => $message, 'data' => $data], JSON_UNESCAPED_UNICODE);
+    }
+
+    public function saveUnit()
+    {
+        $result = false;
+        $status = false;
+        $message = 'Chưa lấy được thông tin xử lý';
+
+        $request = \Config\Services::request();
+        if ($request->is('post')) {
+
+            $data = $this->request->getVar('data');
+            $data = json_decode($data, true);
+
+            // open connection and models
+            $db = db_connect();
+            $UnitModel = new UnitModel($db);
+
+            $unit_id = $data['unit_id'];
+
+            $saveData = [
+                'unit_name' => $data['unit_name'],
+                'description' => $data['description']
+            ];
+
+            if ($unit_id != 'new') {
+                $where = ['unit_id' => $unit_id];
+                if ($UnitModel->isAlreadyExist($where)) {
+                    $sub = "(Update)";
+                    $result = $UnitModel->edit($where, $saveData);
+                }
+            } else {
+                $sub = "(Insert)";
+                $result = $UnitModel->create($saveData);
+            }
+
+            if (!$result) {
+                $message = 'Có lỗi khi lưu dữ liệu' . $sub;
+            } else {
+                $status = true;
+                $message = 'Cập nhật dữ liệu thành công';
+            }
+
+            // close connection
+            $db->close();
+        }
+
+        return json_encode(array('status' => $status, 'message' => $message), JSON_UNESCAPED_UNICODE);
+    }
+
+    public function deleteUnit()
+    {
+        $result = false;
+        $status = false;
+        $message = 'Chưa lấy được thông tin xử lý';
+
+        $request = \Config\Services::request();
+        if ($request->is('post')) {
+
+            $data = $this->request->getVar('data');
+            $data = json_decode($data, true);
+
+            // open connection and models
+            $db = db_connect();
+            $UnitModel = new UnitModel($db);
+
+            $unit_id = $data['unit_id'];
+            $where = ['unit_id' => $unit_id];
+            if ($UnitModel->isAlreadyExist($where)) {
+                $result = $UnitModel->del($where);
+                if (!$result) {
+                    $message = 'Có lỗi khi xóa dữ liệu';
+                } else {
+                    $status = true;
+                    $message = 'Xóa dữ liệu thành công';
+                }
+            }
+
+            // close connection
+            $db->close();
+        }
+
+        return json_encode(array('status' => $status, 'message' => $message), JSON_UNESCAPED_UNICODE);
+    }
+
+    // update size unit auto  --------------------------------------------------------------------------------------------------------------
+    public function updateUnitSizeAuto()
+    {
+        $data = [];
+
+        $db = db_connect();
+        $SizeModel = new SizeModel($db);
+        $UnitModel = new UnitModel($db);
+        $SizeUnitModel = new SizeUnitModel($db);
+
+        $sizeData = $SizeModel->readAll('size', 'asc');
+        $unitData = $UnitModel->readAll('unit_id', 'asc');
+        if (!empty($sizeData) && !empty($unitData)) {
+            foreach ($sizeData as $sizeItem) {
+                $size = $sizeItem->size;
+                foreach ($unitData as $unitItem) {
+
+                    $unit_id = $unitItem->unit_id;
+                    $size_unit_code = $unit_id . ":" . $size;
+                    $unit_name = $unitItem->unit_name;
+                    $data = [
+                        'size' => $size,
+                        'unit_id' => $unit_id,
+                        'size_unit_code' => $size_unit_code,
+                        'description' => $unit_name . " size " . $size
+                    ];
+
+                    // save size unit tăble
+                    $where = ['size_unit_code' => $size_unit_code];
+                    if ($SizeUnitModel->isAlreadyExist($where)) {
+                        unset($data['size_unit_code']);
+                        $result = $SizeUnitModel->edit($where, $data);
+                    } else {
+                        $result = $SizeUnitModel->create($data);
+                    }
+
+                    if (!$result)
+                        return false;
+                }
+            }
+        }
+
+
+        $db->close();
+
+        return true;
+    }
+
+    // unit --------------------------------------------------------------------------------------------------------------------
+    public function sizeUnit()
+    {
+        $data = [];
+        $status = false;
+        $message = 'Chưa lấy được thông tin xử lý';
+
+        $db = db_connect();
+        $SizeUnitModel = new SizeUnitModel($db);
+        $UnitModel = new UnitModel($db);
+
+        // update auto size unit
+        if ($this->updateUnitSizeAuto()) {
+            $results = $SizeUnitModel->readAll('size_unit_code', 'asc');
+            if (!empty($results)) {
+                foreach ($results as $item) {
+
+                    $unit_id = $item->unit_id;
+                    $unitItem = $UnitModel->readItem(['unit_id' => $unit_id]);
+
+                    $unit = !empty($unitItem) ? $unit_id . "__" . $unitItem->unit_name : '';
+                    $data[] = [
+                        'unit' => $unit,
+                        'size' => $item->size,
+                        'size_unit_code' => $item->size_unit_code,
+                        'description' => $item->description
+                    ];
+                }
+            }
+        }
+
+
+
+        $db->close();
+
+        return json_encode(['status' => $status, 'message' => $message, 'data' => $data], JSON_UNESCAPED_UNICODE);
+    }
+
+    // unit --------------------------------------------------------------------------------------------------------------------
+    public function transaction()
+    {
+        $data = [];
+        $status = false;
+        $message = 'Chưa lấy được thông tin xử lý';
+
+        $db = db_connect();
+        $TransModel = new TransModel($db);
+
+        $results = $TransModel->readAll('trans_id', 'asc');
+        if (!empty($results)) {
+            foreach ($results as $item) {
+                $data[] = [
+                    'trans_id' => $item->trans_id,
+                    'trans_type' => $item->trans_type,
+                    'trans_name' => $item->trans_name,
+                    'trans_form' => $item->trans_form,
+                    'status' => $item->status ? 'Xong' : 'Hủy',
+                    'description' => $item->description
+                ];
+            }
+        }
+
+        // thêm 5 dòng trống để User thêm area mới
+        for ($i = 0; $i < 5; $i++) {
+            $data[] = [
+                'trans_id' => 'new',
+                'trans_type' => '',
+                'trans_name' => '',
+                'trans_form' => '1__Tiền mặt',
+                'status' => 'Xong',
+                'description' => ''
+            ];
+        }
+
+        $db->close();
+
+        // loại giao dịch
+        $transTypeOptions[] = 'Thu';
+        $transTypeOptions[] = 'Chi';
+
+        // hình thức giao dịch
+        $transFormOptions[] = '1__Tiền mặt';
+        $transFormOptions[] = '2__Chuyển khoản';
+        $transFormOptions[] = '3__Thanh toán Momo';
+
+        // trạng thái
+        $transStatusOptions[] = 'Xong';
+        $transStatusOptions[] = 'Hủy';
+
+        return json_encode(['status' => $status, 'message' => $message, 'data' => $data, 'transTypeOptions' => $transTypeOptions, 'transFormOptions' => $transFormOptions, 'transStatusOptions' => $transStatusOptions], JSON_UNESCAPED_UNICODE);
+    }
+
+    /// dang lam 20231008
+    public function saveTransaction()
+    {
+        $result = false;
+        $status = false;
+        $message = 'Chưa lấy được thông tin xử lý';
+
+        $request = \Config\Services::request();
+        if ($request->is('post')) {
+
+            $data = $this->request->getVar('data');
+            $data = json_decode($data, true);
+
+            // open connection and models
+            $db = db_connect();
+            $UnitModel = new UnitModel($db);
+
+            $trans_id = $data['trans_id'];
+
+            $saveData = [
+                'unit_name' => $data['unit_name'],
+                'description' => $data['description']
+            ];
+
+            if ($trans_id != 'new') {
+                $where = ['trans_id' => $trans_id];
+                if ($UnitModel->isAlreadyExist($where)) {
+                    $sub = "(Update)";
+                    $result = $UnitModel->edit($where, $saveData);
+                }
+            } else {
+                $sub = "(Insert)";
+                $result = $UnitModel->create($saveData);
+            }
+
+            if (!$result) {
+                $message = 'Có lỗi khi lưu dữ liệu' . $sub;
+            } else {
+                $status = true;
+                $message = 'Cập nhật dữ liệu thành công';
+            }
+
+            // close connection
+            $db->close();
+        }
+
+        return json_encode(array('status' => $status, 'message' => $message), JSON_UNESCAPED_UNICODE);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

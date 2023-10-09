@@ -1,0 +1,44 @@
+CRITICAL - 2023-10-08 15:03:50 --> Cannot use object of type stdClass as array
+in APPPATH\Controllers\Home.php on line 1983.
+ 1 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->sizeUnit()
+ 2 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 3 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-08 15:04:09 --> Cannot use object of type stdClass as array
+in APPPATH\Controllers\Home.php on line 1983.
+ 1 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->sizeUnit()
+ 2 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 3 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-08 15:05:34 --> Call to undefined method App\Models\SizeUnitModel::isAlreadyExist2
+in SYSTEMPATH\Model.php on line 838.
+ 1 APPPATH\Controllers\Home.php(1949): CodeIgniter\Model->__call('isAlreadyExist2', [...])
+ 2 APPPATH\Controllers\Home.php(1980): App\Controllers\Home->updateUnitSizeAuto()
+ 3 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->sizeUnit()
+ 4 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 5 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-08 15:06:48 --> Call to undefined method App\Models\SizeUnitModel::isAlreadyExist2
+in SYSTEMPATH\Model.php on line 838.
+ 1 APPPATH\Controllers\Home.php(1949): CodeIgniter\Model->__call('isAlreadyExist2', [...])
+ 2 APPPATH\Controllers\Home.php(1980): App\Controllers\Home->updateUnitSizeAuto()
+ 3 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->sizeUnit()
+ 4 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 5 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-08 15:07:21 --> Call to undefined method App\Models\SizeUnitModel::isAlreadyExist2
+in SYSTEMPATH\Model.php on line 838.
+ 1 APPPATH\Controllers\Home.php(1949): CodeIgniter\Model->__call('isAlreadyExist2', [...])
+ 2 APPPATH\Controllers\Home.php(1980): App\Controllers\Home->updateUnitSizeAuto()
+ 3 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->sizeUnit()
+ 4 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 5 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-08 15:07:31 --> Call to undefined method App\Models\SizeUnitModel::isAlreadyExist2
+in SYSTEMPATH\Model.php on line 838.
+ 1 APPPATH\Controllers\Home.php(1949): CodeIgniter\Model->__call('isAlreadyExist2', [...])
+ 2 APPPATH\Controllers\Home.php(1980): App\Controllers\Home->updateUnitSizeAuto()
+ 3 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->sizeUnit()
+ 4 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 5 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
