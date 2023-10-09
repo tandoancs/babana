@@ -96,6 +96,10 @@ $routes->add('/transaction', 'Home::transaction');
 $routes->add('/saveTransaction', 'Home::saveTransaction');
 $routes->add('/deleteTransaction', 'Home::deleteTransaction');
 
+// reports
+$routes->add('/reports', 'Home::reports');
+
+
 
 
 

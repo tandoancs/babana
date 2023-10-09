@@ -233,20 +233,15 @@ function orderGrid() {
 
                 // console.log('Đang cập nhật dữ liệu chung ... ');
                 var money_received = row.money_received
-
-
-
                 if (money_received) {
-
                     if (!isNumber(money_received)) {
                         dhx.alert({ header: "Cập nhậ Đơn hàng", text: "Vui nhập nhập kiểu số", buttonsAlignment: "center", buttons: ["Đồng ý"] });
                         // dhx.alert({ header: "Cập nhậ Đơn hàng", text: "Vui nhập nhập kiểu số", buttonsAlignment: "center", buttons: ["Đồng ý"] });
                         row.money_refund = 0
                     } else {
-
                         let money_received_check = row.money_received
                         // trường hợp nhập số tiền đơn vị là 1000 đồng
-                        if (money_received_check.toString().length == 2 || money_received_check.toString().length == 3) {
+                        if (money_received_check.toString().length >= 1 && money_received_check.toString().length <= 3) {
                             money_received = money_received * 1000
                             row.money_received = money_received
                         }
@@ -267,13 +262,9 @@ function orderGrid() {
 
                             // row.money_refund = 0
                         } else {
-
-
                             row.money_refund = money_received - row.total
                         }
                     }
-
-
                 }
 
 
@@ -1161,6 +1152,10 @@ var areaWinddow, tableWindow, foodWindow, promotionWindow, sizeWindow, unitWindo
 var areaToolbar, tableToolbar, foodToolbar, promotionToolbar, sizeToolbar, unitToolbar, sizeUnitToolbar, transToolbar
 var areaGrid, tableGrid, foodGrid, promotionGrid, sizeGrid, unitGrid, sizeUnitGrid, transGrid
 var areaLayout, tableLayout, foodLayout, promotionLayout, sizeLayout, unitLayout, sizeUnitLayout, transLayout
+var reportsWindow
+var reportsGrid
+var reportsToolbar
+var reportsLayout
 
 function area() {
 
@@ -2151,15 +2146,15 @@ function transaction() {
                     template: (value) => getOptionsTemplate(value),
                     htmlEnable: true
                 },
-                // { id: "trans_name", header: [{ text: "Tên Giao dịch", align: "center" }], type: "text", align: "center" },
-                {
-                    width: 200, id: "trans_name", header: [{ text: "Tên Giao dịch" }], type: "text", editorType: "combobox", editorConfig: {
-                        template: ({ value }) => getOptionsTemplate(value)
-                    },
-                    options: result.transNameOptions,
-                    template: (value) => getOptionsTemplate(value),
-                    htmlEnable: true
-                },
+                { id: "trans_name", header: [{ text: "Tên Giao dịch", align: "center" }], type: "text", align: "center" },
+                // // {
+                // //     width: 200, id: "trans_name", header: [{ text: "Tên Giao dịch" }], type: "text", editorType: "combobox", editorConfig: {
+                // //         template: ({ value }) => getOptionsTemplate(value)
+                // //     },
+                // //     options: result.transNameOptions,
+                // //     template: (value) => getOptionsTemplate(value),
+                // //     htmlEnable: true
+                // // },
                 {
                     width: 200, id: "trans_form", header: [{ text: "Hình thức thanh toán" }], editorType: "combobox", editorConfig: {
                         template: ({ value }) => getOptionsTemplate(value)
@@ -2228,7 +2223,7 @@ function transaction() {
                             dhx.alert({ header: "Thông báo", text: "Dữ liệu: Số Tiền không được trống", buttonsAlignment: "center", });
                         } else {
 
-                            let trans_form = "Hình Thức Giao Dịch đang chọn là " + data.row.trans_form; 
+                            let trans_form = "Hình Thức Giao Dịch đang chọn là " + data.row.trans_form;
                             dhx.message({ node: "message_container", text: trans_form, icon: "mdi mdi-square-edit-outline", expire: 3000 });
 
                             getAjaxData2(function (data) {
@@ -2239,7 +2234,7 @@ function transaction() {
                                 dhx.message({ node: "message_container", text: result.message, icon: "mdi mdi-square-edit-outline", css: css, expire: 5000 });
 
                                 if (result.status)
-                                transaction();
+                                    transaction();
                                 // // đợi 4s sau đó load lại trang
                                 // setTimeout(function () {
                                 //     location.reload();
@@ -2255,7 +2250,28 @@ function transaction() {
 
         transGrid.selection.enable();
 
-        transGrid.events.on("afterEditEnd", function (value, row, column) { });
+        // edit events
+        transGrid.events.on("afterEditEnd", function (value, row, column) {
+
+            // console.log('Đang cập nhật dữ liệu chung ... ');
+            var trans_money = row.trans_money
+            if (trans_money) {
+                if (!isNumber(trans_money)) {
+                    dhx.alert({ header: "Cập nhậ Đơn hàng", text: "Vui nhập Số tiền kiểu số", buttonsAlignment: "center", buttons: ["Đồng ý"] });
+                    // dhx.alert({ header: "Cập nhậ Đơn hàng", text: "Vui nhập nhập kiểu số", buttonsAlignment: "center", buttons: ["Đồng ý"] });
+                    row.trans_money = 0
+                } else {
+                    // trường hợp nhập số tiền đơn vị là 1000 đồng
+                    if (trans_money.toString().length >= 1 && trans_money.toString().length <= 3) {
+                        trans_money = trans_money * 1000
+                        row.trans_money = trans_money
+                    }
+
+                }
+            }
+
+
+        });
 
         /*  layout -------------------------------------------------------------------------------------- */
         transLayout = new dhx.Layout(null, {
@@ -2280,6 +2296,72 @@ function transaction() {
         transWindow.show();
 
     }, "transaction")
+
+}
+
+
+
+function reports() {
+
+    getAjaxData2(function (data) {
+
+        var result = JSON.parse(data)
+
+        /*  window -------------------------------------------------------------------------------------- */
+        reportsWindow = new dhx.Window({ width: 1548, height: 620, closable: true, movable: true, modal: true, title: "Báo cáo", })
+
+        /*  toolbar-------------------------------------------------------------------------------------- */
+        var structure = [
+            { type: "button", view: "flat", color: "primary", circle: true, icon: "mdi mdi-menu" },
+            { id: "dashboard", value: "Dashboard", icon: "mdi mdi-view-dashboard", group: "page", twoState: true, active: true },
+            { type: "spacer" },
+            { id: "detail-save", type: "button", circle: true, value: "Lưu tất cả", size: "small", icon: "mdi mdi-content-save-all", full: true },
+            { id: "settings2", icon: "mdi mdi-cog", type: "button", view: "link", color: "secondary", circle: true },
+            { type: "text", icon: "mdi mdi-help-circle", value: "Hướng dẫn", tooltip: "Chức năng:: Lưu tất cả các sản phẩm đã sửa." },
+        ]
+
+        // Toolbar initialization
+        reportsToolbar = new dhx.Toolbar(null, {})
+
+        // loading structure into Toolbar
+        reportsToolbar.data.parse(structure)
+
+        reportsToolbar.events.on("click", function (id, e) {
+            dhx.alert({ header: "Thông báo", text: "Chức năng chưa được hỗ trợ", buttonsAlignment: "center", })
+        })
+
+        /*  html -------------------------------------------------------------------------------------- */
+        var html = result.html
+
+        /*  layout -------------------------------------------------------------------------------------- */
+        reportsLayout = new dhx.Layout(null, {
+            type: "line",
+            rows: [
+                { id: "toolbar", html: "Header", height: "60px" },
+                { id: "items", html: "Items", height: "270px" },
+                {
+                    cols: [
+                        { id: "food_chart", html: "Chart 1"},
+                        // { id: "bestsales", html: "Chart 2" },
+                        { id: "compare", html: "Chart 3", width: "500px" },
+                    ]
+                },
+
+            ]
+        });
+
+        // attaching widgets to Layout cells
+        reportsLayout.getCell("toolbar").attach(reportsToolbar);
+        // reportsLayout.getCell("grid").attach(html);
+        // const html = "<p>Hello world</p>";
+        reportsLayout.getCell("items").attachHTML(html);
+
+
+        reportsWindow.attach(reportsLayout);
+        reportsWindow.setFullScreen();
+        reportsWindow.show();
+
+    }, "reports")
 
 }
 
@@ -2392,4 +2474,9 @@ $("#size-unit").on("click", function () {
 // money
 $("#transaction").on("click", function () {
     transaction();
+});
+
+// reports
+$("#reports").on("click", function () {
+    reports();
 });

@@ -385,10 +385,11 @@ CREATE TABLE `trans` (
   `trans_type` varchar(55) DEFAULT NULL,
   `trans_name` varchar(55) DEFAULT NULL,
   `trans_form` varchar(85) DEFAULT NULL,
+  `money` int DEFAULT NULL,
   `status` int DEFAULT NULL,
   `description` varchar(155) DEFAULT NULL,
   PRIMARY KEY (`trans_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -397,6 +398,7 @@ CREATE TABLE `trans` (
 
 LOCK TABLES `trans` WRITE;
 /*!40000 ALTER TABLE `trans` DISABLE KEYS */;
+INSERT INTO `trans` VALUES (1,'Thu','Cà phê bịch','1__Tiền mặt',100000,0,''),(2,'Chi','Tiền mua thịt','1__Tiền mặt',230000,0,'');
 /*!40000 ALTER TABLE `trans` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -434,4 +436,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-09  8:33:13
+-- Dump completed on 2023-10-09 20:44:23
