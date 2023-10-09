@@ -2116,7 +2116,7 @@ function transaction() {
         var result = JSON.parse(data)
 
         /*  window -------------------------------------------------------------------------------------- */
-        transWindow = new dhx.Window({ width: 1548, height: 620, closable: true, movable: true, modal: true, title: "Khuyến mãi", })
+        transWindow = new dhx.Window({ width: 1548, height: 620, closable: true, movable: true, modal: true, title: "Giao dịch", })
 
         /*  toolbar-------------------------------------------------------------------------------------- */
         var structure = [
@@ -2151,7 +2151,15 @@ function transaction() {
                     template: (value) => getOptionsTemplate(value),
                     htmlEnable: true
                 },
-                { id: "trans_name", header: [{ text: "Tên Giao dịch", align: "center" }], type: "text", align: "center" },
+                // { id: "trans_name", header: [{ text: "Tên Giao dịch", align: "center" }], type: "text", align: "center" },
+                {
+                    width: 200, id: "trans_name", header: [{ text: "Tên Giao dịch" }], type: "text", editorType: "combobox", editorConfig: {
+                        template: ({ value }) => getOptionsTemplate(value)
+                    },
+                    options: result.transNameOptions,
+                    template: (value) => getOptionsTemplate(value),
+                    htmlEnable: true
+                },
                 {
                     width: 200, id: "trans_form", header: [{ text: "Hình thức thanh toán" }], editorType: "combobox", editorConfig: {
                         template: ({ value }) => getOptionsTemplate(value)
@@ -2160,6 +2168,7 @@ function transaction() {
                     template: (value) => getOptionsTemplate(value),
                     htmlEnable: true
                 },
+                { id: "trans_money", header: [{ text: "Số tiền", align: "center" }], type: "number", format: "#,#", align: "center" },
                 {
                     width: 120, id: "status", header: [{ text: "Trạng thái" }], editorType: "combobox", editorConfig: {
                         template: ({ value }) => getOptionsTemplate(value)
@@ -2215,12 +2224,12 @@ function transaction() {
                             dhx.alert({ header: "Thông báo", text: "Dữ liệu: Tên Giao Dịch không được trống", buttonsAlignment: "center", });
                         } else if (!data.row.trans_form) {
                             dhx.alert({ header: "Thông báo", text: "Dữ liệu: Hình Thức Thanh Toán không được trống", buttonsAlignment: "center", });
-                        } else if (!data.row.description) {
-                            dhx.alert({ header: "Thông báo", text: "Dữ liệu: Mô Tả không được trống", buttonsAlignment: "center", });
+                        } else if (!data.row.trans_money) {
+                            dhx.alert({ header: "Thông báo", text: "Dữ liệu: Số Tiền không được trống", buttonsAlignment: "center", });
                         } else {
 
                             let trans_form = "Hình Thức Giao Dịch đang chọn là " + data.row.trans_form; 
-                            dhx.message({ node: "message_container", text: trans_form, icon: "mdi mdi-square-edit-outline", css: css, expire: 3000 });
+                            dhx.message({ node: "message_container", text: trans_form, icon: "mdi mdi-square-edit-outline", expire: 3000 });
 
                             getAjaxData2(function (data) {
 

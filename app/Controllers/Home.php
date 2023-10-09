@@ -2009,6 +2009,7 @@ class Home extends BaseController
         $data = [];
         $status = false;
         $message = 'Chưa lấy được thông tin xử lý';
+        $transNameOptions = [];
 
         $db = db_connect();
         $TransModel = new TransModel($db);
@@ -2021,6 +2022,7 @@ class Home extends BaseController
                     'trans_type' => $item->trans_type,
                     'trans_name' => $item->trans_name,
                     'trans_form' => $item->trans_form,
+                    'trans_money' => $item->money,
                     'status' => $item->status ? 'Xong' : 'Hủy',
                     'description' => $item->description
                 ];
@@ -2034,6 +2036,7 @@ class Home extends BaseController
                 'trans_type' => '',
                 'trans_name' => '',
                 'trans_form' => '1__Tiền mặt',
+                'trans_money' => '',
                 'status' => 'Xong',
                 'description' => ''
             ];
@@ -2054,7 +2057,13 @@ class Home extends BaseController
         $transStatusOptions[] = 'Xong';
         $transStatusOptions[] = 'Hủy';
 
-        return json_encode(['status' => $status, 'message' => $message, 'data' => $data, 'transTypeOptions' => $transTypeOptions, 'transFormOptions' => $transFormOptions, 'transStatusOptions' => $transStatusOptions], JSON_UNESCAPED_UNICODE);
+        //  trans name options
+        $transNameData = $TransModel->readDistince('trans_name', 'asc'); 
+        foreach ($transNameData as $item) {
+            $transNameOptions[] = $item->trans_name;
+        }
+
+        return json_encode(['status' => $status, 'message' => $message, 'data' => $data, 'transTypeOptions' => $transTypeOptions, 'transFormOptions' => $transFormOptions, 'transStatusOptions' => $transStatusOptions, 'transNameOptions' => $transNameOptions], JSON_UNESCAPED_UNICODE);
     }
 
     /// dang lam 20231008
@@ -2072,24 +2081,28 @@ class Home extends BaseController
 
             // open connection and models
             $db = db_connect();
-            $UnitModel = new UnitModel($db);
+            $TransModel = new TransModel($db);
 
             $trans_id = $data['trans_id'];
 
             $saveData = [
-                'unit_name' => $data['unit_name'],
+                'trans_type' => $data['trans_type'],
+                'trans_name' => $data['trans_name'],
+                'trans_form' => $data['trans_form'],
+                'money' => $data['trans_money'],
+                'status' => $data['status'],
                 'description' => $data['description']
             ];
 
             if ($trans_id != 'new') {
                 $where = ['trans_id' => $trans_id];
-                if ($UnitModel->isAlreadyExist($where)) {
+                if ($TransModel->isAlreadyExist($where)) {
                     $sub = "(Update)";
-                    $result = $UnitModel->edit($where, $saveData);
+                    $result = $TransModel->edit($where, $saveData);
                 }
             } else {
                 $sub = "(Insert)";
-                $result = $UnitModel->create($saveData);
+                $result = $TransModel->create($saveData);
             }
 
             if (!$result) {
@@ -2097,6 +2110,41 @@ class Home extends BaseController
             } else {
                 $status = true;
                 $message = 'Cập nhật dữ liệu thành công';
+            }
+
+            // close connection
+            $db->close();
+        }
+
+        return json_encode(array('status' => $status, 'message' => $message), JSON_UNESCAPED_UNICODE);
+    }
+
+    public function deleteTransaction()
+    {
+        $result = false;
+        $status = false;
+        $message = 'Chưa lấy được thông tin xử lý';
+
+        $request = \Config\Services::request();
+        if ($request->is('post')) {
+
+            $data = $this->request->getVar('data');
+            $data = json_decode($data, true);
+
+            // open connection and models
+            $db = db_connect();
+            $TransModel = new TransModel($db);
+
+            $trans_id = $data['trans_id'];
+            $where = ['trans_id' => $trans_id];
+            if ($TransModel->isAlreadyExist($where)) {
+                $result = $TransModel->del($where);
+                if (!$result) {
+                    $message = 'Có lỗi khi xóa dữ liệu';
+                } else {
+                    $status = true;
+                    $message = 'Xóa dữ liệu thành công';
+                }
             }
 
             // close connection

@@ -1,0 +1,39 @@
+CRITICAL - 2023-10-09 10:59:57 --> Undefined property: stdClass::$trans_form
+in APPPATH\Controllers\Home.php on line 2023.
+ 1 APPPATH\Controllers\Home.php(2023): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: stdClass::$trans_form', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 2023)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->transaction()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-09 11:45:29 --> Undefined array key 0
+in APPPATH\Models\TableOrderModel.php on line 65.
+ 1 APPPATH\Models\TableOrderModel.php(65): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key 0', 'C:\\xampp\\htdocs\\babana\\app\\Models\\TableOrderModel.php', 65)
+ 2 APPPATH\Controllers\Home.php(1001): App\Models\TableOrderModel->readItem([...])
+ 3 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->getAreaId()
+ 4 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 5 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-09 11:45:38 --> Undefined array key 0
+in APPPATH\Models\TableOrderModel.php on line 65.
+ 1 APPPATH\Models\TableOrderModel.php(65): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key 0', 'C:\\xampp\\htdocs\\babana\\app\\Models\\TableOrderModel.php', 65)
+ 2 APPPATH\Controllers\Home.php(1001): App\Models\TableOrderModel->readItem([...])
+ 3 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->getAreaId()
+ 4 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 5 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-09 11:45:38 --> Undefined array key 0
+in APPPATH\Models\TableOrderModel.php on line 65.
+ 1 APPPATH\Models\TableOrderModel.php(65): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key 0', 'C:\\xampp\\htdocs\\babana\\app\\Models\\TableOrderModel.php', 65)
+ 2 APPPATH\Controllers\Home.php(1001): App\Models\TableOrderModel->readItem([...])
+ 3 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->getAreaId()
+ 4 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 5 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-09 11:45:38 --> Undefined array key 0
+in APPPATH\Models\TableOrderModel.php on line 65.
+ 1 APPPATH\Models\TableOrderModel.php(65): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key 0', 'C:\\xampp\\htdocs\\babana\\app\\Models\\TableOrderModel.php', 65)
+ 2 APPPATH\Controllers\Home.php(1001): App\Models\TableOrderModel->readItem([...])
+ 3 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->getAreaId()
+ 4 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 5 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
