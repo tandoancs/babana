@@ -2175,7 +2175,7 @@ class Home extends BaseController
                         <div class="col-md-6 col-lg-3">
                             <div class="statistic__item statistic__item--orange">
                                 <h2 class="number">388,688</h2>
-                                <span class="desc">Tổng sản phẩm bán</span>
+                                <span class="desc">Số sản phẩm đã bán</span>
                                 <div class="icon">
                                     <i class="zmdi zmdi-shopping-cart"></i>
                                 </div>
@@ -2184,7 +2184,7 @@ class Home extends BaseController
                         <div class="col-md-6 col-lg-3">
                             <div class="statistic__item statistic__item--blue">
                                 <h2 class="number">1,086</h2>
-                                <span class="desc">Sản phẩm khác loại</span>
+                                <span class="desc">Chi tiêu</span>
                                 <div class="icon">
                                     <i class="zmdi zmdi-calendar-note"></i>
                                 </div>
