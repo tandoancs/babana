@@ -8,6 +8,7 @@ var addForm;
 var form;
 var BDate;
 var treeGrid;
+var treeChart, donutChart;
 
 function isNumber(value) {
     return typeof value === 'number';
@@ -2313,9 +2314,62 @@ function reports() {
         /*  toolbar-------------------------------------------------------------------------------------- */
         var structure = [
             { type: "button", view: "flat", color: "primary", circle: true, icon: "mdi mdi-menu" },
-            { id: "dashboard", value: "Dashboard", icon: "mdi mdi-view-dashboard", group: "page", twoState: true, active: true },
+            { id: "dashboard", value: "Các chức năng", icon: "mdi mdi-view-dashboard", group: "page", twoState: true, active: true },
             { type: "spacer" },
-            { id: "detail-save", type: "button", circle: true, value: "Lưu tất cả", size: "small", icon: "mdi mdi-content-save-all", full: true },
+            { id: "from_date_label", value: "Từ ngày" },
+            {
+                id: 'from_date',
+                type: "datePicker",
+                value: new Date(),
+                editable: true,
+                // marked dates
+                mark: (date) => {
+                    if (date.getDay() === 5) return "highlight-date";
+                },
+                // disabled dates
+                disabledDates: (date) => {
+                    const disabled = { 2: true }
+                    return disabled[date.getDay()];
+                },
+                weekStart: "monday", // "saturday" | "sunday" | "monday"
+                weekNumbers: false,
+                mode: "calendar", // "calendar" | "year" | "month" | "timepicker"
+                timePicker: false,
+                timeFormat: 24, // 24 | 12
+                thisMonthOnly: false,
+            },
+            { id: "to_date_label", value: "đến" },
+            {
+                id: 'report_date',
+                type: "datePicker",
+                value: new Date(),
+                editable: true,
+                // marked dates
+                mark: (date) => {
+                    if (date.getDay() === 5) return "highlight-date";
+                },
+                // disabled dates
+                disabledDates: (date) => {
+                    const disabled = { 2: true }
+                    return disabled[date.getDay()];
+                },
+                weekStart: "monday", // "saturday" | "sunday" | "monday"
+                weekNumbers: false,
+                mode: "calendar", // "calendar" | "year" | "month" | "timepicker"
+                timePicker: false,
+                timeFormat: 24, // 24 | 12
+                thisMonthOnly: false,
+            },
+            { id: "search-distance", type: "button", circle: true, value: "Lấy dữ liệu", size: "small", icon: "mdi mdi-map-marker-distance", full: true, tooltip: "Lấy dữ liệu từ khoảng cách các ngày đã chọn" },
+            {
+                id: "language", value: "Chọn báo cáo", circle: true, full: true, icon: "mdi mdi-finance",
+                items: [
+                    { id: "daily", value: "Ngày" },
+                    { id: "weekly", value: "Tuần" },
+                    { id: "monthly", value: "Tháng" },
+                    { id: "yearly", value: "Năm dương lịch" }
+                ]
+            },
             { id: "settings2", icon: "mdi mdi-cog", type: "button", view: "link", color: "secondary", circle: true },
             { type: "text", icon: "mdi mdi-help-circle", value: "Hướng dẫn", tooltip: "Chức năng:: Lưu tất cả các sản phẩm đã sửa." },
         ]
@@ -2341,20 +2395,122 @@ function reports() {
                 { id: "items", html: "Items", height: "270px" },
                 {
                     cols: [
-                        { id: "food_chart", html: "Chart 1"},
+                        { id: "treemap-chart", html: "Chart 1" },
                         // { id: "bestsales", html: "Chart 2" },
-                        { id: "compare", html: "Chart 3", width: "500px" },
+                        { id: "donut-chart", html: "Chart 3", width: "500px" },
                     ]
                 },
 
             ]
         });
 
+        /* chart tree map -------------------------------------------------------------------------------------- */
+        const treeMapData = [
+            {
+                "food": "Mercury",
+                "radius": "40"
+            },
+            {
+                "food": "Venus",
+                "radius": "52"
+            },
+            {
+                "food": "Earth",
+                "radius": "71"
+            },
+            {
+                "food": "Mars",
+                "radius": "90"
+            },
+            {
+                "food": "Jupiter",
+                "radius": "611"
+            },
+            {
+                "food": "Saturn",
+                "radius": "232"
+            },
+            {
+                "food": "Uranus",
+                "radius": "62"
+            },
+            {
+                "food": "Neptune",
+                "radius": "22"
+            }
+        ]
+
+        const treeConfig = {
+            type: "treeMap",
+            css: "dhx_widget--bg_white dhx_widget--bordered",
+            series: [
+                {
+                    value: "radius",
+                    text: "food",
+                    stroke: "#eeeeee",
+                    strokeWidth: 1,
+                    tooltipTemplate: item => `${item[1]} - ${item[0]}`,
+                }
+            ],
+            legend: {
+                type: "range",
+                treeSeries: [
+                    // setting the color for each value range, related tiles and legend
+                    { greater: 300, color: "#16AAAA" },
+                    { from: 250, to: 300, color: "#B4FAED" },
+                    { from: 200, to: 250, color: "#F28587" },
+                    { from: 150, to: 200, color: "#F7F172" },
+                    { from: 100, to: 150, color: "#463BAC" },
+                    { from: 50, to: 100, color: "#D9BB41" },
+                    { from: 10, to: 50, color: "#ECBDBF" },
+                    { less: 10, color: "A01D1E" },
+                ],
+                halign: "right",
+                valign: "top",
+                direction: "row",
+                size: 50,
+            },
+            data: treeMapData
+        };
+
+        treeChart = new dhx.Chart(null, treeConfig);
+
+        /* chart pie donut -------------------------------------------------------------------------------------- */
+        const pieData = [
+            { id: "Thu", value: 34.25, color: "#9A8BA5", type: "Thu" },
+            { id: "Chi", value: 24.65, color: "#E3C5D5", type: "Chi" }
+        ];
+        const donutConfig = {
+            type: "donut",
+            css: "dhx_widget--bg_white dhx_widget--bordered",
+            series: [
+                {
+                    value: "value",
+                    color: "color",
+                    text: "type"
+                }
+            ],
+            legend: {
+                values: {
+                    text: "id",
+                    color: "color"
+                },
+                halign: "right",
+                valign: "top"
+            }
+        };
+
+        donutChart = new dhx.Chart("chart", donutConfig);
+        donutChart.data.parse(pieData);
+
+
         // attaching widgets to Layout cells
         reportsLayout.getCell("toolbar").attach(reportsToolbar);
-        // reportsLayout.getCell("grid").attach(html);
+
         // const html = "<p>Hello world</p>";
         reportsLayout.getCell("items").attachHTML(html);
+        reportsLayout.getCell("treemap-chart").attach(treeChart);
+        reportsLayout.getCell("donut-chart").attach(donutChart);
 
 
         reportsWindow.attach(reportsLayout);

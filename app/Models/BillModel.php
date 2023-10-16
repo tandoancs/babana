@@ -42,6 +42,14 @@ class BillModel extends Model
         return $this->builder->countAll();
     }
 
+    public function countOptions($col, $where)
+    {
+        $count = "COUNT($col) as $col";
+        $this->builder->select($count);
+        $this->builder->where($where);
+        return $this->builder->get()->getResult()[0]->{$col}; 
+    }
+
     public function readAll($col=null) 
     {
         // get: Lấy tất cả thông tin liên quan truy vấn database
