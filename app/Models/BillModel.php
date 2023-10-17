@@ -50,6 +50,16 @@ class BillModel extends Model
         return $this->builder->get()->getResult()[0]->{$col}; 
     }
 
+    public function sumOptions($col, $where, $order = null)
+    {
+        $sum = "SUM($col) as $col";
+        $this->builder->select($sum);
+        $this->builder->where($where);
+        if ($order != null) 
+            $this->builder->orderBy($order, 'asc');
+        return $this->builder->get()->getResult()[0]->{$col}; 
+    }
+
     public function readAll($col=null) 
     {
         // get: Lấy tất cả thông tin liên quan truy vấn database

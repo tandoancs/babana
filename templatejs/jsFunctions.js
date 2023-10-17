@@ -2412,7 +2412,7 @@ function reports() {
             },
             {
                 "food": "Venus",
-                "radius": "52"
+                "radius": "256"
             },
             {
                 "food": "Earth",
@@ -2424,7 +2424,7 @@ function reports() {
             },
             {
                 "food": "Jupiter",
-                "radius": "611"
+                "radius": "411"
             },
             {
                 "food": "Saturn",
@@ -2456,14 +2456,14 @@ function reports() {
                 type: "range",
                 treeSeries: [
                     // setting the color for each value range, related tiles and legend
-                    { greater: 300, color: "#16AAAA" },
-                    { from: 250, to: 300, color: "#B4FAED" },
-                    { from: 200, to: 250, color: "#F28587" },
-                    { from: 150, to: 200, color: "#F7F172" },
-                    { from: 100, to: 150, color: "#463BAC" },
-                    { from: 50, to: 100, color: "#D9BB41" },
-                    { from: 10, to: 50, color: "#ECBDBF" },
-                    { less: 10, color: "A01D1E" },
+                    { greater: 300, color: "#3B74F0" },
+                    { from: 250, to: 300, color: "#237396" },
+                    { from: 200, to: 250, color: "#2780A8" },
+                    { from: 150, to: 200, color: "#3892A3" },
+                    { from: 100, to: 150, color: "#4DA3A0" },
+                    { from: 50, to: 100, color: "#67BF99" },
+                    { from: 10, to: 50, color: "#44C9DB" },
+                    { less: 10, color: "#51DBEC" },
                 ],
                 halign: "right",
                 valign: "top",
@@ -2477,8 +2477,10 @@ function reports() {
 
         /* chart pie donut -------------------------------------------------------------------------------------- */
         const pieData = [
-            { id: "Thu", value: 34.25, color: "#9A8BA5", type: "Thu" },
-            { id: "Chi", value: 24.65, color: "#E3C5D5", type: "Chi" }
+            // { id: "Thu", value: 34.25, color: "#9A8BA5", type: "Thu" },
+            // { id: "Chi", value: 24.65, color: "#E3C5D5", type: "Chi" }
+            { id: "Dư có", value: 5000000, color: "#49be25", type: "Dư có" },
+            { id: "Chi", value: 3450000, color: "#be4d25", type: "Chi" }
         ];
         const donutConfig = {
             type: "donut",

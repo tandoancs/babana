@@ -64,6 +64,16 @@ class BillDetailModel extends Model
         return $this->builder->get()->getResult();
     }
 
+    public function sumOptionsIn($col, $where, $order = null)
+    {
+        $sum = "SUM('count') as FOOD_SUM";
+        $this->builder->select($sum);
+        $this->builder->whereIn($col, $where);
+        if ($order != null) 
+            $this->builder->orderBy($order, 'asc');
+        return $this->builder->get()->getResult()[0]->FOOD_SUM; 
+    }
+
     public function create($data)
     {
         // Cách 1: Có thể truyền dữ liệu bằng phương thức: $this->builder->set('name', $name); Sau đó sử dụng $this->builder->insert();

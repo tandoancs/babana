@@ -2164,6 +2164,17 @@ class Home extends BaseController
         $BillModel = new BillModel($db);
         $BillDetailModel = new BillDetailModel($db);
 
+        $current_date_s = date("Y-m-d") . "%";
+        $where = ['status' => 'Done','date_check_out like ' => $current_date_s];
+
+        // số lượt khách hàng (số đơn hàng đã thanh toán trong ngày)
+        $countCustomer = $BillModel->countOptions('bill_id', $where );
+
+        // số sản phẩm đã bán
+        $food_sum = $BillModel->sumOptions('sum_orders', $where);
+
+        // 
+        
 
         $html = '
             <div class="row m-t-25">
@@ -2175,8 +2186,8 @@ class Home extends BaseController
                                     <i class="zmdi zmdi-account-o"></i>
                                 </div>
                                 <div class="text">
-                                    <h2>10368</h2>
-                                    <span>Lượng khách hàng</span>
+                                    <h2>' . $countCustomer . '</h2>
+                                    <span>Lượt khách hàng</span>
                                 </div>
                             </div>
                             <div class="overview-chart">
@@ -2193,7 +2204,7 @@ class Home extends BaseController
                                     <i class="zmdi zmdi-shopping-cart"></i>
                                 </div>
                                 <div class="text">
-                                    <h2>388,688</h2>
+                                    <h2>' . $food_sum . '</h2>
                                     <span>Sản phẩm đã bán</span>
                                 </div>
                             </div>
@@ -2212,7 +2223,7 @@ class Home extends BaseController
                                 </div>
                                 <div class="text">
                                     <h2>1,086</h2>
-                                    <span>Lợi nhuận</span>
+                                    <span>Dư có</span>
                                 </div>
                             </div>
                             <div class="overview-chart">
