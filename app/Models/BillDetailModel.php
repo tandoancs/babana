@@ -64,6 +64,16 @@ class BillDetailModel extends Model
         return $this->builder->get()->getResult();
     }
 
+    public function sumOptions($col, $where, $order = null)
+    {
+        $sum = "SUM($col) as $col";
+        $this->builder->select($sum);
+        $this->builder->where($where);
+        if ($order != null) 
+            $this->builder->orderBy($order, 'asc');
+        return $this->builder->get()->getResult()[0]->{$col}; 
+    }
+
     public function sumOptionsIn($col, $where, $order = null)
     {
         $sum = "SUM('count') as FOOD_SUM";
@@ -72,6 +82,16 @@ class BillDetailModel extends Model
         if ($order != null) 
             $this->builder->orderBy($order, 'asc');
         return $this->builder->get()->getResult()[0]->FOOD_SUM; 
+    }
+
+    public function sumOptions2($col, $where, $colIn, $whereIn)
+    {
+        $sum = "SUM($col) as $col";
+        $this->builder->select($sum);
+        $this->builder->where($where);
+        $this->builder->whereIn($colIn, $whereIn);
+        
+        return $this->builder->get()->getResult()[0]->{$col}; 
     }
 
     public function create($data)
@@ -103,6 +123,15 @@ class BillDetailModel extends Model
     {
         $this->builder->selectCount('bill_detail_id');
         $this->builder->where($where);
+        return (($this->builder->get()->getResult()[0]->bill_detail_id) > 0) ? true : false;   
+    }
+
+    
+    public function isAlreadyExist2($where, $colIn, $whereIn)
+    {
+        $this->builder->selectCount('bill_detail_id');
+        $this->builder->where($where);
+        $this->builder->whereIn($colIn, $whereIn);
         return (($this->builder->get()->getResult()[0]->bill_detail_id) > 0) ? true : false;   
     }
 

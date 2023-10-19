@@ -257,7 +257,7 @@ class Home extends BaseController
         $AreaModel = new AreaModel($db);
         $FoodModel = new FoodModel($db);
 
-        $tableOrderData = $TableOrderModel->readAll('table_order_name');
+        $tableOrderData = $TableOrderModel->readAll('table_order_name', 'asc');
         if (!empty($tableOrderData)) {
             foreach ($tableOrderData as $value) {
                 $tableOptions[] = $value->table_id . "__" . $value->table_order_name;
@@ -371,7 +371,7 @@ class Home extends BaseController
             $tableInOrders[] = $bill->table_id;
         }
 
-        $tableOrderData = $TableOrderModel->readAll('table_order_name');
+        $tableOrderData = $TableOrderModel->readAll('table_order_name', 'asc');
         if (!empty($tableOrderData)) {
             foreach ($tableOrderData as $value) {
                 if (!in_array($value->table_id, $tableInOrders)) {
@@ -2090,7 +2090,7 @@ class Home extends BaseController
                 'trans_name' => $data['trans_name'],
                 'trans_form' => $data['trans_form'],
                 'money' => $data['trans_money'],
-                'status' => $data['status'],
+                'status' => $data['status'] == 'Xong' ? 1 : 0,
                 'description' => $data['description']
             ];
 
@@ -2154,105 +2154,241 @@ class Home extends BaseController
         return json_encode(array('status' => $status, 'message' => $message), JSON_UNESCAPED_UNICODE);
     }
 
+    public function getDateToReports($type, $from_date, $to_date)
+    {
+
+        $current_date = date("Y-m-d");
+        $to_date = date("Y-m-d H:i:s");
+
+        $month_31 = ['1', '3', '5', '7', '8', '10', '12'];
+        
+        if ($type == 'daily' ) {
+            $from_date = $current_date;
+        }  else if ($type == 'weekly' ) {
+            $from_date = date("Y-m-d", strtotime(date('Y-m-d H:i:s') . "-7 days"));
+        } else if ($type == 'monthly' ) {
+            $date_count = 30;
+            $month = date('m');
+            if ($month == '2' ) {
+                $date_count = ((int)date('Y') / 4 == 0) ? 29 : 28;
+            } else if (in_array($month, $month_31) ) {
+                $date_count = 31;
+            }
+
+            $from_date = date("Y-m-d", strtotime(date('Y-m-d H:i:s') . "- $date_count days"));
+
+        } else if ($type == 'yearly' ) {
+            $from_date = date('Y') . '-01-01 00:00:00';
+        }
+        //  else if ($type == 'search-distance') {
+
+        // }
+
+        $from_date .= ' 00:00:00';
+        
+        return ['from_date' => $from_date, 'to_date' => $to_date];
+
+        
+    }
+
     public function reports()
     {
         $status = true;
         $message = "OK";
+        $html = '';
 
         // open connection and models
         $db = db_connect();
         $BillModel = new BillModel($db);
         $BillDetailModel = new BillDetailModel($db);
+        $TransModel = new TransModel($db);
+        $FoodModel = new FoodModel($db);
 
-        $current_date_s = date("Y-m-d") . "%";
-        $where = ['status' => 'Done','date_check_out like ' => $current_date_s];
+        $data = [];
+        $request = \Config\Services::request();
+        if ($request->is('post')) {
+            $data = $this->request->getVar('data');
+            $data = json_decode($data, true);
 
-        // số lượt khách hàng (số đơn hàng đã thanh toán trong ngày)
-        $countCustomer = $BillModel->countOptions('bill_id', $where );
+            $type = $data['type'];
+            $from_date = ($data['from_date'] == null) ? (date('Y-m-d') . ' 00:00:00') : (date("Y-m-d", strtotime($data['from_date'])) . ' 00:00:00');
+            $to_date = ($data['to_date'] == null)  ? date("Y-m-d H:i:s") : date("Y-m-d H:i:s", strtotime($data['to_date']));
 
-        // số sản phẩm đã bán
-        $food_sum = $BillModel->sumOptions('sum_orders', $where);
+            // echo "<br>\n from_date: $from_date -- to_date: $to_date";
 
-        // 
-        
+            $date_from_to = $this->getDateToReports($type, $from_date, $to_date);
+            $from_date = $date_from_to['from_date'];
+            $to_date = $date_from_to['to_date'];
 
-        $html = '
-            <div class="row m-t-25">
-                <div class="col-sm-6 col-lg-3">
-                    <div class="overview-item overview-item--c1">
-                        <div class="overview__inner">
-                            <div class="overview-box clearfix">
-                                <div class="icon">
-                                    <i class="zmdi zmdi-account-o"></i>
+            // echo "<br>\n from_date: $from_date -- to_date: $to_date";
+            // // test
+            // $from_date = date("Y-m-d H:i:s", strtotime('2023-10-01 10:00:00'));
+
+            // lượng khách hàng, sản phẩm bán, dư có, doanh thu ----------------------------------------------------------------
+            $count_customer = 0;
+            $food_sum = 0;
+            $total_in_bill = 0;
+
+            $where = ['status' => 'Done', 'date_check_out >= ' => $from_date, 'date_check_out <= ' => $to_date];
+            if ($BillModel->isAlreadyExist($where) ) {
+
+                $billData = $BillModel->readOptions($where);
+
+                // số lượng khách hàng trong khoảng thời gian đã chọn
+                $count_customer = $BillModel->countOptions('bill_id', $where);
+
+                // số sản phẩm đã bán trong khoảng thời gian đã chọn
+                $food_sum = $BillModel->sumOptions('sum_orders', $where);
+                
+                // tổng doanh thu trong hóa đơn trong khoảng thời gian đã chọn
+                $total_in_bill = $BillModel->sumOptions('total', $where);
+                
+            }
+
+            // lấy dữ liệu từ trans (các giao dịch ngoài hóa đơn)
+            // tổng Thu trong các giao dịch ngoài hóa đơn
+            $where = ['trans_type' => 'Thu', 'status' => 1, 'trans_date >= ' => $from_date, 'trans_date <= ' => $to_date];
+            $total_trans_income = ($TransModel->isAlreadyExist($where)) ? $TransModel->sumOptions('money', $where) : 0;
+
+            // tổng Chi trong các giao dịch ngoài hóa đơn
+            $where = ['trans_type' => 'Chi', 'status' => 1, 'trans_date >= ' => $from_date, 'trans_date <= ' => $to_date];
+            $total_trans_spend = ($TransModel->isAlreadyExist($where)) ? $TransModel->sumOptions('money', $where) : 0;
+            
+            // tổng doanh thu
+            $total = $total_in_bill + $total_trans_income;
+
+            // tổng dư có là số tiền còn lại của doanh thu trừ đi chi tiêu
+            $total_temporary_profit = $total - $total_trans_spend;
+            
+            // show 
+            $count_customer_show = number_format($count_customer);
+            $food_sum_show = number_format($food_sum);
+            $total_show = number_format($total);
+            $total_temporary_profit_show = number_format($total_temporary_profit);
+
+            
+
+            $html = '
+                <div class="row m-t-25">
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="overview-item overview-item--c1">
+                            <div class="overview__inner">
+                                <div class="overview-box clearfix">
+                                    <div class="icon">
+                                        <i class="zmdi zmdi-account-o"></i>
+                                    </div>
+                                    <div class="text">
+                                        <h2>' . $count_customer_show . '</h2>
+                                        <span>Lượt khách hàng</span>
+                                    </div>
                                 </div>
-                                <div class="text">
-                                    <h2>' . $countCustomer . '</h2>
-                                    <span>Lượt khách hàng</span>
+                                <div class="overview-chart">
+                                    <canvas id="widgetChart1"></canvas>
                                 </div>
                             </div>
-                            <div class="overview-chart">
-                                <canvas id="widgetChart1"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="overview-item overview-item--c2">
+                            <div class="overview__inner">
+                                <div class="overview-box clearfix">
+                                    <div class="icon">
+                                        <i class="zmdi zmdi-shopping-cart"></i>
+                                    </div>
+                                    <div class="text">
+                                        <h2>' . $food_sum_show . '</h2>
+                                        <span>Sản phẩm đã bán</span>
+                                    </div>
+                                </div>
+                                <div class="overview-chart">
+                                    <canvas id="widgetChart2"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="overview-item overview-item--c3">
+                            <div class="overview__inner">
+                                <div class="overview-box clearfix">
+                                    <div class="icon">
+                                        <i class="zmdi zmdi-flower"></i>
+                                    </div>
+                                    <div class="text">
+                                        <h2>' . $total_temporary_profit_show . '</h2>
+                                        <span>Dư có</span>
+                                    </div>
+                                </div>
+                                <div class="overview-chart">
+                                    <canvas id="widgetChart3"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="overview-item overview-item--c4">
+                            <div class="overview__inner">
+                                <div class="overview-box clearfix">
+                                    <div class="icon">
+                                        <i class="zmdi zmdi-money"></i>
+                                    </div>
+                                    <div class="text">
+                                        <h2>' . $total_show . '</h2>
+                                        <span>Doanh thu</span>
+                                    </div>
+                                </div>
+                                <div class="overview-chart">
+                                    <canvas id="widgetChart4"></canvas>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6 col-lg-3">
-                    <div class="overview-item overview-item--c2">
-                        <div class="overview__inner">
-                            <div class="overview-box clearfix">
-                                <div class="icon">
-                                    <i class="zmdi zmdi-shopping-cart"></i>
-                                </div>
-                                <div class="text">
-                                    <h2>' . $food_sum . '</h2>
-                                    <span>Sản phẩm đã bán</span>
-                                </div>
-                            </div>
-                            <div class="overview-chart">
-                                <canvas id="widgetChart2"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-3">
-                    <div class="overview-item overview-item--c3">
-                        <div class="overview__inner">
-                            <div class="overview-box clearfix">
-                                <div class="icon">
-                                    <i class="zmdi zmdi-flower"></i>
-                                </div>
-                                <div class="text">
-                                    <h2>1,086</h2>
-                                    <span>Dư có</span>
-                                </div>
-                            </div>
-                            <div class="overview-chart">
-                                <canvas id="widgetChart3"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-3">
-                    <div class="overview-item overview-item--c4">
-                        <div class="overview__inner">
-                            <div class="overview-box clearfix">
-                                <div class="icon">
-                                    <i class="zmdi zmdi-money"></i>
-                                </div>
-                                <div class="text">
-                                    <h2>$1,060,386</h2>
-                                    <span>Doanh thu</span>
-                                </div>
-                            </div>
-                            <div class="overview-chart">
-                                <canvas id="widgetChart4"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        ';
-        return json_encode(array('status' => $status, 'message' => $message, 'html' => $html), JSON_UNESCAPED_UNICODE);
+            ';
+
+
+            // treemap ----------------------------------------------------------------
+            $treeMapData = [];
+
+            if (!empty($billData ) ) {
+                $bill_id_list = [];
+                $food_id_list = [];
+                foreach ($billData as $bill) {
+                    $bill_id_list[] = $bill->bill_id;
+
+                    $billDetailData = $BillDetailModel->readOptions(['bill_id' => $bill->bill_id]);
+                    foreach ($billDetailData as $billDetailItem) {
+                        $food_id_list[] = $billDetailItem->food_id;    
+                    }
+                    
+                    
+                }
+                
+                $foodData = $FoodModel->readAll();
+                foreach ($foodData as $food) {
+                    if (in_array($food->food_id, $food_id_list) ) {
+                        $bill_id_string = "('" . implode("','", $bill_id_list) . "')";
+                        $w = ['food_id' => $food->food_id ];
+                        
+                        // $w = "food_id = '$food->food_id' AND bill_id IN ( $bill_id_string )" ;
+                        $food_sum = $BillDetailModel->isAlreadyExist2($w, 'bill_id', $bill_id_list) ? $BillDetailModel->sumOptions2('count', $w, 'bill_id', $bill_id_list) : 0;
+                        $food_sum_show = number_format($food_sum);
+                        $treeMapData[] = [ 'food' => $food->food_name, 'radius' => $food_sum_show];
+                    }
+                }
+                
+            }
+
+
+            // donut chart data
+            $pieData = [];
+            // { id: "Dư có", value: 5000000, color: "#49be25", type: "Dư có" }
+            // { id: "Chi", value: 3450000, color: "#be4d25", type: "Chi" }
+            $pieData[] = ['id' => 'Dư có', "value" => $total_temporary_profit, "color" => "#49be25", "type" => "Dư có"];
+            $pieData[] = ['id' => 'Chi', "value" => $total_trans_spend, "color" => "#be4d25", "type" => "Chi"];
+            
+        }
+
+        return json_encode(array('status' => $status, 'message' => $message, 'html' => $html, 'treeMapData' => $treeMapData, 'pieData' => $pieData), JSON_UNESCAPED_UNICODE);
     }
 
 

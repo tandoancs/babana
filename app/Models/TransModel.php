@@ -84,6 +84,16 @@ class TransModel extends Model
         return $this->builder->get()->getResult();
     }
 
+    public function sumOptions($col, $where, $order = null)
+    {
+        $sum = "SUM($col) as $col";
+        $this->builder->select($sum);
+        $this->builder->where($where);
+        if ($order != null) 
+            $this->builder->orderBy($order, 'asc');
+        return $this->builder->get()->getResult()[0]->{$col}; 
+    }
+
     public function create($data)
     {
         // Cách 1: Có thể truyền dữ liệu bằng phương thức: $this->builder->set('name', $name); Sau đó sử dụng $this->builder->insert();

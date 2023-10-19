@@ -1,0 +1,791 @@
+CRITICAL - 2023-10-19 08:54:14 --> Cannot access offset of type string on string
+in APPPATH\Controllers\Home.php on line 2175.
+ 1 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->reports()
+ 2 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 3 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-19 08:54:26 --> Undefined variable $html
+in APPPATH\Controllers\Home.php on line 2269.
+ 1 APPPATH\Controllers\Home.php(2269): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $html', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 2269)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->reports()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-19 08:55:14 --> Cannot access offset of type string on string
+in APPPATH\Controllers\Home.php on line 2175.
+ 1 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->reports()
+ 2 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 3 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-19 08:56:50 --> Cannot access offset of type string on string
+in APPPATH\Controllers\Home.php on line 2176.
+ 1 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->reports()
+ 2 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 3 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-19 09:02:58 --> Cannot access offset of type string on string
+in APPPATH\Controllers\Home.php on line 2176.
+ 1 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->reports()
+ 2 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 3 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-19 10:56:35 --> Undefined property: stdClass::$food_id
+in APPPATH\Controllers\Home.php on line 2316.
+ 1 APPPATH\Controllers\Home.php(2316): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: stdClass::$food_id', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 2316)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->reports()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-19 03:59:37 --> syntax error, unexpected token "=>", expecting ")"
+in APPPATH\Controllers\Home.php on line 2317.
+ 1 SYSTEMPATH\Autoloader\Autoloader.php(291): CodeIgniter\Autoloader\Autoloader->includeFile('C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php')
+ 2 SYSTEMPATH\Autoloader\Autoloader.php(269): CodeIgniter\Autoloader\Autoloader->loadInNamespace('App\\Controllers\\Home')
+ 3 [internal function]: CodeIgniter\Autoloader\Autoloader->loadClass('App\\Controllers\\Home')
+ 4 SYSTEMPATH\CodeIgniter.php(890): class_exists('\\App\\Controllers\\Home', true)
+ 5 SYSTEMPATH\CodeIgniter.php(484): CodeIgniter\CodeIgniter->startController()
+ 6 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+ERROR - 2023-10-19 10:59:56 --> mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`IN` = ('1','17','20')' at line 4 in C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php:295
+Stack trace:
+#0 C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`b...', 0)
+#1 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`b...')
+#2 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`b...')
+#3 C:\xampp\htdocs\babana\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`b...', Array, false)
+#4 C:\xampp\htdocs\babana\app\Models\BillDetailModel.php(116): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\babana\app\Controllers\Home.php(2329): App\Models\BillDetailModel->isAlreadyExist(Array)
+#6 C:\xampp\htdocs\babana\system\CodeIgniter.php(932): App\Controllers\Home->reports()
+#7 C:\xampp\htdocs\babana\system\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#8 C:\xampp\htdocs\babana\system\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\babana\index.php(68): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-10-19 10:59:56 --> You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`IN` = ('1','17','20')' at line 4
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 295.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\'
+AND `bill_id` `IN` = (\'1\',\'17\',\'20\')', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\'
+AND `bill_id` `IN` = (\'1\',\'17\',\'20\')')
+ 3 SYSTEMPATH\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\'
+AND `bill_id` `IN` = (\'1\',\'17\',\'20\')')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = :food_id:
+AND `bill_id` `IN` = :bill_id IN :', [...], false)
+ 5 APPPATH\Models\BillDetailModel.php(116): CodeIgniter\Database\BaseBuilder->get()
+ 6 APPPATH\Controllers\Home.php(2329): App\Models\BillDetailModel->isAlreadyExist([...])
+ 7 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->reports()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 9 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+ERROR - 2023-10-19 11:06:54 --> mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''1,17,20'' at line 3 in C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php:295
+Stack trace:
+#0 C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`b...', 0)
+#1 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`b...')
+#2 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`b...')
+#3 C:\xampp\htdocs\babana\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`b...', Array, false)
+#4 C:\xampp\htdocs\babana\app\Models\BillDetailModel.php(116): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\babana\app\Controllers\Home.php(2333): App\Models\BillDetailModel->isAlreadyExist('food_id = '1' A...')
+#6 C:\xampp\htdocs\babana\system\CodeIgniter.php(932): App\Controllers\Home->reports()
+#7 C:\xampp\htdocs\babana\system\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#8 C:\xampp\htdocs\babana\system\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\babana\index.php(68): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-10-19 11:06:54 --> You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''1,17,20'' at line 3
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 295.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\' AND bill_id IN \'1,17,20\'', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\' AND bill_id IN \'1,17,20\'')
+ 3 SYSTEMPATH\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\' AND bill_id IN \'1,17,20\'')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\' AND bill_id IN \'1,17,20\'', [], false)
+ 5 APPPATH\Models\BillDetailModel.php(116): CodeIgniter\Database\BaseBuilder->get()
+ 6 APPPATH\Controllers\Home.php(2333): App\Models\BillDetailModel->isAlreadyExist('food_id = \'1\' AND bill_id IN \'1,17,20\'')
+ 7 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->reports()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 9 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+ERROR - 2023-10-19 11:07:18 --> mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`IN` = ('1','17','20')' at line 4 in C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php:295
+Stack trace:
+#0 C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`b...', 0)
+#1 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`b...')
+#2 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`b...')
+#3 C:\xampp\htdocs\babana\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`b...', Array, false)
+#4 C:\xampp\htdocs\babana\app\Models\BillDetailModel.php(116): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\babana\app\Controllers\Home.php(2333): App\Models\BillDetailModel->isAlreadyExist(Array)
+#6 C:\xampp\htdocs\babana\system\CodeIgniter.php(932): App\Controllers\Home->reports()
+#7 C:\xampp\htdocs\babana\system\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#8 C:\xampp\htdocs\babana\system\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\babana\index.php(68): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-10-19 11:07:18 --> You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`IN` = ('1','17','20')' at line 4
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 295.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\'
+AND `bill_id` `IN` = (\'1\',\'17\',\'20\')', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\'
+AND `bill_id` `IN` = (\'1\',\'17\',\'20\')')
+ 3 SYSTEMPATH\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\'
+AND `bill_id` `IN` = (\'1\',\'17\',\'20\')')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = :food_id:
+AND `bill_id` `IN` = :bill_id IN :', [...], false)
+ 5 APPPATH\Models\BillDetailModel.php(116): CodeIgniter\Database\BaseBuilder->get()
+ 6 APPPATH\Controllers\Home.php(2333): App\Models\BillDetailModel->isAlreadyExist([...])
+ 7 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->reports()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 9 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+ERROR - 2023-10-19 11:08:01 --> mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''1,'17,'20'' at line 3 in C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php:295
+Stack trace:
+#0 C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`b...', 0)
+#1 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`b...')
+#2 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`b...')
+#3 C:\xampp\htdocs\babana\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`b...', Array, false)
+#4 C:\xampp\htdocs\babana\app\Models\BillDetailModel.php(116): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\babana\app\Controllers\Home.php(2331): App\Models\BillDetailModel->isAlreadyExist('food_id = '1' A...')
+#6 C:\xampp\htdocs\babana\system\CodeIgniter.php(932): App\Controllers\Home->reports()
+#7 C:\xampp\htdocs\babana\system\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#8 C:\xampp\htdocs\babana\system\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\babana\index.php(68): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-10-19 11:08:01 --> You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''1,'17,'20'' at line 3
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 295.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\' AND bill_id IN \'1,\'17,\'20\'', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\' AND bill_id IN \'1,\'17,\'20\'')
+ 3 SYSTEMPATH\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\' AND bill_id IN \'1,\'17,\'20\'')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\' AND bill_id IN \'1,\'17,\'20\'', [], false)
+ 5 APPPATH\Models\BillDetailModel.php(116): CodeIgniter\Database\BaseBuilder->get()
+ 6 APPPATH\Controllers\Home.php(2331): App\Models\BillDetailModel->isAlreadyExist('food_id = \'1\' AND bill_id IN \'1,\'17,\'20\'')
+ 7 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->reports()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 9 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+ERROR - 2023-10-19 11:08:28 --> mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''1','17','20'' at line 3 in C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php:295
+Stack trace:
+#0 C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`b...', 0)
+#1 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`b...')
+#2 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`b...')
+#3 C:\xampp\htdocs\babana\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`b...', Array, false)
+#4 C:\xampp\htdocs\babana\app\Models\BillDetailModel.php(116): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\babana\app\Controllers\Home.php(2331): App\Models\BillDetailModel->isAlreadyExist('food_id = '1' A...')
+#6 C:\xampp\htdocs\babana\system\CodeIgniter.php(932): App\Controllers\Home->reports()
+#7 C:\xampp\htdocs\babana\system\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#8 C:\xampp\htdocs\babana\system\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\babana\index.php(68): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-10-19 11:08:28 --> You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''1','17','20'' at line 3
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 295.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\' AND bill_id IN \'1\',\'17\',\'20\'', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\' AND bill_id IN \'1\',\'17\',\'20\'')
+ 3 SYSTEMPATH\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\' AND bill_id IN \'1\',\'17\',\'20\'')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\' AND bill_id IN \'1\',\'17\',\'20\'', [], false)
+ 5 APPPATH\Models\BillDetailModel.php(116): CodeIgniter\Database\BaseBuilder->get()
+ 6 APPPATH\Controllers\Home.php(2331): App\Models\BillDetailModel->isAlreadyExist('food_id = \'1\' AND bill_id IN \'1\',\'17\',\'20\'')
+ 7 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->reports()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 9 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+ERROR - 2023-10-19 11:08:55 --> mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '','17','20)' at line 3 in C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php:295
+Stack trace:
+#0 C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`b...', 0)
+#1 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`b...')
+#2 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`b...')
+#3 C:\xampp\htdocs\babana\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`b...', Array, false)
+#4 C:\xampp\htdocs\babana\app\Models\BillDetailModel.php(116): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\babana\app\Controllers\Home.php(2331): App\Models\BillDetailModel->isAlreadyExist('food_id = '1' A...')
+#6 C:\xampp\htdocs\babana\system\CodeIgniter.php(932): App\Controllers\Home->reports()
+#7 C:\xampp\htdocs\babana\system\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#8 C:\xampp\htdocs\babana\system\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\babana\index.php(68): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-10-19 11:08:55 --> You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '','17','20)' at line 3
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 295.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\' AND `bill_id` IN (1\',\'17\',\'20)', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\' AND `bill_id` IN (1\',\'17\',\'20)')
+ 3 SYSTEMPATH\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\' AND `bill_id` IN (1\',\'17\',\'20)')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\' AND `bill_id` IN (1\',\'17\',\'20)', [], false)
+ 5 APPPATH\Models\BillDetailModel.php(116): CodeIgniter\Database\BaseBuilder->get()
+ 6 APPPATH\Controllers\Home.php(2331): App\Models\BillDetailModel->isAlreadyExist('food_id = \'1\' AND bill_id IN (1\',\'17\',\'20)')
+ 7 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->reports()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 9 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+ERROR - 2023-10-19 11:09:36 --> mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1','17','20' at line 3 in C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php:295
+Stack trace:
+#0 C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`b...', 0)
+#1 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`b...')
+#2 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`b...')
+#3 C:\xampp\htdocs\babana\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`b...', Array, false)
+#4 C:\xampp\htdocs\babana\app\Models\BillDetailModel.php(116): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\babana\app\Controllers\Home.php(2331): App\Models\BillDetailModel->isAlreadyExist('food_id = '1' A...')
+#6 C:\xampp\htdocs\babana\system\CodeIgniter.php(932): App\Controllers\Home->reports()
+#7 C:\xampp\htdocs\babana\system\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#8 C:\xampp\htdocs\babana\system\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\babana\index.php(68): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-10-19 11:09:36 --> You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1','17','20' at line 3
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 295.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\' AND bill_id IN 1\',\'17\',\'20', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\' AND bill_id IN 1\',\'17\',\'20')
+ 3 SYSTEMPATH\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\' AND bill_id IN 1\',\'17\',\'20')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\' AND bill_id IN 1\',\'17\',\'20', [], false)
+ 5 APPPATH\Models\BillDetailModel.php(116): CodeIgniter\Database\BaseBuilder->get()
+ 6 APPPATH\Controllers\Home.php(2331): App\Models\BillDetailModel->isAlreadyExist('food_id = \'1\' AND bill_id IN 1\',\'17\',\'20')
+ 7 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->reports()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 9 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+ERROR - 2023-10-19 11:10:33 --> mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '','17','20)' at line 3 in C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php:295
+Stack trace:
+#0 C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`b...', 0)
+#1 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`b...')
+#2 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`b...')
+#3 C:\xampp\htdocs\babana\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`b...', Array, false)
+#4 C:\xampp\htdocs\babana\app\Models\BillDetailModel.php(116): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\babana\app\Controllers\Home.php(2331): App\Models\BillDetailModel->isAlreadyExist('food_id = '1' A...')
+#6 C:\xampp\htdocs\babana\system\CodeIgniter.php(932): App\Controllers\Home->reports()
+#7 C:\xampp\htdocs\babana\system\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#8 C:\xampp\htdocs\babana\system\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\babana\index.php(68): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-10-19 11:10:33 --> You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '','17','20)' at line 3
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 295.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\' AND `bill_id` IN (1\',\'17\',\'20)', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\' AND `bill_id` IN (1\',\'17\',\'20)')
+ 3 SYSTEMPATH\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\' AND `bill_id` IN (1\',\'17\',\'20)')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\' AND `bill_id` IN (1\',\'17\',\'20)', [], false)
+ 5 APPPATH\Models\BillDetailModel.php(116): CodeIgniter\Database\BaseBuilder->get()
+ 6 APPPATH\Controllers\Home.php(2331): App\Models\BillDetailModel->isAlreadyExist('food_id = \'1\' AND bill_id IN (1\',\'17\',\'20)')
+ 7 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->reports()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 9 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+ERROR - 2023-10-19 11:11:05 --> mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '','17','20 )' at line 3 in C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php:295
+Stack trace:
+#0 C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`b...', 0)
+#1 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`b...')
+#2 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`b...')
+#3 C:\xampp\htdocs\babana\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`b...', Array, false)
+#4 C:\xampp\htdocs\babana\app\Models\BillDetailModel.php(116): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\babana\app\Controllers\Home.php(2331): App\Models\BillDetailModel->isAlreadyExist('food_id = '1' A...')
+#6 C:\xampp\htdocs\babana\system\CodeIgniter.php(932): App\Controllers\Home->reports()
+#7 C:\xampp\htdocs\babana\system\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#8 C:\xampp\htdocs\babana\system\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\babana\index.php(68): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-10-19 11:11:05 --> You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '','17','20 )' at line 3
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 295.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\' AND `bill_id` IN ( 1\',\'17\',\'20 )', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\' AND `bill_id` IN ( 1\',\'17\',\'20 )')
+ 3 SYSTEMPATH\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\' AND `bill_id` IN ( 1\',\'17\',\'20 )')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\' AND `bill_id` IN ( 1\',\'17\',\'20 )', [], false)
+ 5 APPPATH\Models\BillDetailModel.php(116): CodeIgniter\Database\BaseBuilder->get()
+ 6 APPPATH\Controllers\Home.php(2331): App\Models\BillDetailModel->isAlreadyExist('food_id = \'1\' AND bill_id IN ( 1\',\'17\',\'20 )')
+ 7 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->reports()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 9 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+ERROR - 2023-10-19 11:11:53 --> mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`IN` = ('1','17','20')' at line 4 in C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php:295
+Stack trace:
+#0 C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`b...', 0)
+#1 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`b...')
+#2 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`b...')
+#3 C:\xampp\htdocs\babana\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`b...', Array, false)
+#4 C:\xampp\htdocs\babana\app\Models\BillDetailModel.php(116): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\babana\app\Controllers\Home.php(2331): App\Models\BillDetailModel->isAlreadyExist(Array)
+#6 C:\xampp\htdocs\babana\system\CodeIgniter.php(932): App\Controllers\Home->reports()
+#7 C:\xampp\htdocs\babana\system\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#8 C:\xampp\htdocs\babana\system\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\babana\index.php(68): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-10-19 11:11:53 --> You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`IN` = ('1','17','20')' at line 4
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 295.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\'
+AND `bill_id` `IN` = (\'1\',\'17\',\'20\')', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\'
+AND `bill_id` `IN` = (\'1\',\'17\',\'20\')')
+ 3 SYSTEMPATH\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\'
+AND `bill_id` `IN` = (\'1\',\'17\',\'20\')')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = :food_id:
+AND `bill_id` `IN` = :bill_id IN :', [...], false)
+ 5 APPPATH\Models\BillDetailModel.php(116): CodeIgniter\Database\BaseBuilder->get()
+ 6 APPPATH\Controllers\Home.php(2331): App\Models\BillDetailModel->isAlreadyExist([...])
+ 7 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->reports()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 9 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-19 11:12:18 --> Array to string conversion
+in APPPATH\Controllers\Home.php on line 2328.
+ 1 APPPATH\Controllers\Home.php(2328): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Array to string conversion', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 2328)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->reports()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-19 11:12:51 --> Array to string conversion
+in APPPATH\Controllers\Home.php on line 2328.
+ 1 APPPATH\Controllers\Home.php(2328): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Array to string conversion', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 2328)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->reports()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+ERROR - 2023-10-19 11:15:21 --> mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`IN` = ('1','17','20')' at line 4 in C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php:295
+Stack trace:
+#0 C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`b...', 0)
+#1 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`b...')
+#2 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`b...')
+#3 C:\xampp\htdocs\babana\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`b...', Array, false)
+#4 C:\xampp\htdocs\babana\app\Models\BillDetailModel.php(116): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\babana\app\Controllers\Home.php(2332): App\Models\BillDetailModel->isAlreadyExist(Array)
+#6 C:\xampp\htdocs\babana\system\CodeIgniter.php(932): App\Controllers\Home->reports()
+#7 C:\xampp\htdocs\babana\system\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#8 C:\xampp\htdocs\babana\system\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\babana\index.php(68): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-10-19 11:15:21 --> You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`IN` = ('1','17','20')' at line 4
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 295.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\'
+AND `bill_id` `IN` = (\'1\',\'17\',\'20\')', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\'
+AND `bill_id` `IN` = (\'1\',\'17\',\'20\')')
+ 3 SYSTEMPATH\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\'
+AND `bill_id` `IN` = (\'1\',\'17\',\'20\')')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = :food_id:
+AND `bill_id` `IN` = :bill_id IN:', [...], false)
+ 5 APPPATH\Models\BillDetailModel.php(116): CodeIgniter\Database\BaseBuilder->get()
+ 6 APPPATH\Controllers\Home.php(2332): App\Models\BillDetailModel->isAlreadyExist([...])
+ 7 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->reports()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 9 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-19 11:15:52 --> Array to string conversion
+in APPPATH\Controllers\Home.php on line 2329.
+ 1 APPPATH\Controllers\Home.php(2329): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Array to string conversion', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 2329)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->reports()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-19 11:16:11 --> Array to string conversion
+in APPPATH\Controllers\Home.php on line 2329.
+ 1 APPPATH\Controllers\Home.php(2329): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Array to string conversion', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 2329)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->reports()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-19 11:16:33 --> Undefined property: stdClass::$food_order_name
+in APPPATH\Controllers\Home.php on line 2334.
+ 1 APPPATH\Controllers\Home.php(2334): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: stdClass::$food_order_name', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 2334)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->reports()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+ERROR - 2023-10-19 11:16:53 --> mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`IN` = '(\'1\',\'17\',\'20\')'' at line 4 in C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php:295
+Stack trace:
+#0 C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`b...', 0)
+#1 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`b...')
+#2 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`b...')
+#3 C:\xampp\htdocs\babana\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`b...', Array, false)
+#4 C:\xampp\htdocs\babana\app\Models\BillDetailModel.php(116): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\babana\app\Controllers\Home.php(2332): App\Models\BillDetailModel->isAlreadyExist(Array)
+#6 C:\xampp\htdocs\babana\system\CodeIgniter.php(932): App\Controllers\Home->reports()
+#7 C:\xampp\htdocs\babana\system\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#8 C:\xampp\htdocs\babana\system\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\babana\index.php(68): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-10-19 11:16:53 --> You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`IN` = '(\'1\',\'17\',\'20\')'' at line 4
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 295.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\'
+AND `bill_id` `IN` = \'(\\\'1\\\',\\\'17\\\',\\\'20\\\')\'', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\'
+AND `bill_id` `IN` = \'(\\\'1\\\',\\\'17\\\',\\\'20\\\')\'')
+ 3 SYSTEMPATH\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\'
+AND `bill_id` `IN` = \'(\\\'1\\\',\\\'17\\\',\\\'20\\\')\'')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = :food_id:
+AND `bill_id` `IN` = :bill_id IN:', [...], false)
+ 5 APPPATH\Models\BillDetailModel.php(116): CodeIgniter\Database\BaseBuilder->get()
+ 6 APPPATH\Controllers\Home.php(2332): App\Models\BillDetailModel->isAlreadyExist([...])
+ 7 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->reports()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 9 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+ERROR - 2023-10-19 11:17:52 --> mysqli_sql_exception: Operand should contain 1 column(s) in C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php:295
+Stack trace:
+#0 C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`b...', 0)
+#1 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`b...')
+#2 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`b...')
+#3 C:\xampp\htdocs\babana\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`b...', Array, false)
+#4 C:\xampp\htdocs\babana\app\Models\BillDetailModel.php(116): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\babana\app\Controllers\Home.php(2332): App\Models\BillDetailModel->isAlreadyExist('food_id = '1' A...')
+#6 C:\xampp\htdocs\babana\system\CodeIgniter.php(932): App\Controllers\Home->reports()
+#7 C:\xampp\htdocs\babana\system\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#8 C:\xampp\htdocs\babana\system\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\babana\index.php(68): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-10-19 11:17:53 --> Operand should contain 1 column(s)
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 295.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\' AND `bill_id` IN ( (\'1\',\'17\',\'20\') )', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\' AND `bill_id` IN ( (\'1\',\'17\',\'20\') )')
+ 3 SYSTEMPATH\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\' AND `bill_id` IN ( (\'1\',\'17\',\'20\') )')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\' AND `bill_id` IN ( (\'1\',\'17\',\'20\') )', [], false)
+ 5 APPPATH\Models\BillDetailModel.php(116): CodeIgniter\Database\BaseBuilder->get()
+ 6 APPPATH\Controllers\Home.php(2332): App\Models\BillDetailModel->isAlreadyExist('food_id = \'1\' AND bill_id IN ( (\'1\',\'17\',\'20\') )')
+ 7 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->reports()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 9 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+ERROR - 2023-10-19 11:18:39 --> mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`IN` = '(\'1\',\'17\',\'20\')'' at line 4 in C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php:295
+Stack trace:
+#0 C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`b...', 0)
+#1 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`b...')
+#2 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`b...')
+#3 C:\xampp\htdocs\babana\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`b...', Array, false)
+#4 C:\xampp\htdocs\babana\app\Models\BillDetailModel.php(116): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\babana\app\Controllers\Home.php(2332): App\Models\BillDetailModel->isAlreadyExist(Array)
+#6 C:\xampp\htdocs\babana\system\CodeIgniter.php(932): App\Controllers\Home->reports()
+#7 C:\xampp\htdocs\babana\system\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#8 C:\xampp\htdocs\babana\system\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\babana\index.php(68): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-10-19 11:18:39 --> You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`IN` = '(\'1\',\'17\',\'20\')'' at line 4
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 295.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\'
+AND `bill_id` `IN` = \'(\\\'1\\\',\\\'17\\\',\\\'20\\\')\'', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\'
+AND `bill_id` `IN` = \'(\\\'1\\\',\\\'17\\\',\\\'20\\\')\'')
+ 3 SYSTEMPATH\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\'
+AND `bill_id` `IN` = \'(\\\'1\\\',\\\'17\\\',\\\'20\\\')\'')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = :food_id:
+AND `bill_id` `IN` = :bill_id IN:', [...], false)
+ 5 APPPATH\Models\BillDetailModel.php(116): CodeIgniter\Database\BaseBuilder->get()
+ 6 APPPATH\Controllers\Home.php(2332): App\Models\BillDetailModel->isAlreadyExist([...])
+ 7 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->reports()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 9 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+ERROR - 2023-10-19 11:25:17 --> mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`IN` = '(\'1\',\'17\',\'20\')'
+AND `bill_id` IN ('1','17','20')' at line 4 in C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php:295
+Stack trace:
+#0 C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`b...', 0)
+#1 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`b...')
+#2 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`b...')
+#3 C:\xampp\htdocs\babana\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`b...', Array, false)
+#4 C:\xampp\htdocs\babana\app\Models\BillDetailModel.php(135): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\babana\app\Controllers\Home.php(2332): App\Models\BillDetailModel->isAlreadyExist2(Array, 'bill_id', Array)
+#6 C:\xampp\htdocs\babana\system\CodeIgniter.php(932): App\Controllers\Home->reports()
+#7 C:\xampp\htdocs\babana\system\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#8 C:\xampp\htdocs\babana\system\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\babana\index.php(68): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-10-19 11:25:17 --> You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`IN` = '(\'1\',\'17\',\'20\')'
+AND `bill_id` IN ('1','17','20')' at line 4
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 295.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\'
+AND `bill_id` `IN` = \'(\\\'1\\\',\\\'17\\\',\\\'20\\\')\'
+AND `bill_id` IN (\'1\',\'17\',\'20\')', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\'
+AND `bill_id` `IN` = \'(\\\'1\\\',\\\'17\\\',\\\'20\\\')\'
+AND `bill_id` IN (\'1\',\'17\',\'20\')')
+ 3 SYSTEMPATH\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = \'1\'
+AND `bill_id` `IN` = \'(\\\'1\\\',\\\'17\\\',\\\'20\\\')\'
+AND `bill_id` IN (\'1\',\'17\',\'20\')')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`bill_detail_id`) AS `bill_detail_id`
+FROM `bill_detail`
+WHERE `food_id` = :food_id:
+AND `bill_id` `IN` = :bill_id IN:
+AND `bill_id` IN :bill_id:', [...], false)
+ 5 APPPATH\Models\BillDetailModel.php(135): CodeIgniter\Database\BaseBuilder->get()
+ 6 APPPATH\Controllers\Home.php(2332): App\Models\BillDetailModel->isAlreadyExist2([...], 'bill_id', [...])
+ 7 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->reports()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 9 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-19 11:28:27 --> Undefined property: stdClass::$food_order_name
+in APPPATH\Controllers\Home.php on line 2334.
+ 1 APPPATH\Controllers\Home.php(2334): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: stdClass::$food_order_name', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 2334)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->reports()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-19 11:33:13 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 625.
+ 1 APPPATH\Controllers\Home.php(625): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 625)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-19 11:33:29 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 625.
+ 1 APPPATH\Controllers\Home.php(625): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 625)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-19 11:33:44 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 625.
+ 1 APPPATH\Controllers\Home.php(625): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 625)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-19 11:35:20 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 625.
+ 1 APPPATH\Controllers\Home.php(625): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 625)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-19 11:38:07 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 625.
+ 1 APPPATH\Controllers\Home.php(625): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 625)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-19 11:38:29 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 625.
+ 1 APPPATH\Controllers\Home.php(625): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 625)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-19 11:47:19 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 625.
+ 1 APPPATH\Controllers\Home.php(625): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 625)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-19 14:47:41 --> Undefined array key "type"
+in APPPATH\Controllers\Home.php on line 2211.
+ 1 APPPATH\Controllers\Home.php(2211): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "type"', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 2211)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->reports()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-19 14:48:59 --> Undefined array key "type"
+in APPPATH\Controllers\Home.php on line 2211.
+ 1 APPPATH\Controllers\Home.php(2211): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "type"', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 2211)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->reports()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-19 14:49:40 --> Undefined array key "type"
+in APPPATH\Controllers\Home.php on line 2211.
+ 1 APPPATH\Controllers\Home.php(2211): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "type"', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 2211)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->reports()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-19 14:50:40 --> Undefined array key "type"
+in APPPATH\Controllers\Home.php on line 2211.
+ 1 APPPATH\Controllers\Home.php(2211): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "type"', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 2211)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->reports()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-19 14:51:23 --> Undefined array key "type"
+in APPPATH\Controllers\Home.php on line 2213.
+ 1 APPPATH\Controllers\Home.php(2213): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "type"', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 2213)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->reports()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-10-19 14:52:23 --> Undefined array key "type"
+in APPPATH\Controllers\Home.php on line 2213.
+ 1 APPPATH\Controllers\Home.php(2213): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "type"', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 2213)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->reports()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+ERROR - 2023-10-19 15:12:39 --> mysqli_sql_exception: Incorrect TIMESTAMP value: '2023-10-1900:00:00' in C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php:295
+Stack trace:
+#0 C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`b...', 0)
+#1 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`b...')
+#2 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`b...')
+#3 C:\xampp\htdocs\babana\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`b...', Array, false)
+#4 C:\xampp\htdocs\babana\app\Models\BillModel.php(135): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\babana\app\Controllers\Home.php(2238): App\Models\BillModel->isAlreadyExist(Array)
+#6 C:\xampp\htdocs\babana\system\CodeIgniter.php(932): App\Controllers\Home->reports()
+#7 C:\xampp\htdocs\babana\system\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#8 C:\xampp\htdocs\babana\system\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\babana\index.php(68): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-10-19 15:12:39 --> Incorrect TIMESTAMP value: '2023-10-1900:00:00'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 295.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`bill_id`) AS `bill_id`
+FROM `bill`
+WHERE `status` = \'Done\'
+AND `date_check_out` >= \'2023-10-1900:00:00\'
+AND `date_check_out` <= \'2023-10-19\'', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`bill_id`) AS `bill_id`
+FROM `bill`
+WHERE `status` = \'Done\'
+AND `date_check_out` >= \'2023-10-1900:00:00\'
+AND `date_check_out` <= \'2023-10-19\'')
+ 3 SYSTEMPATH\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`bill_id`) AS `bill_id`
+FROM `bill`
+WHERE `status` = \'Done\'
+AND `date_check_out` >= \'2023-10-1900:00:00\'
+AND `date_check_out` <= \'2023-10-19\'')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`bill_id`) AS `bill_id`
+FROM `bill`
+WHERE `status` = :status:
+AND `date_check_out` >= :date_check_out:
+AND `date_check_out` <= :date_check_out.1:', [...], false)
+ 5 APPPATH\Models\BillModel.php(135): CodeIgniter\Database\BaseBuilder->get()
+ 6 APPPATH\Controllers\Home.php(2238): App\Models\BillModel->isAlreadyExist([...])
+ 7 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->reports()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 9 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+ERROR - 2023-10-19 15:16:24 --> mysqli_sql_exception: Incorrect TIMESTAMP value: '2023-10-1900:00:00' in C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php:295
+Stack trace:
+#0 C:\xampp\htdocs\babana\system\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`b...', 0)
+#1 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`b...')
+#2 C:\xampp\htdocs\babana\system\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`b...')
+#3 C:\xampp\htdocs\babana\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`b...', Array, false)
+#4 C:\xampp\htdocs\babana\app\Models\BillModel.php(135): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\babana\app\Controllers\Home.php(2229): App\Models\BillModel->isAlreadyExist(Array)
+#6 C:\xampp\htdocs\babana\system\CodeIgniter.php(932): App\Controllers\Home->reports()
+#7 C:\xampp\htdocs\babana\system\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#8 C:\xampp\htdocs\babana\system\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\babana\index.php(68): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-10-19 15:16:24 --> Incorrect TIMESTAMP value: '2023-10-1900:00:00'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 295.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(295): mysqli->query('SELECT COUNT(`bill_id`) AS `bill_id`
+FROM `bill`
+WHERE `status` = \'Done\'
+AND `date_check_out` >= \'2023-10-1900:00:00\'
+AND `date_check_out` <= \'2023-10-19\'', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`bill_id`) AS `bill_id`
+FROM `bill`
+WHERE `status` = \'Done\'
+AND `date_check_out` >= \'2023-10-1900:00:00\'
+AND `date_check_out` <= \'2023-10-19\'')
+ 3 SYSTEMPATH\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`bill_id`) AS `bill_id`
+FROM `bill`
+WHERE `status` = \'Done\'
+AND `date_check_out` >= \'2023-10-1900:00:00\'
+AND `date_check_out` <= \'2023-10-19\'')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`bill_id`) AS `bill_id`
+FROM `bill`
+WHERE `status` = :status:
+AND `date_check_out` >= :date_check_out:
+AND `date_check_out` <= :date_check_out.1:', [...], false)
+ 5 APPPATH\Models\BillModel.php(135): CodeIgniter\Database\BaseBuilder->get()
+ 6 APPPATH\Controllers\Home.php(2229): App\Models\BillModel->isAlreadyExist([...])
+ 7 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->reports()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 9 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()

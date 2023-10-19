@@ -2302,7 +2302,38 @@ function transaction() {
 
 
 
-function reports() {
+function reports(type = 'daily', from_date = null, to_date = null) {
+
+    var distance = {}
+    distance = { "type": type, "from_date": from_date, "to_date": to_date }
+
+    var err;
+    if (type == 'search-distance') {
+        // có from không có to date
+        if (from_date && !to_date) {
+            err = 1;
+            dhx.alert({ header: "Thông báo", text: "Không có dữ liệu Đến ngày", buttonsAlignment: "center", })
+        } else if (!from_date && to_date) {
+            err = 1;
+            dhx.alert({ header: "Thông báo", text: "Không có dữ liệu Từ ngày", buttonsAlignment: "center", })
+        } else if (!from_date && !to_date) {
+            err = 1;
+            dhx.alert({ header: "Thông báo", text: "Không có dữ liệu ngày được nhập", buttonsAlignment: "center", })
+        }
+
+        let from_date_check = new Date(from_date);
+        let to_date_check = new Date(to_date);
+
+        if (to_date_check < from_date_check) {
+            err = 1;
+            dhx.alert({ header: "Thông báo", text: "Dữ liệu ngày Bắt đầu (Từ ngày) không được lớn hơn dữ liệu ngày Đến (Đến ngày)", buttonsAlignment: "center", })
+        }
+    }
+
+    if (err == 1)
+        return;
+
+
 
     getAjaxData2(function (data) {
 
@@ -2326,21 +2357,21 @@ function reports() {
                 mark: (date) => {
                     if (date.getDay() === 5) return "highlight-date";
                 },
-                // disabled dates
-                disabledDates: (date) => {
-                    const disabled = { 2: true }
-                    return disabled[date.getDay()];
-                },
+                // // disabled dates
+                // disabledDates: (date) => {
+                //     const disabled = { 2: true }
+                //     return disabled[date.getDay()];
+                // },
                 weekStart: "monday", // "saturday" | "sunday" | "monday"
                 weekNumbers: false,
                 mode: "calendar", // "calendar" | "year" | "month" | "timepicker"
-                timePicker: false,
+                timePicker: true,
                 timeFormat: 24, // 24 | 12
                 thisMonthOnly: false,
             },
             { id: "to_date_label", value: "đến" },
             {
-                id: 'report_date',
+                id: 'to_date',
                 type: "datePicker",
                 value: new Date(),
                 editable: true,
@@ -2348,15 +2379,15 @@ function reports() {
                 mark: (date) => {
                     if (date.getDay() === 5) return "highlight-date";
                 },
-                // disabled dates
-                disabledDates: (date) => {
-                    const disabled = { 2: true }
-                    return disabled[date.getDay()];
-                },
+                // // disabled dates
+                // disabledDates: (date) => {
+                //     const disabled = { 2: true }
+                //     return disabled[date.getDay()];
+                // },
                 weekStart: "monday", // "saturday" | "sunday" | "monday"
                 weekNumbers: false,
                 mode: "calendar", // "calendar" | "year" | "month" | "timepicker"
-                timePicker: false,
+                timePicker: true,
                 timeFormat: 24, // 24 | 12
                 thisMonthOnly: false,
             },
@@ -2380,8 +2411,35 @@ function reports() {
         // loading structure into Toolbar
         reportsToolbar.data.parse(structure)
 
+        var btn_list = ['search-distance', 'daily', 'weekly', 'monthly', 'yearly']
+
         reportsToolbar.events.on("click", function (id, e) {
-            dhx.alert({ header: "Thông báo", text: "Chức năng chưa được hỗ trợ", buttonsAlignment: "center", })
+
+            let title = "Báo cáo theo ";
+            if (id == 'search-distance' ) {
+                title += " Khoảng ngày đã chọn";
+            } else if (id == 'daily' ) {
+                title += " Ngày";
+            } else if (id == 'weekly' ) {
+                title += " Tuần";
+            } else if (id == 'monthly' ) {
+                title += " Tháng";
+            } else if (id == 'yearly' ) {
+                title += " Năm";
+            }
+
+            reportsToolbar.data.update("dashboard", { value: title, icon: "mdi mdi-view-dashboard", group: "page", twoState: true, active: true })
+
+            // dhx.alert({ header: "Thông báo", text: "Chức năng chưa được hỗ trợ", buttonsAlignment: "center", })
+            let value = reportsToolbar.getState();
+            let from_date = value['from_date'];
+            let to_date = value['to_date'];
+            console.log(from_date, to_date);
+            if (from_date && to_date) {
+                if (btn_list.indexOf(id) != -1)
+                    reports(id, from_date, to_date);
+            }
+
         })
 
         /*  html -------------------------------------------------------------------------------------- */
@@ -2405,52 +2463,11 @@ function reports() {
         });
 
         /* chart tree map -------------------------------------------------------------------------------------- */
-        const treeMapData = [
-            {
-                "food": "Mercury",
-                "radius": "40"
-            },
-            {
-                "food": "Venus",
-                "radius": "256"
-            },
-            {
-                "food": "Earth",
-                "radius": "71"
-            },
-            {
-                "food": "Mars",
-                "radius": "90"
-            },
-            {
-                "food": "Jupiter",
-                "radius": "411"
-            },
-            {
-                "food": "Saturn",
-                "radius": "232"
-            },
-            {
-                "food": "Uranus",
-                "radius": "62"
-            },
-            {
-                "food": "Neptune",
-                "radius": "22"
-            }
-        ]
-
         const treeConfig = {
             type: "treeMap",
             css: "dhx_widget--bg_white dhx_widget--bordered",
             series: [
-                {
-                    value: "radius",
-                    text: "food",
-                    stroke: "#eeeeee",
-                    strokeWidth: 1,
-                    tooltipTemplate: item => `${item[1]} - ${item[0]}`,
-                }
+                { value: "radius", text: "food", stroke: "#eeeeee", strokeWidth: 1, tooltipTemplate: item => `${item[1]} - ${item[0]}`, }
             ],
             legend: {
                 type: "range",
@@ -2470,18 +2487,12 @@ function reports() {
                 direction: "row",
                 size: 50,
             },
-            data: treeMapData
+            data: result.treeMapData
         };
 
         treeChart = new dhx.Chart(null, treeConfig);
 
         /* chart pie donut -------------------------------------------------------------------------------------- */
-        const pieData = [
-            // { id: "Thu", value: 34.25, color: "#9A8BA5", type: "Thu" },
-            // { id: "Chi", value: 24.65, color: "#E3C5D5", type: "Chi" }
-            { id: "Dư có", value: 5000000, color: "#49be25", type: "Dư có" },
-            { id: "Chi", value: 3450000, color: "#be4d25", type: "Chi" }
-        ];
         const donutConfig = {
             type: "donut",
             css: "dhx_widget--bg_white dhx_widget--bordered",
@@ -2503,7 +2514,7 @@ function reports() {
         };
 
         donutChart = new dhx.Chart("chart", donutConfig);
-        donutChart.data.parse(pieData);
+        donutChart.data.parse(result.pieData);
 
 
         // attaching widgets to Layout cells
@@ -2519,7 +2530,7 @@ function reports() {
         reportsWindow.setFullScreen();
         reportsWindow.show();
 
-    }, "reports")
+    }, "reports", distance)
 
 }
 
@@ -2636,5 +2647,5 @@ $("#transaction").on("click", function () {
 
 // reports
 $("#reports").on("click", function () {
-    reports();
+    reports('daily');
 });
