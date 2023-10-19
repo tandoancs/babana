@@ -1463,7 +1463,12 @@ function food() {
         foodToolbar.data.parse(structure)
 
         foodToolbar.events.on("click", function (id, e) {
-            dhx.alert({ header: "Thông báo", text: "Chức năng chưa được hỗ trợ", buttonsAlignment: "center", })
+            if (id == "imports") {
+                imports('food');
+            } else if (id == "exports") {
+
+            }
+            // dhx.alert({ header: "Thông báo", text: "Chức năng chưa được hỗ trợ", buttonsAlignment: "center", })
         })
 
         /*  grid-------------------------------------------------------------------------------------- */
@@ -2302,7 +2307,7 @@ function transaction() {
 
 
 
-function reports(type = 'daily', from_date = null, to_date = null) {
+function reports(type = 'daily', title = 'Dữ liệu Báo cáo theo Ngày', from_date = null, to_date = null) {
 
     var distance = {}
     distance = { "type": type, "from_date": from_date, "to_date": to_date }
@@ -2345,7 +2350,7 @@ function reports(type = 'daily', from_date = null, to_date = null) {
         /*  toolbar-------------------------------------------------------------------------------------- */
         var structure = [
             { type: "button", view: "flat", color: "primary", circle: true, icon: "mdi mdi-menu" },
-            { id: "dashboard", value: "Các chức năng", icon: "mdi mdi-view-dashboard", group: "page", twoState: true, active: true },
+            { id: "dashboard", value: title, icon: "mdi mdi-view-dashboard", group: "page", twoState: true, active: true },
             { type: "spacer" },
             { id: "from_date_label", value: "Từ ngày" },
             {
@@ -2402,7 +2407,7 @@ function reports(type = 'daily', from_date = null, to_date = null) {
                 ]
             },
             { id: "settings2", icon: "mdi mdi-cog", type: "button", view: "link", color: "secondary", circle: true },
-            { type: "text", icon: "mdi mdi-help-circle", value: "Hướng dẫn", tooltip: "Chức năng:: Lưu tất cả các sản phẩm đã sửa." },
+            { type: "text", icon: "mdi mdi-help-circle", value: "Hướng dẫn", tooltip: "Báo cáo có thể chọn Theo khoảng thời gian (từ ngày đến ngày) hoặc theo Ngày, Tuần, Tháng, Năm (tính từ thời điểm hiện tại lùi về sau)" },
         ]
 
         // Toolbar initialization
@@ -2415,16 +2420,16 @@ function reports(type = 'daily', from_date = null, to_date = null) {
 
         reportsToolbar.events.on("click", function (id, e) {
 
-            let title = "Báo cáo theo ";
-            if (id == 'search-distance' ) {
+            let title = "Dữ liệu Báo cáo theo ";
+            if (id == 'search-distance') {
                 title += " Khoảng ngày đã chọn";
-            } else if (id == 'daily' ) {
+            } else if (id == 'daily') {
                 title += " Ngày";
-            } else if (id == 'weekly' ) {
+            } else if (id == 'weekly') {
                 title += " Tuần";
-            } else if (id == 'monthly' ) {
+            } else if (id == 'monthly') {
                 title += " Tháng";
-            } else if (id == 'yearly' ) {
+            } else if (id == 'yearly') {
                 title += " Năm";
             }
 
@@ -2436,8 +2441,11 @@ function reports(type = 'daily', from_date = null, to_date = null) {
             let to_date = value['to_date'];
             console.log(from_date, to_date);
             if (from_date && to_date) {
-                if (btn_list.indexOf(id) != -1)
-                    reports(id, from_date, to_date);
+                if (btn_list.indexOf(id) != -1) {
+                    reportsWindow.destructor();
+                    reports(id, title, from_date, to_date);
+
+                }
             }
 
         })
@@ -2532,6 +2540,38 @@ function reports(type = 'daily', from_date = null, to_date = null) {
 
     }, "reports", distance)
 
+}
+
+// import revise promise date
+function imports(type) {
+
+    // init window
+    dhxWindow = new dhx.Window({
+        title: "Import Window",
+        modal: false, // Khóa window không cho di chuyển
+        resizable: false,
+        movable: true,
+        closable: true, // hiển thị button đóng window
+        viewportOverflow: true,
+        width: 550,
+        height: 150
+    });
+
+    let url = "imports?type=" + type;
+    var html = '<form action="' + url + '" method="post" enctype="multipart/form-data">';
+    html += 'Select file to upload:';
+    html += '<input type="file" name="file" id="file">';
+    html += '<input type="submit" value="Upload" name="submit">';
+    html += '</form>';
+    dhxWindow.attachHTML(html);
+
+    // show Window
+    dhxWindow.show();
+
+}
+
+function exports(type) {
+    location.href = "./exports?type=" + type;
 }
 
 

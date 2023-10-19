@@ -449,27 +449,6 @@ class Home extends BaseController
         return json_encode($data, JSON_UNESCAPED_UNICODE);
     }
 
-    public function testData()
-    {
-        $data = array('Test');
-        return json_encode($data, JSON_UNESCAPED_UNICODE);
-    }
-
-    public function imports()
-    {
-        // set time out
-        ini_set('max_execution_time', 1800);
-
-        // init PhpSpreadsheet Xlsx
-        $Reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-        // get sheet 0 (sheet 1)
-        $file_data = WRITEPATH . 'uploads/test.xlsx';
-        $spreadSheet = $Reader->load($file_data);
-        $spreadSheet = $spreadSheet->getSheet(0);
-        $allDataInSheet = $spreadSheet->toArray(null, true, true, true);
-
-        print_r($allDataInSheet);
-    }
 
     // dữ liệu in hóa đơn
     public function printer()
@@ -2161,23 +2140,22 @@ class Home extends BaseController
         $to_date = date("Y-m-d H:i:s");
 
         $month_31 = ['1', '3', '5', '7', '8', '10', '12'];
-        
-        if ($type == 'daily' ) {
+
+        if ($type == 'daily') {
             $from_date = $current_date;
-        }  else if ($type == 'weekly' ) {
+        } else if ($type == 'weekly') {
             $from_date = date("Y-m-d", strtotime(date('Y-m-d H:i:s') . "-7 days"));
-        } else if ($type == 'monthly' ) {
+        } else if ($type == 'monthly') {
             $date_count = 30;
             $month = date('m');
-            if ($month == '2' ) {
+            if ($month == '2') {
                 $date_count = ((int)date('Y') / 4 == 0) ? 29 : 28;
-            } else if (in_array($month, $month_31) ) {
+            } else if (in_array($month, $month_31)) {
                 $date_count = 31;
             }
 
             $from_date = date("Y-m-d", strtotime(date('Y-m-d H:i:s') . "- $date_count days"));
-
-        } else if ($type == 'yearly' ) {
+        } else if ($type == 'yearly') {
             $from_date = date('Y') . '-01-01 00:00:00';
         }
         //  else if ($type == 'search-distance') {
@@ -2185,10 +2163,8 @@ class Home extends BaseController
         // }
 
         $from_date .= ' 00:00:00';
-        
-        return ['from_date' => $from_date, 'to_date' => $to_date];
 
-        
+        return ['from_date' => $from_date, 'to_date' => $to_date];
     }
 
     public function reports()
@@ -2230,7 +2206,7 @@ class Home extends BaseController
             $total_in_bill = 0;
 
             $where = ['status' => 'Done', 'date_check_out >= ' => $from_date, 'date_check_out <= ' => $to_date];
-            if ($BillModel->isAlreadyExist($where) ) {
+            if ($BillModel->isAlreadyExist($where)) {
 
                 $billData = $BillModel->readOptions($where);
 
@@ -2239,10 +2215,9 @@ class Home extends BaseController
 
                 // số sản phẩm đã bán trong khoảng thời gian đã chọn
                 $food_sum = $BillModel->sumOptions('sum_orders', $where);
-                
+
                 // tổng doanh thu trong hóa đơn trong khoảng thời gian đã chọn
                 $total_in_bill = $BillModel->sumOptions('total', $where);
-                
             }
 
             // lấy dữ liệu từ trans (các giao dịch ngoài hóa đơn)
@@ -2253,20 +2228,20 @@ class Home extends BaseController
             // tổng Chi trong các giao dịch ngoài hóa đơn
             $where = ['trans_type' => 'Chi', 'status' => 1, 'trans_date >= ' => $from_date, 'trans_date <= ' => $to_date];
             $total_trans_spend = ($TransModel->isAlreadyExist($where)) ? $TransModel->sumOptions('money', $where) : 0;
-            
+
             // tổng doanh thu
             $total = $total_in_bill + $total_trans_income;
 
             // tổng dư có là số tiền còn lại của doanh thu trừ đi chi tiêu
             $total_temporary_profit = $total - $total_trans_spend;
-            
+
             // show 
             $count_customer_show = number_format($count_customer);
             $food_sum_show = number_format($food_sum);
             $total_show = number_format($total);
             $total_temporary_profit_show = number_format($total_temporary_profit);
 
-            
+
 
             $html = '
                 <div class="row m-t-25">
@@ -2349,7 +2324,7 @@ class Home extends BaseController
             // treemap ----------------------------------------------------------------
             $treeMapData = [];
 
-            if (!empty($billData ) ) {
+            if (!empty($billData)) {
                 $bill_id_list = [];
                 $food_id_list = [];
                 foreach ($billData as $bill) {
@@ -2357,25 +2332,22 @@ class Home extends BaseController
 
                     $billDetailData = $BillDetailModel->readOptions(['bill_id' => $bill->bill_id]);
                     foreach ($billDetailData as $billDetailItem) {
-                        $food_id_list[] = $billDetailItem->food_id;    
+                        $food_id_list[] = $billDetailItem->food_id;
                     }
-                    
-                    
                 }
-                
+
                 $foodData = $FoodModel->readAll();
                 foreach ($foodData as $food) {
-                    if (in_array($food->food_id, $food_id_list) ) {
+                    if (in_array($food->food_id, $food_id_list)) {
                         $bill_id_string = "('" . implode("','", $bill_id_list) . "')";
-                        $w = ['food_id' => $food->food_id ];
-                        
+                        $w = ['food_id' => $food->food_id];
+
                         // $w = "food_id = '$food->food_id' AND bill_id IN ( $bill_id_string )" ;
                         $food_sum = $BillDetailModel->isAlreadyExist2($w, 'bill_id', $bill_id_list) ? $BillDetailModel->sumOptions2('count', $w, 'bill_id', $bill_id_list) : 0;
                         $food_sum_show = number_format($food_sum);
-                        $treeMapData[] = [ 'food' => $food->food_name, 'radius' => $food_sum_show];
+                        $treeMapData[] = ['food' => $food->food_name, 'radius' => $food_sum_show];
                     }
                 }
-                
             }
 
 
@@ -2385,46 +2357,19 @@ class Home extends BaseController
             // { id: "Chi", value: 3450000, color: "#be4d25", type: "Chi" }
             $pieData[] = ['id' => 'Dư có', "value" => $total_temporary_profit, "color" => "#49be25", "type" => "Dư có"];
             $pieData[] = ['id' => 'Chi', "value" => $total_trans_spend, "color" => "#be4d25", "type" => "Chi"];
-            
         }
 
         return json_encode(array('status' => $status, 'message' => $message, 'html' => $html, 'treeMapData' => $treeMapData, 'pieData' => $pieData), JSON_UNESCAPED_UNICODE);
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    public function imports2()
+    public function imports()
     {
         // set time out
         ini_set('max_execution_time', 1800);
 
-        // check login
-        if (!get_cookie('adUser')) return view('users/index');
-
         // get title
-        $_data['title'] = "Revise Promise Date";
+        $data['title'] = "Import Data";
 
         // get data
         /* Một số trường hợp file excel có dạng: application/zip hoặc application/octet-stream  */
@@ -2434,339 +2379,813 @@ class Home extends BaseController
                 'mime_in[file,application/vnd.ms-excel,application/octet-stream,application/zip,text/xls,text/xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet]',
             ]
         ]);
+
+        $file = $this->request->getFile('file');
+
         // set init
-        $fileData = array(); // lấy dữ liệu
         $message = "No Import data has been updated";
         $log_error = '';
-        // Biến đếm update bao nhiêu
-        $successCount = 0;
 
-        if (!$input) {
-            print_r('Choose a valid file');
+        // Count success and error
+        $count_success = 0;
+        $count_error = 0;
+
+
+        // $file = $this->request->getFile('file');
+        if (!$file->isValid()) {
+            throw new RuntimeException($file->getErrorString() . '(' . $file->getError() . ')');
         } else {
-            /* Hàm lấy mine type $file->getMimeType();*/
 
-            $file = $this->request->getFile('file');
-            if (!$file->isValid()) {
-                throw new RuntimeException($file->getErrorString() . '(' . $file->getError() . ')');
-            } else {
-                // set user data, file
-                $updated_by = get_cookie('adUser');
-                $updated_date = date('Y-m-d H:i:s');
-                $file_name = 'RevisePD_' . $_SERVER['REMOTE_ADDR'] . '_' . $updated_by . '_' . date('YmdHis') . '.xlsx';
-                // move this file to writable/uploads folder
-                $file->move(WRITEPATH . 'uploads', $file_name);
+            $type = $this->request->getVar('type');
+            $file_name_type = '';
+            if ($type == 'food' ) {
+                $file_name_type = 'Food_';
+            }
 
-                // init PhpSpreadsheet Xlsx
-                $Reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-                // get sheet 0 (sheet 1)
-                $file_data = WRITEPATH . 'uploads/' . $file_name;
-                $spreadSheet = $Reader->load($file_data);
-                $spreadSheet = $spreadSheet->getSheet(0);
-                $allDataInSheet = $spreadSheet->toArray(null, true, true, true);
+            $file_name = 'Babana_' . $file_name_type . date('Ymd') . '_' . $_SERVER['REMOTE_ADDR'] . date('Ymd_His') . '.xlsx';
 
-                /* START: check col ----------------------------------------------------------------------------------------------- */
-                // check col name exist
-                $createArray = array('OU', 'Order No', 'Line No', 'Request Date', 'Promise Date');
-                $makeArray = array('OU' => 'OU', 'OrderNo' => 'OrderNo', 'LineNo' => 'LineNo', 'RequestDate' => 'RequestDate', 'PromiseDate' => 'PromiseDate');
+            // move this file to writable/uploads folder
+            $file->move(WRITEPATH . 'uploads/', $file_name);
+
+
+            // get file
+            $file_data = WRITEPATH . 'uploads/' . $file_name;
+
+            // init PhpSpreadsheet Xlsx
+            $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+            $spreadsheet = $reader->load($file_data);
+
+            // Lấy từng sheet để import
+            $fileData = array();
+            if ($type == 'food') {
+                $fileData = $spreadsheet->getSheetByName('Food');
+            }
+
+            if (!empty($fileData)) {
+
+                $allDataInSheet = $fileData->toArray(null, true, true, true);
+                // print_r($mainMasterData); exit();
+
+                /* ---------------------------------------------------------------------------------------------------------------------
+                    | header check
+                    | 
+                -----------------------------------------------------------------------------------------------------------------------*/
+                $createArray = array(
+                    'form_type', 'active', 'internal_item', 'order_item', 'rbo', 'product_type', 'cbs', 'two_sides_printing', 'dual_machine', 'width',
+                    'length', 'blank_gap', 'build_stock_cbs_item', 'material_code', 'inlay_type', 'material_description', 'front_ink', 'front_ink_description', 'back_ink', 'back_ink_description', 'approved_sample_card',
+                    'machine', 'print_system', 'system', 'packing_form', 'pcs_per_sheet', 'combo', 'combine', 'combo_at', 'fsc', 'brand_protection',
+                    'baseroll_in_1_kit', 'qty_pcs_in_1_roll', 'ribbon_in_1_kit', 'ribbon_length', 'process', 'print_speed', 'print_output', 'remark_1', 'remark_2', 'remark_3',
+                    'remark_4', 'remark_5'
+
+                );
+                $makeArray = array(
+                    // 1 - 10
+                    'form_type' => 'form_type',
+                    'active' => 'active',
+                    'internal_item' => 'internal_item',
+                    'order_item' => 'order_item',
+                    'rbo' => 'rbo',
+                    'product_type' => 'product_type',
+                    'cbs' => 'cbs',
+                    'two_sides_printing' => 'two_sides_printing',
+                    'dual_machine' => 'dual_machine',
+                    'width' => 'width',
+                    // 11 - 20
+                    'length' => 'length',
+                    'blank_gap' => 'blank_gap',
+                    'build_stock_cbs_item' => 'build_stock_cbs_item',
+                    'material_code' => 'material_code',
+                    'inlay_type' => 'inlay_type',
+                    'material_description' => 'material_description',
+                    'front_ink' => 'front_ink',
+                    'front_ink_description' => 'front_ink_description',
+                    'back_ink' => 'back_ink',
+                    'back_ink_description' => 'back_ink_description',
+
+                    // 21 - 30
+                    'approved_sample_card' => 'approved_sample_card',
+                    'machine' => 'machine',
+                    'print_system' => 'print_system',
+                    'system' => 'system',
+                    'packing_form' => 'packing_form',
+                    'pcs_per_sheet' => 'pcs_per_sheet',
+                    'combo' => 'combo',
+                    'combine' => 'combine',
+                    'combo_at' => 'combo_at',
+                    'fsc' => 'fsc',
+                    // 31 - 40
+                    'brand_protection' => 'brand_protection',
+                    'baseroll_in_1_kit' => 'baseroll_in_1_kit',
+                    'qty_pcs_in_1_roll' => 'qty_pcs_in_1_roll',
+                    'ribbon_in_1_kit' => 'ribbon_in_1_kit',
+                    'ribbon_length' => 'ribbon_length',
+                    'process' => 'process',
+                    'print_speed' => 'print_speed',
+                    'print_output' => 'print_output',
+                    'remark_1' => 'remark_1',
+                    'remark_2' => 'remark_2',
+                    // 41 - 43
+                    'remark_3' => 'remark_3',
+                    'remark_4' => 'remark_4',
+                    'remark_5' => 'remark_5'
+
+                );
+
                 $SheetDataKey = array();
-                foreach ($allDataInSheet as $dataInSheet) {
-                    foreach ($dataInSheet as $key => $value) {
-                        if (in_array(trim($value), $createArray)) {
-                            $value = preg_replace('/\s+/', '', $value);
-                            $SheetDataKey[trim($value)] = $key;
-                        }
+                foreach ($allDataInSheet[1] as $key => $value) {
+                    if (in_array(trim($value), $createArray)) {
+                        $value = preg_replace('/\s+/', '', $value);
+                        $SheetDataKey[trim($value)] = $key;
                     }
-
-                    break;
                 }
 
                 // check data
-                $flag = 0;
                 $data = array_diff_key($makeArray, $SheetDataKey);
-                if (empty($data)) {
-                    $flag = 1;
-                }
-                /* END: check col ----------------------------------------------------------------------------------------------- */
+                $flag = (empty($data)) ? 1 : 0;
 
-                /* START: GET DATA ----------------------------------------------------------------------------------------------- */
-
-                // True, excute
+                /* ---------------------------------------------------------------------------------------------------------------------
+                    | get data
+                    | 
+                -----------------------------------------------------------------------------------------------------------------------*/
                 if ($flag == 1) {
 
                     // open db and models
                     $db = db_connect();
-                    $Revise = new PromiseDateRevise($db);
+                    $MasterDataModel = new MasterDataModel($db);
+                    $PlanningRFIDSBMultiInkQty = new PlanningRFIDSBMultiInkQty($db);
+
+
+                    // $MSColorModel = new MSColorModel($db);
+
+                    // get col key
+                    // 1 - 10
+                    $form_type_col = $SheetDataKey['form_type'];
+                    $active_col = $SheetDataKey['active'];
+                    $internal_item_col = $SheetDataKey['internal_item'];
+                    $order_item_col = $SheetDataKey['order_item'];
+                    $rbo_col = $SheetDataKey['rbo'];
+                    $product_type_col = $SheetDataKey['product_type'];
+                    $cbs_col = $SheetDataKey['cbs'];
+                    $two_sides_printing_col = $SheetDataKey['two_sides_printing'];
+                    $dual_machine_col = $SheetDataKey['dual_machine'];
+                    $width_col = $SheetDataKey['width'];
+                    // 11 - 20
+                    $length_col = $SheetDataKey['length'];
+                    $blank_gap_col = $SheetDataKey['blank_gap'];
+                    $build_stock_cbs_item_col = $SheetDataKey['build_stock_cbs_item'];
+                    $material_code_col = $SheetDataKey['material_code'];
+                    $inlay_type_col = $SheetDataKey['inlay_type'];
+                    $material_description_col = $SheetDataKey['material_description'];
+                    $front_ink_col = $SheetDataKey['front_ink'];
+                    $front_ink_description_col = $SheetDataKey['front_ink_description'];
+                    $back_ink_col = $SheetDataKey['back_ink'];
+                    $back_ink_description_col = $SheetDataKey['back_ink_description'];
+                    // 21 - 30
+                    $approved_sample_card_col = $SheetDataKey['approved_sample_card'];
+                    $machine_col = $SheetDataKey['machine'];
+                    $print_system_col = $SheetDataKey['print_system'];
+                    $system_col = $SheetDataKey['system'];
+                    $packing_form_col = $SheetDataKey['packing_form'];
+                    $pcs_per_sheet_col = $SheetDataKey['pcs_per_sheet'];
+                    $combo_col = $SheetDataKey['combo'];
+                    $combine_col = $SheetDataKey['combine'];
+                    $combo_at_col = $SheetDataKey['combo_at'];
+                    $fsc_col = $SheetDataKey['fsc'];
+                    // 31 - 40
+                    $brand_protection_col = $SheetDataKey['brand_protection'];
+                    $baseroll_in_1_kit_col = $SheetDataKey['baseroll_in_1_kit'];
+                    $qty_pcs_in_1_roll_col = $SheetDataKey['qty_pcs_in_1_roll'];
+                    $ribbon_in_1_kit_col = $SheetDataKey['ribbon_in_1_kit'];
+                    $ribbon_length_col = $SheetDataKey['ribbon_length'];
+                    $process_col = $SheetDataKey['process'];
+                    $print_speed_col = $SheetDataKey['print_speed'];
+                    $print_output_col = $SheetDataKey['print_output'];
+                    $remark_1_col = $SheetDataKey['remark_1'];
+                    $remark_2_col = $SheetDataKey['remark_2'];
+                    // 41 -43
+                    $remark_3_col = $SheetDataKey['remark_3'];
+                    $remark_4_col = $SheetDataKey['remark_4'];
+                    $remark_5_col = $SheetDataKey['remark_5'];
+
+                    // list check number
+                    $listName[] = 'active';
+                    $listName[] = 'width';
+                    $listName[] = 'length';
+                    $listName[] = 'blank_gap';
+                    $listName[] = 'pcs_per_sheet';
+                    $listName[] = 'baseroll_in_1_kit';
+                    $listName[] = 'qty_pcs_in_1_roll';
+                    $listName[] = 'ribbon_in_1_kit';
+                    $listName[] = 'ribbon_length';
+                    $listName[] = 'print_speed';
+                    $listName[] = 'print_output';
+
                     // load
+                    $data = array();
+                    $index = 0;
                     for ($i = 2; $i <= count($allDataInSheet); $i++) {
-                        // get col key
-                        $OU = $SheetDataKey['OU'];
-                        $OrderNo = $SheetDataKey['OrderNo'];
-                        $LineNo = $SheetDataKey['LineNo'];
-                        $RequestDate = $SheetDataKey['RequestDate'];
-                        $PromiseDate = $SheetDataKey['PromiseDate'];
+
+                        $index++;
 
                         // get data
-                        $OU = filter_var(trim($allDataInSheet[$i][$OU]), FILTER_SANITIZE_STRING); // key primary
-                        $OrderNo = filter_var(trim($allDataInSheet[$i][$OrderNo]), FILTER_SANITIZE_STRING);
-                        $LineNo = filter_var(trim($allDataInSheet[$i][$LineNo]), FILTER_SANITIZE_STRING);
-                        $RequestDate = trim($allDataInSheet[$i][$RequestDate]);
-                        $PromiseDate = trim($allDataInSheet[$i][$PromiseDate]);
+                        // 1 - 10
+                        $form_type = filter_var(trim($allDataInSheet[$i][$form_type_col]));
+                        $active = filter_var(trim($allDataInSheet[$i][$active_col]));
+                        $internal_item = filter_var(trim($allDataInSheet[$i][$internal_item_col]));
+                        $order_item = filter_var(trim($allDataInSheet[$i][$order_item_col]));
+                        $rbo = filter_var(trim($allDataInSheet[$i][$rbo_col]));
+                        $product_type = filter_var(trim($allDataInSheet[$i][$product_type_col]));
+                        $cbs = filter_var(trim($allDataInSheet[$i][$cbs_col]));
+                        $two_sides_printing = filter_var(trim($allDataInSheet[$i][$two_sides_printing_col]));
+                        $dual_machine = filter_var(trim($allDataInSheet[$i][$dual_machine_col]));
+                        $width = filter_var(trim($allDataInSheet[$i][$width_col]));
+                        // 11 - 20
+                        $length = filter_var(trim($allDataInSheet[$i][$length_col]));
+                        $blank_gap = filter_var(trim($allDataInSheet[$i][$blank_gap_col]));
+                        $build_stock_cbs_item = filter_var(trim($allDataInSheet[$i][$build_stock_cbs_item_col]));
+                        $material_code = filter_var(trim($allDataInSheet[$i][$material_code_col]));
+                        $inlay_type = filter_var(trim($allDataInSheet[$i][$inlay_type_col]));
+                        $material_description = filter_var(trim($allDataInSheet[$i][$material_description_col]));
+                        $front_ink = filter_var(trim($allDataInSheet[$i][$front_ink_col]));
+                        $front_ink_description = filter_var(trim($allDataInSheet[$i][$front_ink_description_col]));
+                        $back_ink = filter_var(trim($allDataInSheet[$i][$back_ink_col]));
+                        $back_ink_description = filter_var(trim($allDataInSheet[$i][$back_ink_description_col]));
 
-                        // set validation
-                        $RequestDate = date('Y-m-d', strtotime($RequestDate)); // get date and set format
-                        $PromiseDate = date('Y-m-d', strtotime($PromiseDate)); // get date and set format
-                        // status
-                        $status = 1;
-                        if (!empty($PromiseDate) && ($PromiseDate != '1970-01-01')) {
-                            $status = 1;
+                        // 21 -30
+                        $approved_sample_card = filter_var(trim($allDataInSheet[$i][$approved_sample_card_col]));
+                        $machine = filter_var(trim($allDataInSheet[$i][$machine_col]));
+                        $print_system = filter_var(trim($allDataInSheet[$i][$print_system_col]));
+                        $system = filter_var(trim($allDataInSheet[$i][$system_col]));
+                        $packing_form = filter_var(trim($allDataInSheet[$i][$packing_form_col]));
+                        $pcs_per_sheet = filter_var(trim($allDataInSheet[$i][$pcs_per_sheet_col]));
+                        $combo = filter_var(trim($allDataInSheet[$i][$combo_col]));
+                        $combine = filter_var(trim($allDataInSheet[$i][$combine_col]));
+                        $combo_at = filter_var(trim($allDataInSheet[$i][$combo_at_col]));
+                        $fsc = filter_var(trim($allDataInSheet[$i][$fsc_col]));
+                        // 31 - 40
+                        $brand_protection = filter_var(trim($allDataInSheet[$i][$brand_protection_col]));
+                        $baseroll_in_1_kit = filter_var(trim($allDataInSheet[$i][$baseroll_in_1_kit_col]));
+                        $qty_pcs_in_1_roll = filter_var(trim($allDataInSheet[$i][$qty_pcs_in_1_roll_col]));
+                        $ribbon_in_1_kit = filter_var(trim($allDataInSheet[$i][$ribbon_in_1_kit_col]));
+                        $ribbon_length = filter_var(trim($allDataInSheet[$i][$ribbon_length_col]));
+                        $process = filter_var(trim($allDataInSheet[$i][$process_col]));
+                        $print_speed = filter_var(trim($allDataInSheet[$i][$print_speed_col]));
+                        $print_output = filter_var(trim($allDataInSheet[$i][$print_output_col]));
+                        $remark_1 = filter_var(trim($allDataInSheet[$i][$remark_1_col]));
+                        $remark_2 = filter_var(trim($allDataInSheet[$i][$remark_2_col]));
+
+                        // 41 - 43
+                        $remark_3 = filter_var(trim($allDataInSheet[$i][$remark_3_col]));
+                        $remark_4 = filter_var(trim($allDataInSheet[$i][$remark_4_col]));
+                        $remark_5 = filter_var(trim($allDataInSheet[$i][$remark_5_col]));
+
+                        // reset data to save to database
+                        // boolean
+                        $cbs = (strtolower($cbs) == 'yes') ? 1 : 0;
+                        $two_sides_printing = (strtolower($two_sides_printing) == 'yes') ? 1 : 0;
+                        $dual_machine = (strtolower($dual_machine) == 'yes') ? 1 : 0;
+                        $build_stock_cbs_item = (strtolower($build_stock_cbs_item) == 'yes') ? 1 : 0;
+                        $brand_protection = (strtolower($brand_protection) == 'yes') ? 1 : 0;
+
+                        // check empty
+                        if (empty($internal_item)) {
+                            $count_error++;
+                            if ($count_error < 5)
+                                continue;
+                            else
+                                break;
                         }
-                        $so_line = $OrderNo . "-" . $LineNo;
-                        $updated_by_ip = $_SERVER['REMOTE_ADDR']; // IP
 
-                        // check validation
-                        if (empty($OrderNo) || empty($OrderNo) || empty($PromiseDate)) break;
-                        if (strlen($OrderNo) != 8) break; // Trường hợp Order không phải 8 chữ số
+                        // check numberic
+                        $list = array($active, $width, $length, $blank_gap, $pcs_per_sheet, $baseroll_in_1_kit, $qty_pcs_in_1_roll, $ribbon_in_1_kit, $ribbon_length, $print_speed, $print_output);
+                        $check_number = $this->isNumberic($list);
+                        if ($check_number != 100) {
+                            $message = $listName[$check_number] . " nhập sai định dạng dòng internal_item: $internal_item. (Các dữ liệu còn lại chưa được imports)";
+                            // dừng import
+                            break;
+                        }
+
+                        // int, float
+                        $active = ((int)$active == 1) ? 1 : 0;
+                        $width = (float)$width;
+                        $length = (float)$length;
+                        $blank_gap = (float)$blank_gap;
+                        $pcs_per_sheet = (int)$pcs_per_sheet;
+
+                        $baseroll_in_1_kit = (float)$baseroll_in_1_kit;
+                        $qty_pcs_in_1_roll = (float)$qty_pcs_in_1_roll;
+                        $ribbon_in_1_kit = (float)$ribbon_in_1_kit;
+                        $ribbon_length = (float)$ribbon_length;
+                        $print_speed = (float)$print_speed;
+                        $print_output = (float)$print_output;
+
+
 
                         // get data
-                        $fileData[] = array(
-                            'status' => $status,
-                            'OU' => $OU,
-                            'order_number' => $OrderNo,
-                            'line_number' => $LineNo,
-                            'so_line' => $so_line,
-                            'request_date' => $RequestDate,
-                            'promise_date' => $PromiseDate,
-                            'updated_by_name' => $updated_by,
-                            'updated_by_ip' => $updated_by_ip,
-                            'updated_date' => $updated_date
+                        $data = array(
+                            // 1 - 10
+                            'form_type' => $form_type,
+                            'active' => $active,
+                            'internal_item' => $internal_item,
+                            'order_item' => $order_item,
+                            'rbo' => $rbo,
+                            'product_type' => $product_type,
+                            'cbs' => $cbs,
+                            'two_sides_printing' => $two_sides_printing,
+                            'dual_machine' => $dual_machine,
+                            'width' => $width,
+                            // 11 - 20
+                            'length' => $length,
+                            'blank_gap' => $blank_gap,
+                            'build_stock_cbs_item' => $build_stock_cbs_item,
+                            'material_code' => $material_code,
+                            'inlay_type' => $inlay_type,
+                            'material_description' => $material_description,
+                            'front_ink' => $front_ink,
+                            'front_ink_description' => $front_ink_description,
+                            'back_ink' => $back_ink,
+                            'back_ink_description' => $back_ink_description,
+
+                            // 21 - 30
+                            'approved_sample_card' => $approved_sample_card,
+                            'machine' => $machine,
+                            'print_system' => $print_system,
+                            'system' => $system,
+                            'packing_form' => $packing_form,
+                            'pcs_per_sheet' => $pcs_per_sheet,
+                            'combo' => $combo,
+                            'combine' => $combine,
+                            'combo_at' => $combo_at,
+                            'fsc' => $fsc,
+
+                            // 31 - 40 
+                            'brand_protection' => $brand_protection,
+                            'baseroll_in_1_kit' => $baseroll_in_1_kit,
+                            'qty_pcs_in_1_roll' => $qty_pcs_in_1_roll,
+                            'ribbon_in_1_kit' => $ribbon_in_1_kit,
+                            'ribbon_length' => $ribbon_length,
+                            'process' => $process,
+                            'print_speed' => $print_speed,
+                            'print_output' => $print_output,
+                            'remark_1' => $remark_1,
+                            'remark_2' => $remark_2,
+                            // 41 - 43
+                            'remark_3' => $remark_3,
+                            'remark_4' => $remark_4,
+                            'remark_5' => $remark_5,
+                            // update by, date
+                            'updated_by' => $updated_by
                         );
 
-                        if (count($fileData) == 500) {
+                        $dataTmp = $data;
 
-                            // check updated
-                            foreach ($fileData as $key => $value) {
 
-                                $where = array('order_number' => $value['order_number'], 'line_number' => $value['line_number']);
-                                if ($Revise->isAlreadyExist($where)) {
+                        if (empty($internal_item)) {
+                            continue;
+                        }
 
-                                    $updateData = $fileData[$key];
-                                    unset($updateData['order_number']); // xóa điều kiện
-                                    unset($updateData['line_number']); // xóa điều kiện
-                                    $result = $Revise->edit($where, $updateData);
-                                    // Lưu lỗi update
-                                    if (!$result) {
-                                        $message = "Import data error (Update)";
-                                        $log_error .= ($key + 2) . ",";
-                                    } else {
-                                        $message = "Import data success (U)";
-                                        $successCount++;
-                                    }
-                                    // Xóa bỏ dữ liệu đã cập nhật (cập nhật lỗi vẫn xóa)
-                                    unset($fileData[$key]);
-                                }
+                        $where = array('internal_item' => $internal_item);
+                        if ($MasterDataModel->isAlreadyExist($where)) {
+
+                            unset($data['internal_item']); // xóa điều kiện
+                            $data['updated_date'] = date('Y-m-d H:i:s');
+                            $dataTmp['updated_date'] = date('Y-m-d H:i:s');
+
+
+                            $mess_sub = "(Update)";
+                            $result = $MasterDataModel->edit($where, $data);
+                        } else {
+                            $mess_sub = "(Insert)";
+                            $result = $MasterDataModel->create($data);
+                        }
+
+                        // check
+                        if (!$result) {
+                            $message = "ERROR. Import lỗi dòng Internal Item: $internal_item $mess_sub";
+                            break;
+                        } else {
+
+                            $save_to_db = $this->setSaveModel(strtolower(trim($data['form_type'])));
+                            $saveModel = '';
+                            if ($save_to_db == 'MSColorModel') {
+                                $saveModel = new MSColorModel($db);
+                            } else if ($save_to_db == 'DatabaseTrimModel') {
+                                $saveModel = new DatabaseTrimModel($db);
+                            } else if ($save_to_db == 'NoCBSModel') {
+                                $saveModel = new NoCBSModel($db);
                             }
 
-                            // reset fileDate
-                            $fileData = array();
-                        }
-                    }
-
-                    // check and update
-                    if (!empty($fileData)) {
-
-                        foreach ($fileData as $key => $value) {
-
-                            $where = array('order_number' => $value['order_number'], 'line_number' => $value['line_number']);
-                            if ($Revise->isAlreadyExist($where)) {
-
-                                $updateData = $fileData[$key];
-                                unset($updateData['order_number']); // xóa điều kiện
-                                unset($updateData['line_number']); // xóa điều kiện
-                                $result = $Revise->edit($where, $updateData);
-
-                                // Lưu lỗi update
+                            if (!empty($save_to_db)) {
+                                // // // Không lưu dữ liệu MS Color. Đợi khi cập nhật Sub Material thì kiểm tra và lưu luôn (mới đủ đk kiểm tra trùng hay không)
+                                // // $count_success++;
+                                // // $message = "SUCCESS. Import thành công $count_success dòng dữ liệu";
+                                $result = $this->saveDataToSettingForm($form_type, $internal_item);
                                 if (!$result) {
-                                    $message = "Import data error (Update)";
-                                    $log_error .= ($key + 2) . ",";
+                                    $mess_sub = "(Setting Convert)";
+                                    $message = "ERROR. Import lỗi dòng Internal Item: $internal_item $mess_sub";
+                                    break;
                                 } else {
-                                    $message = "Import data success (U)";
-                                    $successCount++;
+                                    $result = ($save_to_db == 'MSColorModel') ? $this->saveDataToMultiMasterData($dataTmp, $index, $saveModel, $PlanningRFIDSBMultiInkQty) : $this->saveDataToMultiMasterData($dataTmp, $index, $saveModel);
+                                    if (!$result) {
+                                        $mess_sub = "(Main Master Convert)";
+                                        $message = "ERROR. Import lỗi dòng Internal Item: $internal_item $mess_sub";
+                                        break;
+                                    } else {
+                                        $count_success++;
+                                        $message = "SUCCESS. Import thành công $count_success dòng dữ liệu";
+                                    }
                                 }
-                                // Xóa bỏ dữ liệu đã cập nhật (cập nhật lỗi vẫn xóa)
-                                unset($fileData[$key]);
                             }
                         }
                     }
 
-
-                    // close db
                     $db->close();
                 }
+            } else if (!empty($subMasterData)) {
 
-                /* END: GET DATA ----------------------------------------------------------------------------------------------- */
+                $allDataInSheet = $subMasterData->toArray(null, true, true, true);
+
+                // print_r($allDataInSheet); exit();
+
+                /* ---------------------------------------------------------------------------------------------------------------------
+                    | header check
+                    | 
+                -----------------------------------------------------------------------------------------------------------------------*/
+                $createArray = array('internal_item', 'color_code', 'item_color', 'sub_code', 'sub_type', 'sub_check', 'note');
+                $makeArray = array('internal_item' => 'internal_item',  'color_code' => 'color_code', 'item_color' => 'item_color', 'sub_code' => 'sub_code', 'sub_type' => 'sub_type', 'sub_check' => 'sub_check', 'note' => 'note');
+
+                $SheetDataKey = array();
+                foreach ($allDataInSheet[1] as $key => $value) {
+                    if (in_array(trim($value), $createArray)) {
+                        $value = preg_replace('/\s+/', '', $value);
+                        $SheetDataKey[trim($value)] = $key;
+                    }
+                }
+
+                // check data
+                $data = array_diff_key($makeArray, $SheetDataKey);
+                $flag = (empty($data)) ? 1 : 0;
+
+
+                /* ---------------------------------------------------------------------------------------------------------------------
+                    | get data
+                    | 
+                -----------------------------------------------------------------------------------------------------------------------*/
+                if ($flag == 1) {
+
+                    // open db and models
+                    $db = db_connect();
+                    $SubMaterialModel = new SubMaterialModel($db);
+                    $MasterDataModel = new MasterDataModel($db);
+
+                    // get col key
+                    $internal_item_col = $SheetDataKey['internal_item'];
+                    $color_code_col = $SheetDataKey['color_code'];
+                    $item_color_col = $SheetDataKey['item_color'];
+                    $sub_code_col = $SheetDataKey['sub_code'];
+                    $sub_type_col = $SheetDataKey['sub_type'];
+                    $sub_check_col = $SheetDataKey['sub_check'];
+                    $note_col = $SheetDataKey['note'];
+
+                    // load
+                    $data = array();
+                    $index = 0;
+                    for ($i = 2; $i <= count($allDataInSheet); $i++) {
+
+                        $index++;
+
+                        // get data
+                        $internal_item = filter_var(trim($allDataInSheet[$i][$internal_item_col]));
+                        $color_code = filter_var(trim($allDataInSheet[$i][$color_code_col]));
+                        // $item_color = substr($internal_item, 0,7) . str_replace(" ", "", $color_code) . substr($internal_item, 9,2);
+
+                        $sub_code = filter_var(trim($allDataInSheet[$i][$sub_code_col]));
+                        $sub_type = filter_var(trim($allDataInSheet[$i][$sub_type_col]));
+                        $sub_check = filter_var(trim($allDataInSheet[$i][$sub_check_col]));
+                        $note = filter_var(trim($allDataInSheet[$i][$note_col]));
+
+                        // reset data to save to database
+
+                        // check empty
+                        if (empty($internal_item)) {
+                            $count_error++;
+
+                            if ($count_error < 5)
+                                continue;
+                            else
+                                break;
+                        }
+
+                        // xác định form liên quan cbs hay không
+                        $form_type = '';
+                        $w = ['internal_item' => $internal_item];
+                        if ($MasterDataModel->isAlreadyExist($w)) {
+                            $masterItem = $MasterDataModel->readItem(['internal_item' => $internal_item]);
+                            $form_type = $masterItem->form_type;
+                        }
+
+                        $item_color = '';
+                        $cbs_check = in_array($form_type, ['ua_cbs', 'cbs', 'pvh_rfid']) ? true : false;
+                        if ($cbs_check) {
+                            $internal_item_arr = explode('-', $internal_item);
+                            $item_color = $internal_item_arr[0] . "-" . $internal_item_arr[1] . "-" . str_replace(" ", "", $color_code) . "- " . $internal_item_arr[3];
+                        }
+
+                        // check Sub Type and Sub Check
+                        if (!$this->checkSubType($sub_type)) {
+                            $message = "Kiểm tra lại dữ liệu Sub Type tại dòng thứ $index của Internal Item: $internal_item. (Các dữ liệu còn lại chưa được imports) ";
+                            break;
+                        }
+
+                        if (!$this->checkSubCheck($sub_check)) {
+                            $message = "Kiểm tra lại dữ liệu Sub Check tại dòng thứ $index của Internal Item: $internal_item. (Các dữ liệu còn lại chưa được imports) ";
+                            break;
+                        }
+
+                        // get data
+                        $data = array(
+                            'internal_item' => $internal_item,
+                            'color_code' => $color_code,
+                            'item_color' => $item_color,
+                            'sub_code' => $sub_code,
+                            'sub_type' => $sub_type,
+                            'sub_check' => $sub_check,
+                            'note' => $note,
+                            'updated_by' => $updated_by
+                        );
+
+                        $dataTmp = $data;
+
+                        if (empty($internal_item)) {
+                            continue;
+                        }
+
+                        // Xử lý theo logic binh.luong cung cấp
+                        /*
+                            - No Color: 
+                                + Material: Dựa Item + Sub Code
+                                + Ink: Dựa Item + Sub Code + Sub Type
+                            - Color: 
+                                + Material: Dựa vào Item + Item Color + Sub Code
+                                + Ink: Dựa vào Item + Item Color + Sub Code + Sub Type
+                        */
+
+                        if (!$cbs_check) {
+
+                            $where = array('internal_item' => $internal_item, 'sub_code' => $sub_code);
+                            if (strpos(strtoupper($sub_type), "INK") !== false) {
+                                $where = array('internal_item' => $internal_item, 'sub_code' => $sub_code, 'sub_type' => $sub_type);
+                            }
+                        } else {
+                            $where = array('internal_item' => $internal_item, 'item_color' => $item_color, 'sub_code' => $sub_code);
+                            if (strpos(strtoupper($sub_type), "INK") !== false) {
+                                $where = array('internal_item' => $internal_item, 'item_color' => $item_color, 'sub_code' => $sub_code, 'sub_type' => $sub_type);
+                            }
+                        }
+
+                        if ($SubMaterialModel->isAlreadyExist($where)) {
+
+                            if (!$cbs_check) {
+
+                                unset($data['internal_item']); // xóa điều kiện
+                                unset($data['sub_code']); // xóa điều kiện
+
+                                if (strpos(strtoupper($sub_type), "INK") !== false) {
+                                    unset($data['sub_type']); // xóa điều kiện
+                                }
+                            } else {
+                                unset($data['internal_item']); // xóa điều kiện
+                                unset($data['item_color']); // xóa điều kiện
+                                unset($data['sub_code']); // xóa điều kiện
+                                if (strpos(strtoupper($sub_type), "INK") !== false) {
+                                    unset($data['sub_type']); // xóa điều kiện
+                                }
+                            }
+
+
+                            $data['updated_date'] = date('Y-m-d H:i:s');
+                            $dataTmp['updated_date'] = date('Y-m-d H:i:s');
+
+                            $mess_sub = "(Sub Update)";
+                            $result = $SubMaterialModel->edit($where, $data);
+                        } else {
+                            $mess_sub = "(Sub Insert)";
+                            $result = $SubMaterialModel->create($data);
+                        }
+
+                        // check
+                        if (!$result) {
+                            $message = "ERROR. Import lỗi dòng thứ $index của Internal Item: $internal_item $mess_sub";
+                            break;
+                        } else {
+
+                            $result = $this->saveDataToMultiSubMaterial($dataTmp, $index);
+                            if (!$result) {
+                                $mess_sub = "(Sub Convert)";
+                                $message = "ERROR. Import lỗi dòng thứ $index của Internal Item: $internal_item $mess_sub";
+                                break;
+                            } else {
+                                $count_success++;
+                                $message = "SUCCESS. Import thành công $count_success dòng dữ liệu";
+                            }
+                        }
+                    }
+
+                    $db->close();
+                }
             }
         }
 
-        // results
-        $this->_data['message'] = $message;
-        $this->_data['successCount'] = $successCount;
-        $this->_data['log_error'] = $log_error;
 
-        return view('revise_pd/imports/reviseImports', $this->_data);
+        // results
+        $results['message'] = $message;
+
+        return view('imports/display', $results);
     }
 
-    // exports data
+
     public function exports()
     {
+        // set time out
+        ini_set('max_execution_time', 1800);
         // check login
-        if (!get_cookie('adUser')) return view('users/index');
+        if (!get_cookie('VNRISIntranet')) return view('errors/html/error_access');
 
-        // get title
-        $_data['title'] = "Revise Promise Date";
-
-        // open db
-        $db = db_connect();
-
-        // models
-        $Revise = new PromiseDateRevise($db);
-        $UserModel = new UserModel($db);
-
-        // get username
-        $username = get_cookie('adUser');
-
-        // ============== INIT SHEET ==============================================
-        // create
-        // $spreadsheet = new Spreadsheet();
+        // spreadsheet
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet;
-
-
         // Add some data
         $spreadsheet->setActiveSheetIndex(0);
 
-        // active and set title
-        $spreadsheet->getActiveSheet()->setTitle('BlankPD');
 
 
+        $master_type = $this->request->getVar('type');
+        if ($master_type == 'main_master_exports') {
 
-        // set the names of header cells
-        // set Header, width
-        $columns = [
-            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
-            'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
-            'U', 'V', 'W', 'X',
+            // active and set title
+            $spreadsheet->getActiveSheet()->setTitle('Main_Master');
 
-            'Y', 'Z', 'AA', 'AB', 'AC', 'AD',
-            'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN',
-            'AO'
-        ];
+            // set the names of header cells
+            // set Header, width
+            $columns = [
+                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+                'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS'
+            ];
 
-        $headers = [
-            'OU', 'Order No', 'Line No', 'Request Date', 'Promise Date', 'Status', 'SOLine', 'Item', 'Qty', 'Planner Code',
-            'Production Method', 'Ship To Customer', 'Bill To Customer', 'RBO', 'CS', 'Order Type Name', 'Flow Status Code', 'Packing Instructions', 'Ordered Date', 'Shipment Number',
-            'Makebuy', 'Cust Po Number', 'Sample', 'Customer Item'
-        ];
 
-        foreach ($headers as $key => $header) {
-            // width
-            $spreadsheet->getActiveSheet()->getColumnDimension($columns[$key])->setWidth(20);
-            // headers
-            $spreadsheet->getActiveSheet()->setCellValue($columns[$key] . '1', $header);
-        }
+            $headers = [
+                'form_type', 'active', 'internal_item', 'order_item', 'rbo', 'product_type', 'cbs', 'two_sides_printing', 'dual_machine', 'width',
+                'length', 'blank_gap', 'build_stock_cbs_item', 'material_code', 'inlay_type', 'material_description', 'front_ink', 'front_ink_description', 'back_ink', 'back_ink_description',
+                'approved_sample_card', 'machine', 'print_system', 'system', 'packing_form', 'pcs_per_sheet', 'combo', 'combine', 'combo_at', 'fsc',
+                'brand_protection', 'baseroll_in_1_kit', 'qty_pcs_in_1_roll', 'ribbon_in_1_kit', 'ribbon_length', 'process', 'print_speed', 'print_output', 'remark_1',
+                'remark_2', 'remark_3', 'remark_4', 'remark_5', 'updated_by', 'updated_date'
+            ];
 
-        // Font
-        $spreadsheet->getActiveSheet()->getStyle('A1:X1')->getFont()->setBold(true)->setName('Arial')->setSize(10);
-        $spreadsheet->getActiveSheet()->getStyle('A1:X1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('3399ff');
-        $spreadsheet->getActiveSheet()->getStyle('A:X')->getFont()->setName('Arial')->setSize(10);
-
-        // ============== LOAD DATA ==============================================
-
-        // load get
-        $views = '';
-        if ($this->request->getMethod() == "get") {
-            $views = $this->request->getVar('views');
-        }
-
-        // get user info
-        if (!$UserModel->isAlreadyExist($username)) {
-            $_data['results'] = array(
-                'status' => false,
-                'message' => 'Username is not exist. Please contact the Admin'
-            );
-        } else {
-            // change to array
-            $userInfo = (array)$UserModel->readItem($username);
-            $production_line = $userInfo['department'];
-            $factory_code = $userInfo['factory_code'];
-            $OU = '';
-            if ($factory_code == 'LH') {
-                $OU = 'VN';
-            } else if ($factory_code == 'BN') {
-                $OU = 'BNH';
+            foreach ($headers as $key => $header) {
+                // width
+                $spreadsheet->getActiveSheet()->getColumnDimension($columns[$key])->setWidth(20);
+                // headers
+                $spreadsheet->getActiveSheet()->setCellValue($columns[$key] . '1', $header);
             }
 
+            // Font
+            $spreadsheet->getActiveSheet()->getStyle('A1:AS1')->getFont()->setBold(true)->setName('Arial')->setSize(10);
+            $spreadsheet->getActiveSheet()->getStyle('A1:AS1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('3399ff');
+            $spreadsheet->getActiveSheet()->getStyle('A:AS')->getFont()->setName('Arial')->setSize(10);
 
+            // open db and models
+            $db = db_connect();
+            $MasterDataModel = new MasterDataModel($db);
 
-            // load data. If user department is AUTOMATION then get all data, not true get department data
-            if ($production_line == 'AUTOMATION') {
-                $data = $Revise->readAll();
-            } else {
-                $data = ($views == 'all') ? $Revise->readAll() : $Revise->readDepartment($OU, $production_line);
-            }
-            // $data = ($production_line == 'AUTOMATION' ) ? $Revise->readAll() : $Revise->readDepartment($OU,$production_line);
+            $data = $MasterDataModel->readAll('form_type');
 
-
-            if (empty($data)) {
-                $_data['results'] = array(
-                    'status' => false,
-                    'message' => 'Load data empty'
-                );
-            } else {
-
-                // data
+            // print_r($data); exit();
+            if (!empty($data)) {
+                $index = 0;
                 $rowCount = 1;
-                foreach ($data as $key => $element) {
+                // $data (array)$data;
+                foreach ($data as $element) {
+                    $index++;
                     $rowCount++;
 
-                    $element = (array)$element;
-
+                    $element = (array) $element;
                     // add to excel file
-                    $spreadsheet->getActiveSheet()->SetCellValue('A' . $rowCount, trim($element['OU']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('B' . $rowCount, trim($element['order_number']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('C' . $rowCount, trim($element['line_number']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('D' . $rowCount, trim($element['request_date']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('E' . $rowCount, trim($element['promise_date']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('F' . $rowCount, trim($element['status']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('G' . $rowCount, trim($element['so_line']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('H' . $rowCount, trim($element['item']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('I' . $rowCount, trim($element['qty']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('J' . $rowCount, trim($element['planner_code']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('A' . $rowCount, trim($element['form_type']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('B' . $rowCount, trim($element['active']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('C' . $rowCount, trim($element['internal_item']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('D' . $rowCount, trim($element['order_item']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('E' . $rowCount, trim($element['rbo']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('F' . $rowCount, trim($element['product_type']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('G' . $rowCount, trim($element['cbs']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('H' . $rowCount, trim($element['two_sides_printing']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('I' . $rowCount, trim($element['dual_machine']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('J' . $rowCount, trim($element['width']));
 
-                    $spreadsheet->getActiveSheet()->SetCellValue('K' . $rowCount, trim($element['production_method']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('L' . $rowCount, trim($element['ship_to_customer']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('M' . $rowCount, trim($element['bill_to_customer']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('N' . $rowCount, trim($element['sold_to_customer']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('O' . $rowCount, trim($element['cs']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('P' . $rowCount, trim($element['order_type_name']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('K' . $rowCount, trim($element['length']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('L' . $rowCount, trim($element['blank_gap']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('M' . $rowCount, trim($element['build_stock_cbs_item']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('N' . $rowCount, trim($element['material_code']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('O' . $rowCount, trim($element['inlay_type']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('P' . $rowCount, trim($element['material_description']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('Q' . $rowCount, trim($element['front_ink']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('R' . $rowCount, trim($element['front_ink_description']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('S' . $rowCount, trim($element['back_ink']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('T' . $rowCount, trim($element['back_ink_description']));
 
-                    $spreadsheet->getActiveSheet()->SetCellValue('Q' . $rowCount, trim($element['flow_status_code']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('R' . $rowCount, trim($element['packing_instructions']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('S' . $rowCount, trim($element['ordered_date']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('T' . $rowCount, trim($element['shipment_number']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('U' . $rowCount, trim($element['approved_sample_card']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('V' . $rowCount, trim($element['machine']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('W' . $rowCount, trim($element['print_system']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('X' . $rowCount, trim($element['system']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('Y' . $rowCount, trim($element['packing_form']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('Z' . $rowCount, trim($element['pcs_per_sheet']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('AA' . $rowCount, trim($element['combo']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('AB' . $rowCount, trim($element['combine']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('AC' . $rowCount, trim($element['combo_at']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('AD' . $rowCount, trim($element['fsc']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('AE' . $rowCount, trim($element['brand_protection']));
 
-                    $spreadsheet->getActiveSheet()->SetCellValue('U' . $rowCount, trim($element['makebuy']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('V' . $rowCount, trim($element['cust_po_number']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('W' . $rowCount, trim($element['sample']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('X' . $rowCount, trim($element['customer_item']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('AF' . $rowCount, trim($element['baseroll_in_1_kit']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('AG' . $rowCount, trim($element['qty_pcs_in_1_roll']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('AH' . $rowCount, trim($element['ribbon_in_1_kit']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('AI' . $rowCount, trim($element['ribbon_length']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('AJ' . $rowCount, trim($element['process']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('AK' . $rowCount, trim($element['print_speed']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('AL' . $rowCount, trim($element['print_output']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('AM' . $rowCount, trim($element['remark_1']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('AN' . $rowCount, trim($element['remark_2']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('AO' . $rowCount, trim($element['remark_3']));
+
+                    $spreadsheet->getActiveSheet()->SetCellValue('AP' . $rowCount, trim($element['remark_4']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('AQ' . $rowCount, trim($element['remark_5']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('AR' . $rowCount, trim($element['updated_by']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('AS' . $rowCount, trim($element['updated_date']));
                 }
             }
+
+            $db->close();
+        } else if ($master_type == 'sub_material_exports') {
+
+            // active and set title
+            $spreadsheet->getActiveSheet()->setTitle('Sub_Material');
+
+            // set the names of header cells
+            // set Header, width
+            $columns = [
+                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+                'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS'
+            ];
+
+            $headers = array('internal_item', 'color_code', 'item_color', 'sub_code', 'sub_type', 'sub_check', 'note');
+
+            foreach ($headers as $key => $header) {
+                // width
+                $spreadsheet->getActiveSheet()->getColumnDimension($columns[$key])->setWidth(20);
+                // headers
+                $spreadsheet->getActiveSheet()->setCellValue($columns[$key] . '1', $header);
+            }
+
+            // Font
+            $spreadsheet->getActiveSheet()->getStyle('A1:G1')->getFont()->setBold(true)->setName('Arial')->setSize(10);
+            $spreadsheet->getActiveSheet()->getStyle('A1:G1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('3399ff');
+            $spreadsheet->getActiveSheet()->getStyle('A:G')->getFont()->setName('Arial')->setSize(10);
+
+            // open db and models
+            $db = db_connect();
+            $SubMaterialModel = new SubMaterialModel($db);
+            $data = $SubMaterialModel->readAll('internal_item, sub_type, sub_check');
+
+            // print_r($data); exit();
+            if (!empty($data)) {
+                $index = 0;
+                $rowCount = 1;
+                // $data (array)$data;
+                foreach ($data as $element) {
+                    $index++;
+                    $rowCount++;
+
+                    $element = (array) $element;
+                    // add to excel file
+                    $spreadsheet->getActiveSheet()->SetCellValue('A' . $rowCount, trim($element['internal_item']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('B' . $rowCount, trim($element['color_code']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('C' . $rowCount, trim($element['item_color']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('D' . $rowCount, trim($element['sub_code']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('E' . $rowCount, trim($element['sub_type']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('F' . $rowCount, trim($element['sub_check']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('G' . $rowCount, trim($element['note']));
+                }
+            }
+
+            $db->close();
         }
 
-
-        // ============== OUTPUT ==============================================
-
+        // output 
         // set filename for excel file to be exported
-        $filename = 'PD_Blank_' . date('Y_m_d__H_i_s');
+        $file_name_type = "All_Master__";
+        if ($master_type == 'main_master_exports') {
+            $file_name_type = "MainMaster__";
+        } else if ($master_type == 'sub_material_exports') {
+            $file_name_type = "SubMaster__";
+        }
+        $filename = 'SB_' . $file_name_type . '_' . date('Y_m_d__H_i_s');
 
         // header: generate excel file
         header('Content-Type: application/vnd.ms-excel');
@@ -2777,371 +3196,9 @@ class Home extends BaseController
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
         // $writer = new Xlsx($spreadsheet);
         $writer->save('php://output');
-
-        // ============== END ==============================================
-
     }
 
-    public function exportByYearData()
-    {
-        // ini_set('max_execution_time', 7200);
-        // ini_set('memory_limit', '1024M');
 
-        ini_set('memory_limit', '-1');
-        // // ini_set('memory_limit', '1024M');
-        set_time_limit(0);
 
 
-        // get
-        $type = 'actual';
-        $from_year = '';
-        $to_year = '';
-        if ($this->request->getMethod() == "get") {
-            $type = trim($this->request->getVar('type'));
-            $from_year = trim($this->request->getVar('from_year'));
-            $to_year = trim($this->request->getVar('to_year'));
-        }
-
-
-
-        // Get year
-        $current_year = getdate()['year'];
-        $current_month = getdate()['mon'];
-
-        // limit
-        $limit = null; // không giới hạn
-        // where
-        if (!empty($from_year) && !empty($to_year)) {
-            $where = " full_year>='$from_year' AND full_year<='$to_year' ";
-        } else {
-            $where = " full_year>='$current_year' ";
-        }
-
-
-        // open db and models
-        $db = \Config\Database::connect();
-        $cs_avery_db = \Config\Database::connect('cs_avery_db', false);
-        $FinanceFtyPICListMain = new FinanceFtyPICListMain($db);
-        $FinanceMaterialCode = new FinanceMaterialCode($db);
-        $FinanceProductionItem = new FinanceProductionItem($cs_avery_db);
-
-        // type
-        if ($type == 'actual') {
-            $FinanceData = new FinanceActualData($db);
-            $type_label = 'Actual';
-        } else if ($type == 'forecast') {
-            $FinanceData = new FinanceForecastData($db);
-            $type_label = 'Forecast';
-        }
-
-        // create
-        $spreadsheet = new Spreadsheet();
-
-        // set the names of header cells
-        // set Header, width
-        $columns = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',  'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',  'U', 'V', 'W', 'X', 'Y');
-
-        if ($FinanceData->countAll() > 0) {
-
-            /* ========================= SHEET DETAILS ==============================================================*/
-
-            // Add new sheet
-            $spreadsheet->createSheet();
-
-            // Add some data
-            $spreadsheet->setActiveSheetIndex(0);
-
-            // active and set title
-            $spreadsheet->getActiveSheet()->setTitle($type_label);
-
-            $header1 = array(
-                'No.', 'Factory PIC', 'Bill To Code', 'Bill To Customer', 'Item ID', 'RB Report Name', 'Cumstomer Item ID', 'Material Code', 'Location', 'Production Line',
-                'Status', 'Check', 'YEAR', 'M01', 'M02', 'M03', 'M04', 'M05', 'M06', 'M07', 'M08', 'M09', 'M10', 'M11', 'M12'
-            );
-
-            $id = 0;
-            foreach ($header1 as $header) {
-                for ($index = $id; $index < count($header1); $index++) {
-                    // width
-                    $spreadsheet->getActiveSheet()->getColumnDimension($columns[$index])->setWidth(20);
-
-                    // headers
-                    $spreadsheet->getActiveSheet()->setCellValue($columns[$index] . '1', $header);
-
-                    $id++;
-                    break;
-                }
-            }
-
-            // Font
-            $spreadsheet->getActiveSheet()->getStyle('A1:Y1')->getFont()->setBold(true)->setName('Arial')->setSize(10);
-            $spreadsheet->getActiveSheet()->getStyle('A1:Y1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('3399ff');
-            $spreadsheet->getActiveSheet()->getStyle('A:Y')->getFont()->setName('Arial')->setSize(10);
-
-            // get data
-            $data = $FinanceData->readMainData($where, $limit);
-
-            // set data
-            $index = 0;
-            $rowCount = 1;
-
-            foreach ($data as $element) {
-
-                $index++;
-                $rowCount++;
-
-
-                $item = trim($element->item);
-                $bill_to_code = trim($element->bill_to_code);
-
-                $material_code = trim($element->material_code);
-                $sold_to_customer = trim($element->sold_to_customer);
-                $customer_item = trim($element->customer_item);
-                $production_line = trim($element->production_line);
-                $status = trim($element->status);
-
-
-                $factory_pic = '';
-                $whereF = array('bill_to_code' => $bill_to_code);
-                if ($FinanceFtyPICListMain->isAlreadyExist($whereF)) {
-                    $picItem = $FinanceFtyPICListMain->readItem($whereF);
-                    $factory_pic = $picItem->pic;
-                }
-
-
-
-                // get data from production item
-                if ($FinanceProductionItem->isAlreadyExist(array('Item' => $item))) {
-                    $productionItem = $FinanceProductionItem->readItem($item);
-                    $customer_item = (empty($customer_item)) ? $productionItem->CustomerItemNumber : $customer_item;
-                    $production_line = (empty($production_line)) ? $productionItem->ProductLine : $production_line;
-                    $status = (empty($status)) ? $productionItem->Status : $status;
-                    $sold_to_customer = (empty($sold_to_customer)) ? $productionItem->SoldToName : $sold_to_customer;
-                    // $sold_to_customer = htmlspecialchars($sold_to_customer, ENT_QUOTES, 'UTF-8');
-                }
-
-
-
-                // get data from material code
-                if ($FinanceMaterialCode->isAlreadyExist(array('Item' => $item))) {
-                    $materialItem = $FinanceMaterialCode->readItem($item);
-                    $material_code = (empty($material_code)) ? $FinanceMaterialCode->material_code : $material_code;
-                }
-
-                // check
-                $check = '';
-
-                // set data
-                $spreadsheet->getActiveSheet()->SetCellValue('A' . $rowCount, $index);
-                $spreadsheet->getActiveSheet()->SetCellValue('B' . $rowCount, $factory_pic);
-                $spreadsheet->getActiveSheet()->SetCellValue('C' . $rowCount, trim($bill_to_code));
-                $spreadsheet->getActiveSheet()->SetCellValue('D' . $rowCount, trim($element->bill_to_customer));
-                $spreadsheet->getActiveSheet()->SetCellValue('E' . $rowCount, trim($item));
-                $spreadsheet->getActiveSheet()->SetCellValue('F' . $rowCount, trim($sold_to_customer));
-                $spreadsheet->getActiveSheet()->SetCellValue('G' . $rowCount, trim($customer_item));
-                $spreadsheet->getActiveSheet()->SetCellValue('H' . $rowCount, trim($material_code));
-                $spreadsheet->getActiveSheet()->SetCellValue('I' . $rowCount, trim($element->location));
-                $spreadsheet->getActiveSheet()->SetCellValue('J' . $rowCount, trim($production_line));
-                $spreadsheet->getActiveSheet()->SetCellValue('K' . $rowCount, trim($status));
-                $spreadsheet->getActiveSheet()->SetCellValue('L' . $rowCount, trim($check));
-
-                $spreadsheet->getActiveSheet()->SetCellValue('M' . $rowCount, trim($element->full_year));
-                $spreadsheet->getActiveSheet()->SetCellValue('N' . $rowCount, trim($element->M01));
-                $spreadsheet->getActiveSheet()->SetCellValue('O' . $rowCount, trim($element->M02));
-                $spreadsheet->getActiveSheet()->SetCellValue('P' . $rowCount, trim($element->M03));
-                $spreadsheet->getActiveSheet()->SetCellValue('Q' . $rowCount, trim($element->M04));
-                $spreadsheet->getActiveSheet()->SetCellValue('R' . $rowCount, trim($element->M05));
-                $spreadsheet->getActiveSheet()->SetCellValue('S' . $rowCount, trim($element->M06));
-                $spreadsheet->getActiveSheet()->SetCellValue('T' . $rowCount, trim($element->M07));
-                $spreadsheet->getActiveSheet()->SetCellValue('U' . $rowCount, trim($element->M08));
-                $spreadsheet->getActiveSheet()->SetCellValue('V' . $rowCount, trim($element->M09));
-                $spreadsheet->getActiveSheet()->SetCellValue('W' . $rowCount, trim($element->M10));
-                $spreadsheet->getActiveSheet()->SetCellValue('X' . $rowCount, trim($element->M11));
-                $spreadsheet->getActiveSheet()->SetCellValue('Y' . $rowCount, trim($element->M12));
-            }
-        }
-
-        // print_r($spreadsheet->getActiveSheet()); exit();
-        /* ========================= OUT PUT ==============================================================*/
-
-        // set filename for excel file to be exported
-        $filename = $type_label . '_Report_' . date("Y_m_d__H_i_s");
-
-        // header: generate excel file
-        header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="' . $filename . '.xlsx"');
-        header('Cache-Control: max-age=0');
-        // writer
-        $writer = new Xlsx($spreadsheet);
-        $writer->save('php://output');
-    }
-
-    public function exportCsv()
-    {
-        ini_set('memory_limit', '-1');
-        // // ini_set('memory_limit', '1024M');
-        set_time_limit(0);
-
-
-        // get
-        $type = 'actual';
-        $from_year = '';
-        $to_year = '';
-        if ($this->request->getMethod() == "get") {
-            $type = trim($this->request->getVar('type'));
-            $from_year = trim($this->request->getVar('from_year'));
-            $to_year = trim($this->request->getVar('to_year'));
-        }
-
-
-        // set header data
-        $file_name = ($type == 'actual') ? 'Actual_Report_' : 'Forecast_Report_';
-        $file_name .= date('YmdHis') . '.csv';
-        header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename=' . $file_name);
-        header('Cache-Control: max-age=0');
-
-        // check login
-        if (!get_cookie('adLoginUser')) return view('users/index');
-
-
-
-        // Get year
-        $current_year = getdate()['year'];
-        $current_month = getdate()['mon'];
-
-        // limit
-        $limit = null; // không giới hạn
-        // where
-        if (!empty($from_year) && !empty($to_year)) {
-            $where = " full_year>='$from_year' AND full_year<='$to_year' ";
-        } else {
-            $where = " full_year>='$current_year' ";
-        }
-
-        // open db and models
-        $db = \Config\Database::connect();
-        $cs_avery_db = \Config\Database::connect('cs_avery_db', false);
-        $FinanceFtyPICListMain = new FinanceFtyPICListMain($db);
-        $FinanceMaterialCode = new FinanceMaterialCode($db);
-        $FinanceProductionItem = new FinanceProductionItem($cs_avery_db);
-
-        // type
-        if ($type == 'actual') {
-            $FinanceData = new FinanceActualData($db);
-            $type_label = 'Actual';
-        } else if ($type == 'forecast') {
-            $FinanceData = new FinanceForecastData($db);
-            $type_label = 'Forecast';
-        }
-
-        /* START HEADER ------------------------------------------------------------------------------------------------------------ */
-        // title
-        $headlist = array('No.', 'Factory PIC', 'Bill To Code', 'Bill To Customer', 'Item ID', 'RB Report Name', 'Cumstomer Item ID', 'Material Code', 'Location', 'Production Line', 'Status', 'Check', 'YEAR', 'M01', 'M02', 'M03', 'M04', 'M05', 'M06', 'M07', 'M08', 'M09', 'M10', 'M11', 'M12');
-
-        //Open the PHP file handle, php://output means direct output to the browser
-        $fp = fopen('php://output', 'a');
-        //Output Excel column name information
-        foreach ($headlist as $key => $value) {
-            //CSV Excel supports GBK encoding, must be converted, otherwise garbled
-            $headlist[$key] = iconv('utf-8', 'gbk', $value);
-        }
-
-        //Write the data to the file handle through fputcsv
-        fputcsv($fp, $headlist);
-        /* END HEADER ------------------------------------------------------------------------------------------------------------ */
-
-        /* START DATA ----------------------------------------------------------------------------------------------------------- */
-
-        //Counter
-        $num = 0;
-
-        //Refresh the output buffer every $limit line, not too big or too small
-        $refresh = 5000;
-
-        // get data
-        $data = $FinanceData->readMainData($where, $limit);
-
-        // set data
-        $index = 0;
-        foreach ($data as $element) {
-
-            $index++;
-            $num++;
-
-            $item = trim($element->item);
-            $bill_to_code = trim($element->bill_to_code);
-
-            $material_code = trim($element->material_code);
-            $sold_to_customer = trim($element->sold_to_customer);
-            $customer_item = trim($element->customer_item);
-            $production_line = trim($element->production_line);
-            $status = trim($element->status);
-
-
-            $factory_pic = '';
-            $whereF = array('bill_to_code' => $bill_to_code);
-            if ($FinanceFtyPICListMain->isAlreadyExist($whereF)) {
-                $picItem = $FinanceFtyPICListMain->readItem($whereF);
-                $factory_pic = $picItem->pic;
-            }
-
-
-
-            // get data from production item
-            if ($FinanceProductionItem->isAlreadyExist(array('Item' => $item))) {
-                $productionItem = $FinanceProductionItem->readItem($item);
-                $customer_item = (empty($customer_item)) ? $productionItem->CustomerItemNumber : $customer_item;
-                $production_line = (empty($production_line)) ? $productionItem->ProductLine : $production_line;
-                $status = (empty($status)) ? $productionItem->Status : $status;
-                $sold_to_customer = (empty($sold_to_customer)) ? $productionItem->SoldToName : $sold_to_customer;
-                // $sold_to_customer = htmlspecialchars($sold_to_customer, ENT_QUOTES, 'UTF-8');
-            }
-
-
-
-            // get data from material code
-            if ($FinanceMaterialCode->isAlreadyExist(array('Item' => $item))) {
-                $materialItem = $FinanceMaterialCode->readItem($item);
-                $material_code = (empty($material_code)) ? $FinanceMaterialCode->material_code : $material_code;
-            }
-
-            // check
-            $check = '';
-
-            $header1 = array(
-                'No.', 'Factory PIC', 'Bill To Code', 'Bill To Customer', 'Item ID', 'RB Report Name', 'Cumstomer Item ID', 'Material Code', 'Location', 'Production Line',
-                'Status', 'Check', 'YEAR', 'M01', 'M02', 'M03', 'M04', 'M05', 'M06', 'M07', 'M08', 'M09', 'M10', 'M11', 'M12'
-            );
-
-            // set data
-            $content = array(
-                $index, trim($factory_pic), trim($bill_to_code), trim($element->bill_to_customer), $item, trim($sold_to_customer), trim($customer_item), trim($material_code), trim($element->location), $production_line,
-                $status, $check, trim($element->full_year), trim($element->M01), trim($element->M02), trim($element->M03), trim($element->M04), trim($element->M05), trim($element->M06), trim($element->M07), trim($element->M08), trim($element->M09), trim($element->M10), trim($element->M11), trim($element->M12)
-            );
-
-
-            //Output Excel column name information
-            foreach ($content as $key => $value) {
-                //CSV Excel supports GBK encoding, must be converted, otherwise garbled
-                $content[$key] = iconv('utf-8', 'gbk', $value);
-            }
-
-            //Write the data to the file handle through fputcsv
-            fputcsv($fp, $content);
-
-            // refresh output buffer, to prevent problems caused by excessive data
-            if ($refresh == $num) {
-                ob_flush();
-                flush(); // refresh buffer
-                $num = 0;
-            }
-        }
-
-        // close file
-        fclose($fp);
-        exit();
-
-        /* END DATA ----------------------------------------------------------------------------------------------------------- */
-    }
 }
