@@ -379,6 +379,13 @@ class Home extends BaseController
                         'value' => $value->table_order_name,
                         'id' => $value->table_id
                     ];
+                } else {
+                    if ($value->table_order_name ==  'Mang về' || $value->table_id == '21' ) {
+                        $tableOptions[] = [
+                            'value' => $value->table_order_name,
+                            'id' => $value->table_id
+                        ];
+                    }
                 }
             }
         }
@@ -989,7 +996,16 @@ class Home extends BaseController
                 // check 
                 if (in_array($table_id, $tableList)) {
                     $table_order_name = !empty($tableItem) ? $tableItem->table_order_name : '';
-                    $message = "Bàn $table_order_name đã được đặt chổ";
+                    if ($table_order_name == 'Mang về' || $table_id == '21' ) {
+                        $area_id = !empty($tableItem) ? $tableItem->area_id : '';
+                        $areaItem = $AreaModel->readItem(array('area_id' => $area_id));
+                        $area_name = !empty($areaItem) ? $areaItem->area_name : '';
+                        $status = true;
+                    } else {
+                        $message = "Bàn $table_order_name đã được đặt chổ";
+                    }
+                    
+                    
                 } else {
 
                     $area_id = !empty($tableItem) ? $tableItem->area_id : '';
@@ -2389,6 +2405,7 @@ class Home extends BaseController
         // Count success and error
         $count_success = 0;
         $count_error = 0;
+        $check_error = false;
 
 
         // $file = $this->request->getFile('file');
@@ -2398,7 +2415,7 @@ class Home extends BaseController
 
             $type = $this->request->getVar('type');
             $file_name_type = '';
-            if ($type == 'food' ) {
+            if ($type == 'food') {
                 $file_name_type = 'Food_';
             }
 
@@ -2430,66 +2447,15 @@ class Home extends BaseController
                     | header check
                     | 
                 -----------------------------------------------------------------------------------------------------------------------*/
-                $createArray = array(
-                    'form_type', 'active', 'internal_item', 'order_item', 'rbo', 'product_type', 'cbs', 'two_sides_printing', 'dual_machine', 'width',
-                    'length', 'blank_gap', 'build_stock_cbs_item', 'material_code', 'inlay_type', 'material_description', 'front_ink', 'front_ink_description', 'back_ink', 'back_ink_description', 'approved_sample_card',
-                    'machine', 'print_system', 'system', 'packing_form', 'pcs_per_sheet', 'combo', 'combine', 'combo_at', 'fsc', 'brand_protection',
-                    'baseroll_in_1_kit', 'qty_pcs_in_1_roll', 'ribbon_in_1_kit', 'ribbon_length', 'process', 'print_speed', 'print_output', 'remark_1', 'remark_2', 'remark_3',
-                    'remark_4', 'remark_5'
+                $createArray = ['Loai_San_Pham', 'San_Pham', 'Size', 'Gia', 'Mo_Ta'];
 
-                );
-                $makeArray = array(
-                    // 1 - 10
-                    'form_type' => 'form_type',
-                    'active' => 'active',
-                    'internal_item' => 'internal_item',
-                    'order_item' => 'order_item',
-                    'rbo' => 'rbo',
-                    'product_type' => 'product_type',
-                    'cbs' => 'cbs',
-                    'two_sides_printing' => 'two_sides_printing',
-                    'dual_machine' => 'dual_machine',
-                    'width' => 'width',
-                    // 11 - 20
-                    'length' => 'length',
-                    'blank_gap' => 'blank_gap',
-                    'build_stock_cbs_item' => 'build_stock_cbs_item',
-                    'material_code' => 'material_code',
-                    'inlay_type' => 'inlay_type',
-                    'material_description' => 'material_description',
-                    'front_ink' => 'front_ink',
-                    'front_ink_description' => 'front_ink_description',
-                    'back_ink' => 'back_ink',
-                    'back_ink_description' => 'back_ink_description',
-
-                    // 21 - 30
-                    'approved_sample_card' => 'approved_sample_card',
-                    'machine' => 'machine',
-                    'print_system' => 'print_system',
-                    'system' => 'system',
-                    'packing_form' => 'packing_form',
-                    'pcs_per_sheet' => 'pcs_per_sheet',
-                    'combo' => 'combo',
-                    'combine' => 'combine',
-                    'combo_at' => 'combo_at',
-                    'fsc' => 'fsc',
-                    // 31 - 40
-                    'brand_protection' => 'brand_protection',
-                    'baseroll_in_1_kit' => 'baseroll_in_1_kit',
-                    'qty_pcs_in_1_roll' => 'qty_pcs_in_1_roll',
-                    'ribbon_in_1_kit' => 'ribbon_in_1_kit',
-                    'ribbon_length' => 'ribbon_length',
-                    'process' => 'process',
-                    'print_speed' => 'print_speed',
-                    'print_output' => 'print_output',
-                    'remark_1' => 'remark_1',
-                    'remark_2' => 'remark_2',
-                    // 41 - 43
-                    'remark_3' => 'remark_3',
-                    'remark_4' => 'remark_4',
-                    'remark_5' => 'remark_5'
-
-                );
+                $makeArray = [
+                    'Loai_San_Pham' => 'Loai_San_Pham',
+                    'San_Pham' => 'San_Pham',
+                    'Size' => 'Size',
+                    'Gia' => 'Gia',
+                    'Mo_Ta' => 'Mo_Ta'
+                ];
 
                 $SheetDataKey = array();
                 foreach ($allDataInSheet[1] as $key => $value) {
@@ -2511,74 +2477,21 @@ class Home extends BaseController
 
                     // open db and models
                     $db = db_connect();
-                    $MasterDataModel = new MasterDataModel($db);
-                    $PlanningRFIDSBMultiInkQty = new PlanningRFIDSBMultiInkQty($db);
+                    $FoodModel = new FoodModel($db);
+                    $FoodSizeModel = new FoodSizeModel($db);
+                    $SizeModel = new SizeModel($db);
+                    $SizeUnitModel = new SizeUnitModel($db);
 
 
                     // $MSColorModel = new MSColorModel($db);
 
                     // get col key
                     // 1 - 10
-                    $form_type_col = $SheetDataKey['form_type'];
-                    $active_col = $SheetDataKey['active'];
-                    $internal_item_col = $SheetDataKey['internal_item'];
-                    $order_item_col = $SheetDataKey['order_item'];
-                    $rbo_col = $SheetDataKey['rbo'];
-                    $product_type_col = $SheetDataKey['product_type'];
-                    $cbs_col = $SheetDataKey['cbs'];
-                    $two_sides_printing_col = $SheetDataKey['two_sides_printing'];
-                    $dual_machine_col = $SheetDataKey['dual_machine'];
-                    $width_col = $SheetDataKey['width'];
-                    // 11 - 20
-                    $length_col = $SheetDataKey['length'];
-                    $blank_gap_col = $SheetDataKey['blank_gap'];
-                    $build_stock_cbs_item_col = $SheetDataKey['build_stock_cbs_item'];
-                    $material_code_col = $SheetDataKey['material_code'];
-                    $inlay_type_col = $SheetDataKey['inlay_type'];
-                    $material_description_col = $SheetDataKey['material_description'];
-                    $front_ink_col = $SheetDataKey['front_ink'];
-                    $front_ink_description_col = $SheetDataKey['front_ink_description'];
-                    $back_ink_col = $SheetDataKey['back_ink'];
-                    $back_ink_description_col = $SheetDataKey['back_ink_description'];
-                    // 21 - 30
-                    $approved_sample_card_col = $SheetDataKey['approved_sample_card'];
-                    $machine_col = $SheetDataKey['machine'];
-                    $print_system_col = $SheetDataKey['print_system'];
-                    $system_col = $SheetDataKey['system'];
-                    $packing_form_col = $SheetDataKey['packing_form'];
-                    $pcs_per_sheet_col = $SheetDataKey['pcs_per_sheet'];
-                    $combo_col = $SheetDataKey['combo'];
-                    $combine_col = $SheetDataKey['combine'];
-                    $combo_at_col = $SheetDataKey['combo_at'];
-                    $fsc_col = $SheetDataKey['fsc'];
-                    // 31 - 40
-                    $brand_protection_col = $SheetDataKey['brand_protection'];
-                    $baseroll_in_1_kit_col = $SheetDataKey['baseroll_in_1_kit'];
-                    $qty_pcs_in_1_roll_col = $SheetDataKey['qty_pcs_in_1_roll'];
-                    $ribbon_in_1_kit_col = $SheetDataKey['ribbon_in_1_kit'];
-                    $ribbon_length_col = $SheetDataKey['ribbon_length'];
-                    $process_col = $SheetDataKey['process'];
-                    $print_speed_col = $SheetDataKey['print_speed'];
-                    $print_output_col = $SheetDataKey['print_output'];
-                    $remark_1_col = $SheetDataKey['remark_1'];
-                    $remark_2_col = $SheetDataKey['remark_2'];
-                    // 41 -43
-                    $remark_3_col = $SheetDataKey['remark_3'];
-                    $remark_4_col = $SheetDataKey['remark_4'];
-                    $remark_5_col = $SheetDataKey['remark_5'];
-
-                    // list check number
-                    $listName[] = 'active';
-                    $listName[] = 'width';
-                    $listName[] = 'length';
-                    $listName[] = 'blank_gap';
-                    $listName[] = 'pcs_per_sheet';
-                    $listName[] = 'baseroll_in_1_kit';
-                    $listName[] = 'qty_pcs_in_1_roll';
-                    $listName[] = 'ribbon_in_1_kit';
-                    $listName[] = 'ribbon_length';
-                    $listName[] = 'print_speed';
-                    $listName[] = 'print_output';
+                    $loai_san_pham_col = $SheetDataKey['Loai_San_Pham'];
+                    $san_pham_col = $SheetDataKey['San_Pham'];
+                    $size_col = $SheetDataKey['Size'];
+                    $gia_col = $SheetDataKey['Gia'];
+                    $mo_ta_col = $SheetDataKey['Mo_Ta'];
 
                     // load
                     $data = array();
@@ -2589,66 +2502,30 @@ class Home extends BaseController
 
                         // get data
                         // 1 - 10
-                        $form_type = filter_var(trim($allDataInSheet[$i][$form_type_col]));
-                        $active = filter_var(trim($allDataInSheet[$i][$active_col]));
-                        $internal_item = filter_var(trim($allDataInSheet[$i][$internal_item_col]));
-                        $order_item = filter_var(trim($allDataInSheet[$i][$order_item_col]));
-                        $rbo = filter_var(trim($allDataInSheet[$i][$rbo_col]));
-                        $product_type = filter_var(trim($allDataInSheet[$i][$product_type_col]));
-                        $cbs = filter_var(trim($allDataInSheet[$i][$cbs_col]));
-                        $two_sides_printing = filter_var(trim($allDataInSheet[$i][$two_sides_printing_col]));
-                        $dual_machine = filter_var(trim($allDataInSheet[$i][$dual_machine_col]));
-                        $width = filter_var(trim($allDataInSheet[$i][$width_col]));
-                        // 11 - 20
-                        $length = filter_var(trim($allDataInSheet[$i][$length_col]));
-                        $blank_gap = filter_var(trim($allDataInSheet[$i][$blank_gap_col]));
-                        $build_stock_cbs_item = filter_var(trim($allDataInSheet[$i][$build_stock_cbs_item_col]));
-                        $material_code = filter_var(trim($allDataInSheet[$i][$material_code_col]));
-                        $inlay_type = filter_var(trim($allDataInSheet[$i][$inlay_type_col]));
-                        $material_description = filter_var(trim($allDataInSheet[$i][$material_description_col]));
-                        $front_ink = filter_var(trim($allDataInSheet[$i][$front_ink_col]));
-                        $front_ink_description = filter_var(trim($allDataInSheet[$i][$front_ink_description_col]));
-                        $back_ink = filter_var(trim($allDataInSheet[$i][$back_ink_col]));
-                        $back_ink_description = filter_var(trim($allDataInSheet[$i][$back_ink_description_col]));
+                        $loai_san_pham = filter_var(trim($allDataInSheet[$i][$loai_san_pham_col]));
+                        $san_pham = filter_var(trim($allDataInSheet[$i][$san_pham_col]));
+                        $size = filter_var(trim($allDataInSheet[$i][$size_col]));
+                        $gia = filter_var(trim($allDataInSheet[$i][$gia_col]));
+                        $mo_ta = filter_var(trim($allDataInSheet[$i][$mo_ta_col]));
 
-                        // 21 -30
-                        $approved_sample_card = filter_var(trim($allDataInSheet[$i][$approved_sample_card_col]));
-                        $machine = filter_var(trim($allDataInSheet[$i][$machine_col]));
-                        $print_system = filter_var(trim($allDataInSheet[$i][$print_system_col]));
-                        $system = filter_var(trim($allDataInSheet[$i][$system_col]));
-                        $packing_form = filter_var(trim($allDataInSheet[$i][$packing_form_col]));
-                        $pcs_per_sheet = filter_var(trim($allDataInSheet[$i][$pcs_per_sheet_col]));
-                        $combo = filter_var(trim($allDataInSheet[$i][$combo_col]));
-                        $combine = filter_var(trim($allDataInSheet[$i][$combine_col]));
-                        $combo_at = filter_var(trim($allDataInSheet[$i][$combo_at_col]));
-                        $fsc = filter_var(trim($allDataInSheet[$i][$fsc_col]));
-                        // 31 - 40
-                        $brand_protection = filter_var(trim($allDataInSheet[$i][$brand_protection_col]));
-                        $baseroll_in_1_kit = filter_var(trim($allDataInSheet[$i][$baseroll_in_1_kit_col]));
-                        $qty_pcs_in_1_roll = filter_var(trim($allDataInSheet[$i][$qty_pcs_in_1_roll_col]));
-                        $ribbon_in_1_kit = filter_var(trim($allDataInSheet[$i][$ribbon_in_1_kit_col]));
-                        $ribbon_length = filter_var(trim($allDataInSheet[$i][$ribbon_length_col]));
-                        $process = filter_var(trim($allDataInSheet[$i][$process_col]));
-                        $print_speed = filter_var(trim($allDataInSheet[$i][$print_speed_col]));
-                        $print_output = filter_var(trim($allDataInSheet[$i][$print_output_col]));
-                        $remark_1 = filter_var(trim($allDataInSheet[$i][$remark_1_col]));
-                        $remark_2 = filter_var(trim($allDataInSheet[$i][$remark_2_col]));
-
-                        // 41 - 43
-                        $remark_3 = filter_var(trim($allDataInSheet[$i][$remark_3_col]));
-                        $remark_4 = filter_var(trim($allDataInSheet[$i][$remark_4_col]));
-                        $remark_5 = filter_var(trim($allDataInSheet[$i][$remark_5_col]));
-
-                        // reset data to save to database
-                        // boolean
-                        $cbs = (strtolower($cbs) == 'yes') ? 1 : 0;
-                        $two_sides_printing = (strtolower($two_sides_printing) == 'yes') ? 1 : 0;
-                        $dual_machine = (strtolower($dual_machine) == 'yes') ? 1 : 0;
-                        $build_stock_cbs_item = (strtolower($build_stock_cbs_item) == 'yes') ? 1 : 0;
-                        $brand_protection = (strtolower($brand_protection) == 'yes') ? 1 : 0;
 
                         // check empty
-                        if (empty($internal_item)) {
+                        if (empty($san_pham)) {
+                            $message = "Sản phẩm không được trống ";
+                            $check_error = true;
+                        } else if (empty($loai_san_pham)) {
+                            $message = "Loại sản phẩm không được trống ";
+                            $check_error = true;
+                        } else if (empty($size)) {
+                            $message = "Kích cỡ (Size) sản phẩm không được trống ";
+                            $check_error = true;
+                        } else if (empty($gia)) {
+                            $message = "Giá sản phẩm không được trống ";
+                            $check_error = true;
+                        }
+
+
+                        if ($check_error) {
                             $count_error++;
                             if ($count_error < 5)
                                 continue;
@@ -2656,95 +2533,17 @@ class Home extends BaseController
                                 break;
                         }
 
-                        // check numberic
-                        $list = array($active, $width, $length, $blank_gap, $pcs_per_sheet, $baseroll_in_1_kit, $qty_pcs_in_1_roll, $ribbon_in_1_kit, $ribbon_length, $print_speed, $print_output);
-                        $check_number = $this->isNumberic($list);
-                        if ($check_number != 100) {
-                            $message = $listName[$check_number] . " nhập sai định dạng dòng internal_item: $internal_item. (Các dữ liệu còn lại chưa được imports)";
-                            // dừng import
-                            break;
-                        }
-
-                        // int, float
-                        $active = ((int)$active == 1) ? 1 : 0;
-                        $width = (float)$width;
-                        $length = (float)$length;
-                        $blank_gap = (float)$blank_gap;
-                        $pcs_per_sheet = (int)$pcs_per_sheet;
-
-                        $baseroll_in_1_kit = (float)$baseroll_in_1_kit;
-                        $qty_pcs_in_1_roll = (float)$qty_pcs_in_1_roll;
-                        $ribbon_in_1_kit = (float)$ribbon_in_1_kit;
-                        $ribbon_length = (float)$ribbon_length;
-                        $print_speed = (float)$print_speed;
-                        $print_output = (float)$print_output;
-
-
-
                         // get data
-                        $data = array(
-                            // 1 - 10
-                            'form_type' => $form_type,
-                            'active' => $active,
-                            'internal_item' => $internal_item,
-                            'order_item' => $order_item,
-                            'rbo' => $rbo,
-                            'product_type' => $product_type,
-                            'cbs' => $cbs,
-                            'two_sides_printing' => $two_sides_printing,
-                            'dual_machine' => $dual_machine,
-                            'width' => $width,
-                            // 11 - 20
-                            'length' => $length,
-                            'blank_gap' => $blank_gap,
-                            'build_stock_cbs_item' => $build_stock_cbs_item,
-                            'material_code' => $material_code,
-                            'inlay_type' => $inlay_type,
-                            'material_description' => $material_description,
-                            'front_ink' => $front_ink,
-                            'front_ink_description' => $front_ink_description,
-                            'back_ink' => $back_ink,
-                            'back_ink_description' => $back_ink_description,
-
-                            // 21 - 30
-                            'approved_sample_card' => $approved_sample_card,
-                            'machine' => $machine,
-                            'print_system' => $print_system,
-                            'system' => $system,
-                            'packing_form' => $packing_form,
-                            'pcs_per_sheet' => $pcs_per_sheet,
-                            'combo' => $combo,
-                            'combine' => $combine,
-                            'combo_at' => $combo_at,
-                            'fsc' => $fsc,
-
-                            // 31 - 40 
-                            'brand_protection' => $brand_protection,
-                            'baseroll_in_1_kit' => $baseroll_in_1_kit,
-                            'qty_pcs_in_1_roll' => $qty_pcs_in_1_roll,
-                            'ribbon_in_1_kit' => $ribbon_in_1_kit,
-                            'ribbon_length' => $ribbon_length,
-                            'process' => $process,
-                            'print_speed' => $print_speed,
-                            'print_output' => $print_output,
-                            'remark_1' => $remark_1,
-                            'remark_2' => $remark_2,
-                            // 41 - 43
-                            'remark_3' => $remark_3,
-                            'remark_4' => $remark_4,
-                            'remark_5' => $remark_5,
-                            // update by, date
-                            'updated_by' => $updated_by
-                        );
-
-                        $dataTmp = $data;
+                        $data = [
+                            'loai_san_pham' => $loai_san_pham,
+                            'san_pham' => $san_pham,
+                            'size' => $size,
+                            'gia' => $gia,
+                            'mo_ta' => $mo_ta
+                        ];
 
 
-                        if (empty($internal_item)) {
-                            continue;
-                        }
-
-                        $where = array('internal_item' => $internal_item);
+                        $where = ['internal_item' => $internal_item];
                         if ($MasterDataModel->isAlreadyExist($where)) {
 
                             unset($data['internal_item']); // xóa điều kiện
@@ -3008,15 +2807,89 @@ class Home extends BaseController
     {
         // set time out
         ini_set('max_execution_time', 1800);
-        // check login
-        if (!get_cookie('VNRISIntranet')) return view('errors/html/error_access');
 
         // spreadsheet
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet;
-        // Add some data
-        $spreadsheet->setActiveSheetIndex(0);
+
+        $columns = [
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+            'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS'
+        ];
+
+        // open db and models
+        // open db and models
+        $db = db_connect();
+        $FoodModel = new FoodModel($db);
+        $FoodSizeModel = new FoodSizeModel($db);
+        $SizeModel = new SizeModel($db);
+        $SizeUnitModel = new SizeUnitModel($db);
+
+        /* ---------------------------------------------------------------------------------------------------------------
+            |
+            | Food
+            |
+        */ 
+        
+            // create a new sheet
+            $newSheet = new \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet($spreadsheet, 'Food');
+            $spreadsheet->addSheet($newSheet, 0);
+
+            // Retrieve the worksheet by name
+            $spreadsheet->getSheetByName('Food');
+
+            // set the names of header cells
+            // set Header, width
+            $headers = array('No.', 'Loai_San_Pham', 'San_Pham', 'Size', 'Gia', 'Mo_Ta');
+
+            foreach ($headers as $key => $header) {
+                // width
+                $spreadsheet->getActiveSheet()->getColumnDimension($columns[$key])->setWidth(20);
+                // headers
+                $spreadsheet->getActiveSheet()->setCellValue($columns[$key] . '1', $header);
+            }
+
+            // Font
+            $spreadsheet->getActiveSheet()->getStyle('A1:F1')->getFont()->setBold(true)->setName('Arial')->setSize(10);
+            $spreadsheet->getActiveSheet()->getStyle('A1:F1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('3399ff');
+
+            // data
+            $index = 0;
+            $rowCount = 1;
+            $data = $FoodModel->readAll('food_name', 'asc');
+            if (!empty($data) ) {
+                foreach ($data as $element) {
+                    $index++;
+                    $rowCount++;
+                    // convert to array
+                    $element = (array) $element;
+
+                    // getdata
+                    $catalog_id = $element['catalog_id'];
+    
+                }
+            }
+            
 
 
+
+
+
+
+
+
+
+
+
+
+        
+        // Catalog
+        $newSheet = new \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet($spreadsheet, 'Catalog');
+        $spreadsheet->addSheet($newSheet, 1);
+        // Size
+        $newSheet = new \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet($spreadsheet, 'Size');
+        $spreadsheet->addSheet($newSheet, 2);
+
+        
 
         $master_type = $this->request->getVar('type');
         if ($master_type == 'main_master_exports') {
@@ -3024,129 +2897,7 @@ class Home extends BaseController
             // active and set title
             $spreadsheet->getActiveSheet()->setTitle('Main_Master');
 
-            // set the names of header cells
-            // set Header, width
-            $columns = [
-                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-                'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS'
-            ];
-
-
-            $headers = [
-                'form_type', 'active', 'internal_item', 'order_item', 'rbo', 'product_type', 'cbs', 'two_sides_printing', 'dual_machine', 'width',
-                'length', 'blank_gap', 'build_stock_cbs_item', 'material_code', 'inlay_type', 'material_description', 'front_ink', 'front_ink_description', 'back_ink', 'back_ink_description',
-                'approved_sample_card', 'machine', 'print_system', 'system', 'packing_form', 'pcs_per_sheet', 'combo', 'combine', 'combo_at', 'fsc',
-                'brand_protection', 'baseroll_in_1_kit', 'qty_pcs_in_1_roll', 'ribbon_in_1_kit', 'ribbon_length', 'process', 'print_speed', 'print_output', 'remark_1',
-                'remark_2', 'remark_3', 'remark_4', 'remark_5', 'updated_by', 'updated_date'
-            ];
-
-            foreach ($headers as $key => $header) {
-                // width
-                $spreadsheet->getActiveSheet()->getColumnDimension($columns[$key])->setWidth(20);
-                // headers
-                $spreadsheet->getActiveSheet()->setCellValue($columns[$key] . '1', $header);
-            }
-
-            // Font
-            $spreadsheet->getActiveSheet()->getStyle('A1:AS1')->getFont()->setBold(true)->setName('Arial')->setSize(10);
-            $spreadsheet->getActiveSheet()->getStyle('A1:AS1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('3399ff');
-            $spreadsheet->getActiveSheet()->getStyle('A:AS')->getFont()->setName('Arial')->setSize(10);
-
-            // open db and models
-            $db = db_connect();
-            $MasterDataModel = new MasterDataModel($db);
-
-            $data = $MasterDataModel->readAll('form_type');
-
-            // print_r($data); exit();
-            if (!empty($data)) {
-                $index = 0;
-                $rowCount = 1;
-                // $data (array)$data;
-                foreach ($data as $element) {
-                    $index++;
-                    $rowCount++;
-
-                    $element = (array) $element;
-                    // add to excel file
-                    $spreadsheet->getActiveSheet()->SetCellValue('A' . $rowCount, trim($element['form_type']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('B' . $rowCount, trim($element['active']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('C' . $rowCount, trim($element['internal_item']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('D' . $rowCount, trim($element['order_item']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('E' . $rowCount, trim($element['rbo']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('F' . $rowCount, trim($element['product_type']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('G' . $rowCount, trim($element['cbs']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('H' . $rowCount, trim($element['two_sides_printing']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('I' . $rowCount, trim($element['dual_machine']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('J' . $rowCount, trim($element['width']));
-
-                    $spreadsheet->getActiveSheet()->SetCellValue('K' . $rowCount, trim($element['length']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('L' . $rowCount, trim($element['blank_gap']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('M' . $rowCount, trim($element['build_stock_cbs_item']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('N' . $rowCount, trim($element['material_code']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('O' . $rowCount, trim($element['inlay_type']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('P' . $rowCount, trim($element['material_description']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('Q' . $rowCount, trim($element['front_ink']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('R' . $rowCount, trim($element['front_ink_description']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('S' . $rowCount, trim($element['back_ink']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('T' . $rowCount, trim($element['back_ink_description']));
-
-                    $spreadsheet->getActiveSheet()->SetCellValue('U' . $rowCount, trim($element['approved_sample_card']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('V' . $rowCount, trim($element['machine']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('W' . $rowCount, trim($element['print_system']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('X' . $rowCount, trim($element['system']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('Y' . $rowCount, trim($element['packing_form']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('Z' . $rowCount, trim($element['pcs_per_sheet']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('AA' . $rowCount, trim($element['combo']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('AB' . $rowCount, trim($element['combine']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('AC' . $rowCount, trim($element['combo_at']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('AD' . $rowCount, trim($element['fsc']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('AE' . $rowCount, trim($element['brand_protection']));
-
-                    $spreadsheet->getActiveSheet()->SetCellValue('AF' . $rowCount, trim($element['baseroll_in_1_kit']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('AG' . $rowCount, trim($element['qty_pcs_in_1_roll']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('AH' . $rowCount, trim($element['ribbon_in_1_kit']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('AI' . $rowCount, trim($element['ribbon_length']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('AJ' . $rowCount, trim($element['process']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('AK' . $rowCount, trim($element['print_speed']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('AL' . $rowCount, trim($element['print_output']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('AM' . $rowCount, trim($element['remark_1']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('AN' . $rowCount, trim($element['remark_2']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('AO' . $rowCount, trim($element['remark_3']));
-
-                    $spreadsheet->getActiveSheet()->SetCellValue('AP' . $rowCount, trim($element['remark_4']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('AQ' . $rowCount, trim($element['remark_5']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('AR' . $rowCount, trim($element['updated_by']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('AS' . $rowCount, trim($element['updated_date']));
-                }
-            }
-
-            $db->close();
-        } else if ($master_type == 'sub_material_exports') {
-
-            // active and set title
-            $spreadsheet->getActiveSheet()->setTitle('Sub_Material');
-
-            // set the names of header cells
-            // set Header, width
-            $columns = [
-                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-                'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS'
-            ];
-
-            $headers = array('internal_item', 'color_code', 'item_color', 'sub_code', 'sub_type', 'sub_check', 'note');
-
-            foreach ($headers as $key => $header) {
-                // width
-                $spreadsheet->getActiveSheet()->getColumnDimension($columns[$key])->setWidth(20);
-                // headers
-                $spreadsheet->getActiveSheet()->setCellValue($columns[$key] . '1', $header);
-            }
-
-            // Font
-            $spreadsheet->getActiveSheet()->getStyle('A1:G1')->getFont()->setBold(true)->setName('Arial')->setSize(10);
-            $spreadsheet->getActiveSheet()->getStyle('A1:G1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('3399ff');
-            $spreadsheet->getActiveSheet()->getStyle('A:G')->getFont()->setName('Arial')->setSize(10);
+            
 
             // open db and models
             $db = db_connect();
@@ -3197,8 +2948,4 @@ class Home extends BaseController
         // $writer = new Xlsx($spreadsheet);
         $writer->save('php://output');
     }
-
-
-
-
 }
