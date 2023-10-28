@@ -98,10 +98,10 @@
                                 </a>
                                 <ul class="header3-sub-list list-unstyled">
                                     <li>
-                                        <a href="#area" id="transaction">Quản lý Thu/Chi</a>
+                                        <a href="#" id="transaction">Quản lý Thu/Chi</a>
                                     </li>
                                     <li>
-                                        <a href="#table" id="reports">Báo cáo</a>
+                                        <a href="#" id="reports">Báo cáo</a>
                                     </li>
                                 </ul>
                             </li>
@@ -112,13 +112,17 @@
                                 </a>
                                 <ul class="header3-sub-list list-unstyled">
                                     <li>
-                                        <a href="#area" id="area">Khu vực chổ ngồi</a>
+                                        <a href="#" id="area">Khu vực chổ ngồi</a>
                                     </li>
                                     <li>
-                                        <a href="#table" id="table-order">Bàn</a>
+                                        <a href="#" id="table-order">Bàn</a>
                                     </li>
                                     <li>
-                                        <a href="#food" id="food">Sản phẩm</a>
+                                        <a href="#" id="food">Sản phẩm</a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#" id="menu">Menu</a>
                                     </li>
 
 

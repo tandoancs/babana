@@ -83,12 +83,17 @@ class BillModel extends Model
         return $this->builder->get()->getResult()[0];
     }
 
-    public function readOptionsIn($col, $where, $order = null) 
+    public function readOptionsIn($col, $where, $order = null, $sort = null) 
     {
         $this->builder->select('*');
         $this->builder->whereIn($col, $where);
-        if ($order != null) 
-            $this->builder->orderBy($order, 'asc');
+        if ($order != null) {
+            if ($sort != null) 
+                $this->builder->orderBy($order, $sort);
+            else 
+                $this->builder->orderBy($order, 'asc');
+        }
+            
         return $this->builder->get()->getResult();
     }
 

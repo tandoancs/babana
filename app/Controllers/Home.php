@@ -70,7 +70,7 @@ class Home extends BaseController
         // $billData = $BillModel->readOptions(array('status <>' => 'Done'), 'bill_id');
         $billData = $BillModel->readOptionsIn('status', ['In-progress', 'Delivered'], 'date_check_in');
         if ($done == "done") {
-            $billData = $BillModel->readOptionsIn('status', ['Done'], 'date_check_in');
+            $billData = $BillModel->readOptionsIn('status', ['Done'], 'date_check_in', 'desc');
         }
 
         foreach ($billData as $bill) {
@@ -101,9 +101,12 @@ class Home extends BaseController
                 'area_name' => !empty($areaItem) ? $areaItem->area_id . "__" . $areaItem->area_name : '',
                 'table_order_name' => !empty($tableItem) ? $tableItem->table_id . "__" . $tableItem->table_order_name : '',
                 'date_check_in' => date('d-m-y H:i:s', strtotime($bill->date_check_in)),
+                'date_check_out' => date('d-m-y H:i:s', strtotime($bill->date_check_out)),
                 'sum_orders' => $bill->sum_orders,
                 'total' => $bill->total,
                 'status' => $status,
+                'money_received' => $bill->money_received,
+                'money_refund' => $bill->money_refund,
 
                 // 'area_name' => '',
                 'promotion_description' => !empty($promotionItem) ? $promotionItem->description : 'Không',
@@ -380,7 +383,7 @@ class Home extends BaseController
                         'id' => $value->table_id
                     ];
                 } else {
-                    if ($value->table_order_name ==  'Mang về' || $value->table_id == '21' ) {
+                    if ($value->table_order_name ==  'Mang về' || $value->table_id == '21') {
                         $tableOptions[] = [
                             'value' => $value->table_order_name,
                             'id' => $value->table_id
@@ -996,7 +999,7 @@ class Home extends BaseController
                 // check 
                 if (in_array($table_id, $tableList)) {
                     $table_order_name = !empty($tableItem) ? $tableItem->table_order_name : '';
-                    if ($table_order_name == 'Mang về' || $table_id == '21' ) {
+                    if ($table_order_name == 'Mang về' || $table_id == '21') {
                         $area_id = !empty($tableItem) ? $tableItem->area_id : '';
                         $areaItem = $AreaModel->readItem(array('area_id' => $area_id));
                         $area_name = !empty($areaItem) ? $areaItem->area_name : '';
@@ -1004,8 +1007,6 @@ class Home extends BaseController
                     } else {
                         $message = "Bàn $table_order_name đã được đặt chổ";
                     }
-                    
-                    
                 } else {
 
                     $area_id = !empty($tableItem) ? $tableItem->area_id : '';
@@ -2009,11 +2010,12 @@ class Home extends BaseController
         $db = db_connect();
         $TransModel = new TransModel($db);
 
-        $results = $TransModel->readAll('trans_id', 'asc');
+        $results = $TransModel->readAll('trans_id', 'desc');
         if (!empty($results)) {
             foreach ($results as $item) {
                 $data[] = [
                     'trans_id' => $item->trans_id,
+                    'trans_date' => date('d-m-Y H:i:s', strtotime($item->trans_date)),
                     'trans_type' => $item->trans_type,
                     'trans_name' => $item->trans_name,
                     'trans_form' => $item->trans_form,
@@ -2378,6 +2380,121 @@ class Home extends BaseController
         return json_encode(array('status' => $status, 'message' => $message, 'html' => $html, 'treeMapData' => $treeMapData, 'pieData' => $pieData), JSON_UNESCAPED_UNICODE);
     }
 
+    // food --------------------------------------------------------------------------------------------------------------------
+    public function menu()
+    {
+        $data = [];
+        $catalogOptions = [];
+        $foodOptions = [];
+        $sizeOptions = [];
+        $unitOptions = [];
+
+        $status = false;
+        $message = 'Chưa lấy được thông tin xử lý';
+
+        $db = db_connect();
+        $FoodSizeModel = new FoodSizeModel($db);
+        $FoodModel = new FoodModel($db);
+        $CatalogModel = new CatalogModel($db);
+        $UnitModel = new UnitModel($db);
+        $sizeModel = new sizeModel($db);
+
+
+        $result = $FoodSizeModel->readAll('description', 'asc');
+        if (!empty($result)) {
+            foreach ($result as $item) {
+
+                $catalog_id = '';
+
+                $where = ['food_id' => $item->food_id];
+                $food = '';
+                if ($FoodModel->isAlreadyExist($where)) {
+                    $foodItem = $FoodModel->readItem($where);
+                    $food = $foodItem->food_id . "__" . $foodItem->food_name;
+                    $catalog_id = $foodItem->catalog_id;
+                }
+
+
+                $where = ['catalog_id' => $catalog_id];
+                $catalog = '';
+                if ($CatalogModel->isAlreadyExist($where)) {
+                    $catalogItem = $CatalogModel->readItem($where);
+                    $catalog = $catalogItem->catalog_id . "__" . $catalogItem->catalog_name;
+                }
+
+                $size_unit_code_arr = (!empty($item->size_unit_code) && strpos($item->size_unit_code, ':') !== false) ? explode(':', $item->size_unit_code) : [];
+                $unit_id = !empty($size_unit_code_arr) ? $size_unit_code_arr[0] : '';
+                $size = !empty($size_unit_code_arr) ? $size_unit_code_arr[1] : '';
+
+                $unit = '';
+                $where = ['unit_id' => $unit_id];
+                if ($UnitModel->isAlreadyExist($where)) {
+                    $unitItem = $UnitModel->readItem($where);
+                    $unit = $unitItem->unit_id . "__" . $unitItem->unit_name;
+                }
+
+                $data[] = [
+                    'food_id' => $item->food_id,
+                    'food' => $food,
+                    'price' => $item->price,
+                    'description' => $item->description,
+                    'catalog' => $catalog,
+                    'unit' => $unit,
+                    'size' => $size
+                ];
+            }
+        }
+
+        // thêm 5 dòng trống để User thêm dòng mới
+        for ($i = 0; $i < 5; $i++) {
+            $data[] = [
+                'food_id' => 'new',
+                'food' => '',
+                'description' => '',
+                'catalog' => '',
+                'unit' => '',
+                'size' => ''
+            ];
+        }
+        
+
+        // options
+        $catalogData = $CatalogModel->readAll('catalog_id', 'asc');
+        foreach ($catalogData as $value) {
+            $catalogOptions[] = $value->catalog_id . "__" . $value->catalog_name;
+        }
+
+        // options
+        $foodData = $FoodModel->readAll('food_name', 'asc');
+        foreach ($foodData as $value) {
+            $foodOptions[] = $value->food_id . "__" . $value->food_name;
+        }
+
+        // options
+        $sizeData = $sizeModel->readAll('size', 'desc');
+        foreach ($sizeData as $value) {
+            $sizeOptions[] = $value->size;
+        }
+
+        // options
+        $unitData = $UnitModel->readAll('unit_id', 'asc');
+        foreach ($unitData as $value) {
+            $unitOptions[] = $value->unit_id . '__' . $value->unit_name;
+        }
+
+        $db->close();
+
+        return json_encode(
+            [
+                'status' => $status, 
+                'message' => $message, 
+                'data' => $data, 
+                'catalogOptions' => $catalogOptions, 
+                'foodOptions' => $foodOptions, 
+                'sizeOptions' => $sizeOptions, 
+                'unitOptions' => $unitOptions
+            ], JSON_UNESCAPED_UNICODE);
+    }
 
     public function imports()
     {
@@ -2424,7 +2541,6 @@ class Home extends BaseController
             // move this file to writable/uploads folder
             $file->move(WRITEPATH . 'uploads/', $file_name);
 
-
             // get file
             $file_data = WRITEPATH . 'uploads/' . $file_name;
 
@@ -2436,361 +2552,159 @@ class Home extends BaseController
             $fileData = array();
             if ($type == 'food') {
                 $fileData = $spreadsheet->getSheetByName('Food');
-            }
+                if (!empty($fileData)) {
 
-            if (!empty($fileData)) {
+                    $allDataInSheet = $fileData->toArray(null, true, true, true);
+                    // print_r($mainMasterData); exit();
 
-                $allDataInSheet = $fileData->toArray(null, true, true, true);
-                // print_r($mainMasterData); exit();
+                    /* ---------------------------------------------------------------------------------------------------------------------
+                        | header check
+                        | 
+                    -----------------------------------------------------------------------------------------------------------------------*/
+                    $createArray = ['Loai_San_Pham', 'San_Pham', 'Size', 'Gia', 'Mo_Ta'];
 
-                /* ---------------------------------------------------------------------------------------------------------------------
-                    | header check
-                    | 
-                -----------------------------------------------------------------------------------------------------------------------*/
-                $createArray = ['Loai_San_Pham', 'San_Pham', 'Size', 'Gia', 'Mo_Ta'];
+                    $makeArray = [
+                        'Loai_San_Pham' => 'Loai_San_Pham',
+                        'San_Pham' => 'San_Pham',
+                        'Size' => 'Size',
+                        'Gia' => 'Gia',
+                        'Mo_Ta' => 'Mo_Ta'
+                    ];
 
-                $makeArray = [
-                    'Loai_San_Pham' => 'Loai_San_Pham',
-                    'San_Pham' => 'San_Pham',
-                    'Size' => 'Size',
-                    'Gia' => 'Gia',
-                    'Mo_Ta' => 'Mo_Ta'
-                ];
-
-                $SheetDataKey = array();
-                foreach ($allDataInSheet[1] as $key => $value) {
-                    if (in_array(trim($value), $createArray)) {
-                        $value = preg_replace('/\s+/', '', $value);
-                        $SheetDataKey[trim($value)] = $key;
+                    $SheetDataKey = array();
+                    foreach ($allDataInSheet[1] as $key => $value) {
+                        if (in_array(trim($value), $createArray)) {
+                            $value = preg_replace('/\s+/', '', $value);
+                            $SheetDataKey[trim($value)] = $key;
+                        }
                     }
-                }
 
-                // check data
-                $data = array_diff_key($makeArray, $SheetDataKey);
-                $flag = (empty($data)) ? 1 : 0;
+                    // check data
+                    $data = array_diff_key($makeArray, $SheetDataKey);
+                    $flag = (empty($data)) ? 1 : 0;
 
-                /* ---------------------------------------------------------------------------------------------------------------------
-                    | get data
-                    | 
-                -----------------------------------------------------------------------------------------------------------------------*/
-                if ($flag == 1) {
+                    /* ---------------------------------------------------------------------------------------------------------------------
+                        | get data
+                        | 
+                    -----------------------------------------------------------------------------------------------------------------------*/
+                    if ($flag == 1) {
 
-                    // open db and models
-                    $db = db_connect();
-                    $FoodModel = new FoodModel($db);
-                    $FoodSizeModel = new FoodSizeModel($db);
-                    $SizeModel = new SizeModel($db);
-                    $SizeUnitModel = new SizeUnitModel($db);
+                        // open db and models
+                        $db = db_connect();
+                        $FoodModel = new FoodModel($db);
 
-
-                    // $MSColorModel = new MSColorModel($db);
-
-                    // get col key
-                    // 1 - 10
-                    $loai_san_pham_col = $SheetDataKey['Loai_San_Pham'];
-                    $san_pham_col = $SheetDataKey['San_Pham'];
-                    $size_col = $SheetDataKey['Size'];
-                    $gia_col = $SheetDataKey['Gia'];
-                    $mo_ta_col = $SheetDataKey['Mo_Ta'];
-
-                    // load
-                    $data = array();
-                    $index = 0;
-                    for ($i = 2; $i <= count($allDataInSheet); $i++) {
-
-                        $index++;
-
-                        // get data
+                        // get col key
                         // 1 - 10
-                        $loai_san_pham = filter_var(trim($allDataInSheet[$i][$loai_san_pham_col]));
-                        $san_pham = filter_var(trim($allDataInSheet[$i][$san_pham_col]));
-                        $size = filter_var(trim($allDataInSheet[$i][$size_col]));
-                        $gia = filter_var(trim($allDataInSheet[$i][$gia_col]));
-                        $mo_ta = filter_var(trim($allDataInSheet[$i][$mo_ta_col]));
+                        $loai_san_pham_col = $SheetDataKey['Loai_San_Pham'];
+                        $san_pham_col = $SheetDataKey['San_Pham'];
+                        $size_col = $SheetDataKey['Size'];
+                        $gia_col = $SheetDataKey['Gia'];
+                        $mo_ta_col = $SheetDataKey['Mo_Ta'];
 
+                        // load
+                        $data = array();
+                        $index = 0;
+                        for ($i = 2; $i <= count($allDataInSheet); $i++) {
 
-                        // check empty
-                        if (empty($san_pham)) {
-                            $message = "Sản phẩm không được trống ";
-                            $check_error = true;
-                        } else if (empty($loai_san_pham)) {
-                            $message = "Loại sản phẩm không được trống ";
-                            $check_error = true;
-                        } else if (empty($size)) {
-                            $message = "Kích cỡ (Size) sản phẩm không được trống ";
-                            $check_error = true;
-                        } else if (empty($gia)) {
-                            $message = "Giá sản phẩm không được trống ";
-                            $check_error = true;
-                        }
+                            $index++;
 
+                            // get data
+                            // 1 - 10
+                            $loai_san_pham = filter_var(trim($allDataInSheet[$i][$loai_san_pham_col]));
+                            $san_pham = filter_var(trim($allDataInSheet[$i][$san_pham_col]));
+                            $size = filter_var(trim($allDataInSheet[$i][$size_col]));
+                            $gia = filter_var(trim($allDataInSheet[$i][$gia_col]));
+                            $mo_ta = filter_var(trim($allDataInSheet[$i][$mo_ta_col]));
 
-                        if ($check_error) {
-                            $count_error++;
-                            if ($count_error < 5)
-                                continue;
-                            else
-                                break;
-                        }
-
-                        // get data
-                        $data = [
-                            'loai_san_pham' => $loai_san_pham,
-                            'san_pham' => $san_pham,
-                            'size' => $size,
-                            'gia' => $gia,
-                            'mo_ta' => $mo_ta
-                        ];
-
-
-                        $where = ['internal_item' => $internal_item];
-                        if ($MasterDataModel->isAlreadyExist($where)) {
-
-                            unset($data['internal_item']); // xóa điều kiện
-                            $data['updated_date'] = date('Y-m-d H:i:s');
-                            $dataTmp['updated_date'] = date('Y-m-d H:i:s');
-
-
-                            $mess_sub = "(Update)";
-                            $result = $MasterDataModel->edit($where, $data);
-                        } else {
-                            $mess_sub = "(Insert)";
-                            $result = $MasterDataModel->create($data);
-                        }
-
-                        // check
-                        if (!$result) {
-                            $message = "ERROR. Import lỗi dòng Internal Item: $internal_item $mess_sub";
-                            break;
-                        } else {
-
-                            $save_to_db = $this->setSaveModel(strtolower(trim($data['form_type'])));
-                            $saveModel = '';
-                            if ($save_to_db == 'MSColorModel') {
-                                $saveModel = new MSColorModel($db);
-                            } else if ($save_to_db == 'DatabaseTrimModel') {
-                                $saveModel = new DatabaseTrimModel($db);
-                            } else if ($save_to_db == 'NoCBSModel') {
-                                $saveModel = new NoCBSModel($db);
+                            // check empty
+                            if (empty($san_pham)) {
+                                $message = "Sản phẩm không được trống ";
+                                $check_error = true;
+                            } else if (empty($loai_san_pham)) {
+                                $message = "Loại sản phẩm không được trống ";
+                                $check_error = true;
+                            } else if (empty($size)) {
+                                $message = "Kích cỡ (Size) sản phẩm không được trống ";
+                                $check_error = true;
+                            } else if (empty($gia)) {
+                                $message = "Giá sản phẩm không được trống ";
+                                $check_error = true;
                             }
 
-                            if (!empty($save_to_db)) {
-                                // // // Không lưu dữ liệu MS Color. Đợi khi cập nhật Sub Material thì kiểm tra và lưu luôn (mới đủ đk kiểm tra trùng hay không)
-                                // // $count_success++;
-                                // // $message = "SUCCESS. Import thành công $count_success dòng dữ liệu";
-                                $result = $this->saveDataToSettingForm($form_type, $internal_item);
-                                if (!$result) {
-                                    $mess_sub = "(Setting Convert)";
-                                    $message = "ERROR. Import lỗi dòng Internal Item: $internal_item $mess_sub";
+                            if ($check_error) {
+                                $count_error++;
+                                if ($count_error < 5)
+                                    continue;
+                                else
                                     break;
-                                } else {
-                                    $result = ($save_to_db == 'MSColorModel') ? $this->saveDataToMultiMasterData($dataTmp, $index, $saveModel, $PlanningRFIDSBMultiInkQty) : $this->saveDataToMultiMasterData($dataTmp, $index, $saveModel);
+                            }
+
+                            // get data
+                            $data = [
+                                'loai_san_pham' => $loai_san_pham,
+                                'san_pham' => $san_pham,
+                                'size' => $size,
+                                'gia' => $gia,
+                                'mo_ta' => $mo_ta
+                            ];
+
+                            $where = ['internal_item' => $internal_item];
+                            if ($MasterDataModel->isAlreadyExist($where)) {
+
+                                unset($data['internal_item']); // xóa điều kiện
+                                $data['updated_date'] = date('Y-m-d H:i:s');
+                                $dataTmp['updated_date'] = date('Y-m-d H:i:s');
+
+
+                                $mess_sub = "(Update)";
+                                $result = $MasterDataModel->edit($where, $data);
+                            } else {
+                                $mess_sub = "(Insert)";
+                                $result = $MasterDataModel->create($data);
+                            }
+
+                            // check
+                            if (!$result) {
+                                $message = "ERROR. Import lỗi dòng Internal Item: $internal_item $mess_sub";
+                                break;
+                            } else {
+
+                                $save_to_db = $this->setSaveModel(strtolower(trim($data['form_type'])));
+                                $saveModel = '';
+                                if ($save_to_db == 'MSColorModel') {
+                                    $saveModel = new MSColorModel($db);
+                                } else if ($save_to_db == 'DatabaseTrimModel') {
+                                    $saveModel = new DatabaseTrimModel($db);
+                                } else if ($save_to_db == 'NoCBSModel') {
+                                    $saveModel = new NoCBSModel($db);
+                                }
+
+                                if (!empty($save_to_db)) {
+                                    // // // Không lưu dữ liệu MS Color. Đợi khi cập nhật Sub Material thì kiểm tra và lưu luôn (mới đủ đk kiểm tra trùng hay không)
+                                    // // $count_success++;
+                                    // // $message = "SUCCESS. Import thành công $count_success dòng dữ liệu";
+                                    $result = $this->saveDataToSettingForm($form_type, $internal_item);
                                     if (!$result) {
-                                        $mess_sub = "(Main Master Convert)";
+                                        $mess_sub = "(Setting Convert)";
                                         $message = "ERROR. Import lỗi dòng Internal Item: $internal_item $mess_sub";
                                         break;
                                     } else {
-                                        $count_success++;
-                                        $message = "SUCCESS. Import thành công $count_success dòng dữ liệu";
+                                        $result = ($save_to_db == 'MSColorModel') ? $this->saveDataToMultiMasterData($dataTmp, $index, $saveModel, $PlanningRFIDSBMultiInkQty) : $this->saveDataToMultiMasterData($dataTmp, $index, $saveModel);
+                                        if (!$result) {
+                                            $mess_sub = "(Main Master Convert)";
+                                            $message = "ERROR. Import lỗi dòng Internal Item: $internal_item $mess_sub";
+                                            break;
+                                        } else {
+                                            $count_success++;
+                                            $message = "SUCCESS. Import thành công $count_success dòng dữ liệu";
+                                        }
                                     }
                                 }
                             }
                         }
+
+                        $db->close();
                     }
-
-                    $db->close();
-                }
-            } else if (!empty($subMasterData)) {
-
-                $allDataInSheet = $subMasterData->toArray(null, true, true, true);
-
-                // print_r($allDataInSheet); exit();
-
-                /* ---------------------------------------------------------------------------------------------------------------------
-                    | header check
-                    | 
-                -----------------------------------------------------------------------------------------------------------------------*/
-                $createArray = array('internal_item', 'color_code', 'item_color', 'sub_code', 'sub_type', 'sub_check', 'note');
-                $makeArray = array('internal_item' => 'internal_item',  'color_code' => 'color_code', 'item_color' => 'item_color', 'sub_code' => 'sub_code', 'sub_type' => 'sub_type', 'sub_check' => 'sub_check', 'note' => 'note');
-
-                $SheetDataKey = array();
-                foreach ($allDataInSheet[1] as $key => $value) {
-                    if (in_array(trim($value), $createArray)) {
-                        $value = preg_replace('/\s+/', '', $value);
-                        $SheetDataKey[trim($value)] = $key;
-                    }
-                }
-
-                // check data
-                $data = array_diff_key($makeArray, $SheetDataKey);
-                $flag = (empty($data)) ? 1 : 0;
-
-
-                /* ---------------------------------------------------------------------------------------------------------------------
-                    | get data
-                    | 
-                -----------------------------------------------------------------------------------------------------------------------*/
-                if ($flag == 1) {
-
-                    // open db and models
-                    $db = db_connect();
-                    $SubMaterialModel = new SubMaterialModel($db);
-                    $MasterDataModel = new MasterDataModel($db);
-
-                    // get col key
-                    $internal_item_col = $SheetDataKey['internal_item'];
-                    $color_code_col = $SheetDataKey['color_code'];
-                    $item_color_col = $SheetDataKey['item_color'];
-                    $sub_code_col = $SheetDataKey['sub_code'];
-                    $sub_type_col = $SheetDataKey['sub_type'];
-                    $sub_check_col = $SheetDataKey['sub_check'];
-                    $note_col = $SheetDataKey['note'];
-
-                    // load
-                    $data = array();
-                    $index = 0;
-                    for ($i = 2; $i <= count($allDataInSheet); $i++) {
-
-                        $index++;
-
-                        // get data
-                        $internal_item = filter_var(trim($allDataInSheet[$i][$internal_item_col]));
-                        $color_code = filter_var(trim($allDataInSheet[$i][$color_code_col]));
-                        // $item_color = substr($internal_item, 0,7) . str_replace(" ", "", $color_code) . substr($internal_item, 9,2);
-
-                        $sub_code = filter_var(trim($allDataInSheet[$i][$sub_code_col]));
-                        $sub_type = filter_var(trim($allDataInSheet[$i][$sub_type_col]));
-                        $sub_check = filter_var(trim($allDataInSheet[$i][$sub_check_col]));
-                        $note = filter_var(trim($allDataInSheet[$i][$note_col]));
-
-                        // reset data to save to database
-
-                        // check empty
-                        if (empty($internal_item)) {
-                            $count_error++;
-
-                            if ($count_error < 5)
-                                continue;
-                            else
-                                break;
-                        }
-
-                        // xác định form liên quan cbs hay không
-                        $form_type = '';
-                        $w = ['internal_item' => $internal_item];
-                        if ($MasterDataModel->isAlreadyExist($w)) {
-                            $masterItem = $MasterDataModel->readItem(['internal_item' => $internal_item]);
-                            $form_type = $masterItem->form_type;
-                        }
-
-                        $item_color = '';
-                        $cbs_check = in_array($form_type, ['ua_cbs', 'cbs', 'pvh_rfid']) ? true : false;
-                        if ($cbs_check) {
-                            $internal_item_arr = explode('-', $internal_item);
-                            $item_color = $internal_item_arr[0] . "-" . $internal_item_arr[1] . "-" . str_replace(" ", "", $color_code) . "- " . $internal_item_arr[3];
-                        }
-
-                        // check Sub Type and Sub Check
-                        if (!$this->checkSubType($sub_type)) {
-                            $message = "Kiểm tra lại dữ liệu Sub Type tại dòng thứ $index của Internal Item: $internal_item. (Các dữ liệu còn lại chưa được imports) ";
-                            break;
-                        }
-
-                        if (!$this->checkSubCheck($sub_check)) {
-                            $message = "Kiểm tra lại dữ liệu Sub Check tại dòng thứ $index của Internal Item: $internal_item. (Các dữ liệu còn lại chưa được imports) ";
-                            break;
-                        }
-
-                        // get data
-                        $data = array(
-                            'internal_item' => $internal_item,
-                            'color_code' => $color_code,
-                            'item_color' => $item_color,
-                            'sub_code' => $sub_code,
-                            'sub_type' => $sub_type,
-                            'sub_check' => $sub_check,
-                            'note' => $note,
-                            'updated_by' => $updated_by
-                        );
-
-                        $dataTmp = $data;
-
-                        if (empty($internal_item)) {
-                            continue;
-                        }
-
-                        // Xử lý theo logic binh.luong cung cấp
-                        /*
-                            - No Color: 
-                                + Material: Dựa Item + Sub Code
-                                + Ink: Dựa Item + Sub Code + Sub Type
-                            - Color: 
-                                + Material: Dựa vào Item + Item Color + Sub Code
-                                + Ink: Dựa vào Item + Item Color + Sub Code + Sub Type
-                        */
-
-                        if (!$cbs_check) {
-
-                            $where = array('internal_item' => $internal_item, 'sub_code' => $sub_code);
-                            if (strpos(strtoupper($sub_type), "INK") !== false) {
-                                $where = array('internal_item' => $internal_item, 'sub_code' => $sub_code, 'sub_type' => $sub_type);
-                            }
-                        } else {
-                            $where = array('internal_item' => $internal_item, 'item_color' => $item_color, 'sub_code' => $sub_code);
-                            if (strpos(strtoupper($sub_type), "INK") !== false) {
-                                $where = array('internal_item' => $internal_item, 'item_color' => $item_color, 'sub_code' => $sub_code, 'sub_type' => $sub_type);
-                            }
-                        }
-
-                        if ($SubMaterialModel->isAlreadyExist($where)) {
-
-                            if (!$cbs_check) {
-
-                                unset($data['internal_item']); // xóa điều kiện
-                                unset($data['sub_code']); // xóa điều kiện
-
-                                if (strpos(strtoupper($sub_type), "INK") !== false) {
-                                    unset($data['sub_type']); // xóa điều kiện
-                                }
-                            } else {
-                                unset($data['internal_item']); // xóa điều kiện
-                                unset($data['item_color']); // xóa điều kiện
-                                unset($data['sub_code']); // xóa điều kiện
-                                if (strpos(strtoupper($sub_type), "INK") !== false) {
-                                    unset($data['sub_type']); // xóa điều kiện
-                                }
-                            }
-
-
-                            $data['updated_date'] = date('Y-m-d H:i:s');
-                            $dataTmp['updated_date'] = date('Y-m-d H:i:s');
-
-                            $mess_sub = "(Sub Update)";
-                            $result = $SubMaterialModel->edit($where, $data);
-                        } else {
-                            $mess_sub = "(Sub Insert)";
-                            $result = $SubMaterialModel->create($data);
-                        }
-
-                        // check
-                        if (!$result) {
-                            $message = "ERROR. Import lỗi dòng thứ $index của Internal Item: $internal_item $mess_sub";
-                            break;
-                        } else {
-
-                            $result = $this->saveDataToMultiSubMaterial($dataTmp, $index);
-                            if (!$result) {
-                                $mess_sub = "(Sub Convert)";
-                                $message = "ERROR. Import lỗi dòng thứ $index của Internal Item: $internal_item $mess_sub";
-                                break;
-                            } else {
-                                $count_success++;
-                                $message = "SUCCESS. Import thành công $count_success dòng dữ liệu";
-                            }
-                        }
-                    }
-
-                    $db->close();
                 }
             }
         }
@@ -2801,7 +2715,6 @@ class Home extends BaseController
 
         return view('imports/display', $results);
     }
-
 
     public function exports()
     {
@@ -2816,47 +2729,56 @@ class Home extends BaseController
             'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS'
         ];
 
-        // open db and models
-        // open db and models
+        // open db
         $db = db_connect();
-        $FoodModel = new FoodModel($db);
-        $FoodSizeModel = new FoodSizeModel($db);
-        $SizeModel = new SizeModel($db);
-        $SizeUnitModel = new SizeUnitModel($db);
 
-        /* ---------------------------------------------------------------------------------------------------------------
-            |
-            | Food
-            |
-        */ 
-        
-            // create a new sheet
-            $newSheet = new \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet($spreadsheet, 'Food');
-            $spreadsheet->addSheet($newSheet, 0);
+        // get type
+        $type = $this->request->getVar('type');
+        $file_name_type = '';
+        if ($type == 'food') {
+            $file_name_type = 'Food_';
+        }
 
-            // Retrieve the worksheet by name
-            $spreadsheet->getSheetByName('Food');
+        // Start the output buffer.
+        ob_start();
+
+        if ($type == 'food') {
+
+
+            /* ---------------------------------------------------------------------------------------------------------------
+                | Food
+            */
+
+            // models
+            $FoodModel = new FoodModel($db);
+            $CatalogModel = new CatalogModel($db);
+
+            // Add some data
+            $spreadsheet->setActiveSheetIndex(0);
+
+            // active and set title
+            $spreadsheet->getActiveSheet()->setTitle('Food');
 
             // set the names of header cells
             // set Header, width
-            $headers = array('No.', 'Loai_San_Pham', 'San_Pham', 'Size', 'Gia', 'Mo_Ta');
-
+            $headers = array('No.', 'Ma_San_Pham', 'San_Pham', 'Mo_Ta', 'Loai_San_Pham');
             foreach ($headers as $key => $header) {
                 // width
-                $spreadsheet->getActiveSheet()->getColumnDimension($columns[$key])->setWidth(20);
+                $width = ($key == 0) ? 5 : 20;
+                $spreadsheet->getActiveSheet()->getColumnDimension($columns[$key])->setWidth($width);
                 // headers
                 $spreadsheet->getActiveSheet()->setCellValue($columns[$key] . '1', $header);
             }
 
             // Font
-            $spreadsheet->getActiveSheet()->getStyle('A1:F1')->getFont()->setBold(true)->setName('Arial')->setSize(10);
-            $spreadsheet->getActiveSheet()->getStyle('A1:F1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('3399ff');
+            $spreadsheet->getActiveSheet()->getStyle('A1:E1')->getFont()->setBold(true)->setName('Arial')->setSize(10);
+            $spreadsheet->getActiveSheet()->getStyle('A1:E1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('3399ff');
 
             // data
             $index = 0;
             $rowCount = 1;
             $data = $FoodModel->readAll('food_name', 'asc');
-            if (!empty($data) ) {
+            if (!empty($data)) {
                 foreach ($data as $element) {
                     $index++;
                     $rowCount++;
@@ -2864,79 +2786,78 @@ class Home extends BaseController
                     $element = (array) $element;
 
                     // getdata
-                    $catalog_id = $element['catalog_id'];
-    
+                    $catalog_name = '';
+                    $whereC = ['catalog_id' => $element['catalog_id']];
+                    if ($CatalogModel->isAlreadyExist($whereC)) {
+                        $catalogItem = $CatalogModel->readItem($whereC);
+                        $catalog_name = $catalogItem->catalog_name;
+                    }
+
+                    $catalog = $element['catalog_id'] . '__' . $catalog_name;
+
+                    // add to excel file
+                    $spreadsheet->getActiveSheet()->SetCellValue('A' . $rowCount, $index);
+                    $spreadsheet->getActiveSheet()->SetCellValue('B' . $rowCount, trim($element['food_id']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('C' . $rowCount, trim($element['food_name']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('D' . $rowCount, trim($element['description']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('E' . $rowCount, trim($catalog));
                 }
             }
-            
 
+            /* ---------------------------------------------------------------------------------------------------------------
+                | Catalog
+            */
+            // Add new sheet
+            $spreadsheet->createSheet();
 
-
-
-
-
-
-
-
-
-
-
-        
-        // Catalog
-        $newSheet = new \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet($spreadsheet, 'Catalog');
-        $spreadsheet->addSheet($newSheet, 1);
-        // Size
-        $newSheet = new \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet($spreadsheet, 'Size');
-        $spreadsheet->addSheet($newSheet, 2);
-
-        
-
-        $master_type = $this->request->getVar('type');
-        if ($master_type == 'main_master_exports') {
+            // Add some data
+            $spreadsheet->setActiveSheetIndex(1);
 
             // active and set title
-            $spreadsheet->getActiveSheet()->setTitle('Main_Master');
+            $spreadsheet->getActiveSheet()->setTitle('Catalog');
 
-            
+            // set the names of header cells
+            // set Header, width
+            $headers = array('No.', 'Loai_San_Pham');
+            foreach ($headers as $key => $header) {
+                // width
+                $width = ($key == 0) ? 5 : 20;
+                $spreadsheet->getActiveSheet()->getColumnDimension($columns[$key])->setWidth($width);
+                // headers
+                $spreadsheet->getActiveSheet()->setCellValue($columns[$key] . '1', $header);
+            }
 
-            // open db and models
-            $db = db_connect();
-            $SubMaterialModel = new SubMaterialModel($db);
-            $data = $SubMaterialModel->readAll('internal_item, sub_type, sub_check');
+            // Font
+            $spreadsheet->getActiveSheet()->getStyle('A1:B1')->getFont()->setBold(true)->setName('Arial')->setSize(10);
+            $spreadsheet->getActiveSheet()->getStyle('A1:B1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('3399ff');
 
-            // print_r($data); exit();
+            // data
+            $index = 0;
+            $rowCount = 1;
+            $data = $CatalogModel->readAll('catalog_name', 'asc');
             if (!empty($data)) {
-                $index = 0;
-                $rowCount = 1;
-                // $data (array)$data;
                 foreach ($data as $element) {
                     $index++;
                     $rowCount++;
-
+                    // convert to array
                     $element = (array) $element;
+
+
+                    $catalog = $element['catalog_id'] . '__' . $element['catalog_name'];
+
                     // add to excel file
-                    $spreadsheet->getActiveSheet()->SetCellValue('A' . $rowCount, trim($element['internal_item']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('B' . $rowCount, trim($element['color_code']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('C' . $rowCount, trim($element['item_color']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('D' . $rowCount, trim($element['sub_code']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('E' . $rowCount, trim($element['sub_type']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('F' . $rowCount, trim($element['sub_check']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('G' . $rowCount, trim($element['note']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('A' . $rowCount, $index);
+                    $spreadsheet->getActiveSheet()->SetCellValue('B' . $rowCount, trim($catalog));
                 }
             }
-
-            $db->close();
         }
+
+
+        // Clean up output buffer before writing anything to the file.
+        ob_end_clean();
 
         // output 
-        // set filename for excel file to be exported
-        $file_name_type = "All_Master__";
-        if ($master_type == 'main_master_exports') {
-            $file_name_type = "MainMaster__";
-        } else if ($master_type == 'sub_material_exports') {
-            $file_name_type = "SubMaster__";
-        }
-        $filename = 'SB_' . $file_name_type . '_' . date('Y_m_d__H_i_s');
+        $filename = 'Babana_' . $file_name_type . '_' . date('Y_m_d__H_i_s');
 
         // header: generate excel file
         header('Content-Type: application/vnd.ms-excel');
@@ -2945,7 +2866,6 @@ class Home extends BaseController
 
         // writer
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
-        // $writer = new Xlsx($spreadsheet);
         $writer->save('php://output');
     }
 }

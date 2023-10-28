@@ -99,12 +99,15 @@ $routes->add('/deleteTransaction', 'Home::deleteTransaction');
 // reports
 $routes->add('/reports', 'Home::reports');
 
+$routes->add('/menu', 'Home::menu');
 
 
 
 
-// import
+
+// import/export
 $routes->add('/imports', 'Home::imports');
+$routes->add('/exports', 'Home::exports');
 
 
 

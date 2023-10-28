@@ -18,8 +18,8 @@ class TransModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['trans_id', 'trans_type', 'trans_name', 'trans_form', 'money', 'status', 'description'];
-    protected $fields = 'trans_id, trans_type, trans_name, trans_form, money, status, description';
+    protected $allowedFields = ['trans_id', 'trans_type', 'trans_name', 'trans_form', 'money', 'status', 'description', 'trans_date'];
+    protected $fields = 'trans_id, trans_type, trans_name, trans_form, money, status, description, trans_date';
 
     private $_insertBatch;
 
