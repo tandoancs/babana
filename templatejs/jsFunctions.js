@@ -2335,9 +2335,9 @@ function menu() {
 
         menuToolbar.events.on("click", function (id, e) {
             if (id == "imports") {
-                imports('food');
+                imports('menu');
             } else if (id == "exports") {
-                exports('food');
+                exports('menu');
             }
             // dhx.alert({ header: "Thông báo", text: "Chức năng chưa được hỗ trợ", buttonsAlignment: "center", })
         })
@@ -2381,6 +2381,19 @@ function menu() {
                     options: result.catalogOptions,
                     template: (value) => getOptionsTemplate(value),
                     htmlEnable: true
+                },
+                { width: 150, id: "promotion_price", header: [{ text: "Giá Khuyến mãi", align: "center" }, { content: "comboFilter" }], type: "number", format: "#,#", align: "center" },
+                {
+                    id: "promotion_price_deadline", header: [{ text: "Giá KM đến" }, { content: "comboFilter" }], type: "date", format: "%d-%m-%Y %H:%i:%s",
+                    editorConfig: {
+                        weekStart: "monday", weekNumbers: true, mode: "calendar", timePicker: true, timeFormat: 24, thisMonthOnly: false,
+                        mark: (date) => { if (date.getDay() === 5) return "highlight-date"; },
+                        // disabled dates
+                        disabledDates: (date) => {
+                            const disabled = { 2: true }
+                            return disabled[date.getDay()];
+                        },
+                    }
                 },
                 {
                     width: 150, id: "detail_action", gravity: 1.5, header: [{ text: "Actions", align: "center" }], htmlEnable: true, align: "center",
@@ -2438,13 +2451,13 @@ function menu() {
                                 dhx.message({ node: "message_container", text: result.message, icon: "mdi mdi-square-edit-outline", css: css, expire: 5000 });
 
                                 if (result.status) {
-                                    food();
+                                    menu();
                                 }
                                 // // đợi 4s sau đó load lại trang
                                 // setTimeout(function () {
                                 //     location.reload();
                                 // }, 4000)
-                            }, "saveFood", data.row);
+                            }, "saveMenu", data.row);
                         }
 
                     },

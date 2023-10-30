@@ -55,6 +55,22 @@ class Home extends BaseController
         return view('index');
     }
 
+    // số nguyên
+    public function setNumber($number)
+    {
+
+        if (strpos($number, ',') !== false) {
+            $number = str_replace(',', '', $number);
+        }
+
+        // trường hợp dấu chấm này là dấu phân cách phần nghìn
+        if (strpos($number, '.') !== false) {
+            $number = str_replace('.', '', $number);
+        }
+
+        return (int)$number;
+    }
+
     public function load($done)
     {
         // init
@@ -2410,7 +2426,7 @@ class Home extends BaseController
                 $food = '';
                 if ($FoodModel->isAlreadyExist($where)) {
                     $foodItem = $FoodModel->readItem($where);
-                    $food = $foodItem->food_id . "__" . $foodItem->food_name;
+                    $food = $foodItem->food_name;
                     $catalog_id = $foodItem->catalog_id;
                 }
 
@@ -2440,7 +2456,9 @@ class Home extends BaseController
                     'description' => $item->description,
                     'catalog' => $catalog,
                     'unit' => $unit,
-                    'size' => $size
+                    'size' => $size,
+                    'promotion_price' => $item->promotion_price,
+                    'promotion_price_deadline' => $item->promotion_price_deadline
                 ];
             }
         }
@@ -2453,10 +2471,12 @@ class Home extends BaseController
                 'description' => '',
                 'catalog' => '',
                 'unit' => '',
-                'size' => ''
+                'size' => '',
+                'promotion_price' => '',
+                'promotion_price_deadline' => ''
             ];
         }
-        
+
 
         // options
         $catalogData = $CatalogModel->readAll('catalog_id', 'asc');
@@ -2486,14 +2506,16 @@ class Home extends BaseController
 
         return json_encode(
             [
-                'status' => $status, 
-                'message' => $message, 
-                'data' => $data, 
-                'catalogOptions' => $catalogOptions, 
-                'foodOptions' => $foodOptions, 
-                'sizeOptions' => $sizeOptions, 
+                'status' => $status,
+                'message' => $message,
+                'data' => $data,
+                'catalogOptions' => $catalogOptions,
+                'foodOptions' => $foodOptions,
+                'sizeOptions' => $sizeOptions,
                 'unitOptions' => $unitOptions
-            ], JSON_UNESCAPED_UNICODE);
+            ],
+            JSON_UNESCAPED_UNICODE
+        );
     }
 
     public function imports()
@@ -2516,8 +2538,8 @@ class Home extends BaseController
         $file = $this->request->getFile('file');
 
         // set init
+        $result = false;
         $message = "No Import data has been updated";
-        $log_error = '';
 
         // Count success and error
         $count_success = 0;
@@ -2534,9 +2556,11 @@ class Home extends BaseController
             $file_name_type = '';
             if ($type == 'food') {
                 $file_name_type = 'Food_';
+            } else if ($type == 'menu') {
+                $file_name_type = 'Menu_';
             }
 
-            $file_name = 'Babana_' . $file_name_type . date('Ymd') . '_' . $_SERVER['REMOTE_ADDR'] . date('Ymd_His') . '.xlsx';
+            $file_name = 'Babana_' . $file_name_type . date('Ymd') . '_' . date('Ymd_His') . '.xlsx';
 
             // move this file to writable/uploads folder
             $file->move(WRITEPATH . 'uploads/', $file_name);
@@ -2706,6 +2730,225 @@ class Home extends BaseController
                         $db->close();
                     }
                 }
+            } else if ($type == 'menu') {
+
+                $fileData = $spreadsheet->getSheetByName('Menu');
+                if (!empty($fileData)) {
+
+                    $allDataInSheet = $fileData->toArray(null, true, true, true);
+                    // // print_r($allDataInSheet); exit();
+
+                    /* ---------------------------------------------------------------------------------------------------------------------
+                        | header check
+                        | 
+                    -----------------------------------------------------------------------------------------------------------------------*/
+                    $createArray = ['Ma_San_Pham', 'San_Pham', 'Gia_Tien_Size', 'Mo_Ta', 'Don_Vi', 'Loai_San_Pham'];
+
+                    $makeArray = [
+                        'Ma_San_Pham' => 'Ma_San_Pham',
+                        'San_Pham' => 'San_Pham',
+                        'Gia_Tien_Size' => 'Gia_Tien_Size',
+                        'Mo_Ta' => 'Mo_Ta',
+                        'Don_Vi' => 'Don_Vi',
+                        'Loai_San_Pham' => 'Loai_San_Pham'
+                    ];
+
+                    $SheetDataKey = array();
+                    foreach ($allDataInSheet[1] as $key => $value) {
+                        if (in_array(trim($value), $createArray)) {
+                            $value = preg_replace('/\s+/', '', $value);
+                            $SheetDataKey[trim($value)] = $key;
+                        }
+                    }
+
+                    // check data
+                    $data = array_diff_key($makeArray, $SheetDataKey);
+                    $flag = (empty($data)) ? 1 : 0;
+
+                    /* ---------------------------------------------------------------------------------------------------------------------
+                        | get data
+                        | 
+                    -----------------------------------------------------------------------------------------------------------------------*/
+                    if ($flag == 1) {
+
+                        // open db and models
+                        $db = db_connect();
+                        $FoodModel = new FoodModel($db);
+                        $FoodSizeModel = new FoodSizeModel($db);
+                        $SizeUnitModel = new SizeUnitModel($db);
+                        // // $CatalogModel = new CatalogModel($db);
+                        // // $UnitModel = new UnitModel($db);
+                        // // $SizeModel = new SizeModel($db);
+
+                        // get col key
+                        $food_id_col = 'B';
+                        $food_name_col = 'C';
+                        $price_size_m_col = 'D';
+                        $price_size_l_col = 'E';
+                        $description_col = 'F';
+                        $unit_col = 'G';
+                        $catalog_col = 'H';
+                        $promotion_price_col = 'I';
+                        $promotion_price_deadline_col = 'J';
+
+                        // load
+                        $data = array();
+                        $index = 0;
+                        for ($i = 3; $i <= count($allDataInSheet); $i++) {
+
+                            $index++;
+
+                            // get data
+                            $food_id = filter_var(trim($allDataInSheet[$i][$food_id_col]));
+                            $food_name = filter_var(trim($allDataInSheet[$i][$food_name_col]));
+                            $price_size_m = trim($allDataInSheet[$i][$price_size_m_col]);
+                            $price_size_l = trim($allDataInSheet[$i][$price_size_l_col]);
+                            $unit = filter_var(trim($allDataInSheet[$i][$unit_col]));
+
+                            $description = filter_var(trim($allDataInSheet[$i][$description_col]));
+                            $description = empty($description) ? $food_name : $description;
+
+                            $catalog = filter_var(trim($allDataInSheet[$i][$catalog_col]));
+                            $promotion_price = filter_var(trim($allDataInSheet[$i][$promotion_price_col]));
+                            $promotion_price_deadline = filter_var(trim($allDataInSheet[$i][$promotion_price_deadline_col]));
+                            $promotion_price_deadline = !empty($promotion_price_deadline) ? $promotion_price_deadline : '';
+                            $price_size_m = $this->setNumber($price_size_m);
+                            $price_size_l = $this->setNumber($price_size_l);
+                            $promotion_price = (!empty($promotion_price) && $promotion_price > 0) ? $this->setNumber($promotion_price) : 0;
+
+                            // check empty
+                            if (empty($food_name)) {
+                                $count_error++;
+                                if ($count_error < 100)
+                                    continue;
+                                else
+                                    break;
+                            } else {
+                                if (empty($price_size_m) && empty($price_size_l)) {
+                                    $message = "Vui lòng nhập giá cho sản phẩm $food_name";
+                                    break;
+                                } else if (empty($unit) || strpos($unit, '__') === false) {
+                                    $message = "Vui lòng nhập (đúng) Đơn vị cho sản phẩm $food_name";
+                                    break;
+                                } else if (empty($catalog) || strpos($catalog, '__') === false) {
+                                    $message = "Vui lòng nhập Loại (đúng) cho sản phẩm $food_name";
+                                    break;
+                                }
+                            }
+
+                            // unit 
+                            $unit_arr = (strpos($unit, '__') !== false) ? explode('__', $unit) : [];
+                            $unit_id = isset($unit_arr[0]) && !empty($unit_arr[0]) ? $unit_arr[0] : '';
+
+                            // catalog
+                            $catalog_arr = (strpos($catalog, '__') !== false) ? explode('__', $catalog) : [];
+                            $catalog_id = isset($catalog_arr[0]) && !empty($catalog_arr[0]) ? $catalog_arr[0] : '';
+                            // $catalog_description = isset($catalog_arr[1]) && !empty($catalog_arr[1]) ? $catalog_arr[1] : '';
+
+                            // // $catalog_type = '';
+                            // // $catalog_name = '';
+                            // // $catalog_description_arr = (strpos($catalog_description, '-') !== false) ? explode('-', $catalog_description) : [];
+                            // // if (count($catalog_description_arr) == 2) {
+                            // //     $catalog_type = $catalog_description_arr[0];
+                            // //     $catalog_name = $catalog_description_arr[1];
+                            // // }
+
+                            # Update food
+                            $data = [
+                                'food_name' => $food_name,
+                                'description' => $description,
+                                'status' => 1,
+                                'catalog_id' => $catalog_id
+                            ];
+
+                            if (!empty(($food_id))) {
+                                $where = ['food_id' => $food_id];
+                                if ($FoodModel->isAlreadyExist($where)) {
+                                    $result = $FoodModel->edit($where, $data);
+                                }
+                            } else {
+                                $result = $FoodModel->create($data);
+                            }
+
+                            // thêm Food thành công
+                            if (!$result) {
+                                $message = "ERROR. Nhập file lỗi dòng Sản phẩm: $food_name. Chương trình đã dừng Cập nhật các dòng dữ liệu phía dưới";
+                                break;
+                            } else {
+
+                                if (empty($food_id)) {
+                                    $foodItem = $FoodModel->readLastItem();
+                                    $food_id = $foodItem->food_id;
+                                }
+
+                                # Update Food Size
+                                $result = false;
+                                $dataFS = [];
+
+                                echo "<br>\n food_name: $food_name -- price_size_m: $price_size_m -- price_size_l: $price_size_l";
+
+                                if ($price_size_m > 0) {
+
+                                    // phải kiểm tra xem bảng size_unit có dữ liệu không // Nếu không ==> User nhập sai 
+                                    $size_unit_code = $unit_id . ':M';
+                                    if ($SizeUnitModel->isAlreadyExist(['size_unit_code' => $size_unit_code])) {
+                                        $dataFS = [
+                                            'price' => $price_size_m,
+                                            'promotion_price' => $promotion_price,
+                                            'description' => ($food_name . ' (Vừa)'),
+                                            'food_id' => $food_id,
+                                            'size_unit_code' => $size_unit_code,
+                                            'promotion_price_deadline' => $promotion_price_deadline
+                                        ];
+
+                                        $whereFS = ['food_id' => $food_id, 'size_unit_code' => $size_unit_code];
+                                        if ($FoodSizeModel->isAlreadyExist($whereFS)) {
+                                            unset($dataFS['food_id']);
+                                            unset($dataFS['size_unit_code']);
+                                            $result = $FoodSizeModel->edit($whereFS, $dataFS);
+                                        } else {
+                                            $result = $FoodSizeModel->create($dataFS);
+                                        }
+                                    }
+                                }
+
+                                $result = false;
+                                $dataFS = [];
+                                if ($price_size_l > 0) {
+
+                                    // phải kiểm tra xem bảng size_unit có dữ liệu không // Nếu không ==> User nhập sai 
+                                    $size_unit_code = $unit_id . ':L';
+                                    if ($SizeUnitModel->isAlreadyExist(['size_unit_code' => $size_unit_code])) {
+                                        $dataFS = [
+                                            'price' => $price_size_l,
+                                            'promotion_price' => $promotion_price,
+                                            'description' => ($food_name . ' (Lớn)'),
+                                            'food_id' => $food_id,
+                                            'size_unit_code' => $size_unit_code,
+                                            'promotion_price_deadline' => $promotion_price_deadline
+                                        ];
+
+                                        $whereFS = ['food_id' => $food_id, 'size_unit_code' => $size_unit_code];
+                                        if ($FoodSizeModel->isAlreadyExist($whereFS)) {
+                                            unset($dataFS['food_id']);
+                                            unset($dataFS['size_unit_code']);
+                                            $result = $FoodSizeModel->edit($whereFS, $dataFS);
+                                        } else {
+                                            $result = $FoodSizeModel->create($dataFS);
+                                        }
+                                    }
+                                }
+
+                                if (!$result) {
+                                    $message = "ERROR. Nhập file lỗi dòng Sản phẩm: $food_name. Chương trình đã dừng Cập nhật các dòng dữ liệu phía dưới";
+                                    break;
+                                }
+                            }
+                        }
+
+                        $db->close();
+                    }
+                }
             }
         }
 
@@ -2735,14 +2978,14 @@ class Home extends BaseController
         // get type
         $type = $this->request->getVar('type');
         $file_name_type = '';
-        if ($type == 'food') {
-            $file_name_type = 'Food_';
+        if ($type == 'menu') {
+            $file_name_type = 'Menu_';
         }
 
         // Start the output buffer.
         ob_start();
 
-        if ($type == 'food') {
+        if ($type == 'menu') {
 
 
             /* ---------------------------------------------------------------------------------------------------------------
@@ -2751,18 +2994,33 @@ class Home extends BaseController
 
             // models
             $FoodModel = new FoodModel($db);
+            $FoodSizeModel = new FoodSizeModel($db);
             $CatalogModel = new CatalogModel($db);
+            $UnitModel = new UnitModel($db);
+            $SizeModel = new SizeModel($db);
 
             // Add some data
             $spreadsheet->setActiveSheetIndex(0);
 
             // active and set title
-            $spreadsheet->getActiveSheet()->setTitle('Food');
+            $spreadsheet->getActiveSheet()->setTitle('Menu');
 
             // set the names of header cells
             // set Header, width
-            $headers = array('No.', 'Ma_San_Pham', 'San_Pham', 'Mo_Ta', 'Loai_San_Pham');
+            $headers = array('No.', 'Ma_San_Pham', 'San_Pham', 'Gia_Tien_Size', 'Gia_Tien_Size', 'Mo_Ta', 'Don_Vi', 'Loai_San_Pham', 'Gia_KM', 'Han_KM');
             foreach ($headers as $key => $header) {
+
+                // width
+                $width = ($key == 0) ? 5 : 20;
+                $spreadsheet->getActiveSheet()->getColumnDimension($columns[$key])->setWidth($width);
+                // headers
+                $spreadsheet->getActiveSheet()->setCellValue($columns[$key] . '1', $header);
+            }
+
+            // set Header, width
+            $headers2 = array('', '', '', 'M', 'L', '', '', '', '', '');
+            foreach ($headers2 as $key => $header) {
+
                 // width
                 $width = ($key == 0) ? 5 : 20;
                 $spreadsheet->getActiveSheet()->getColumnDimension($columns[$key])->setWidth($width);
@@ -2771,13 +3029,16 @@ class Home extends BaseController
             }
 
             // Font
-            $spreadsheet->getActiveSheet()->getStyle('A1:E1')->getFont()->setBold(true)->setName('Arial')->setSize(10);
-            $spreadsheet->getActiveSheet()->getStyle('A1:E1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('3399ff');
+            $spreadsheet->getActiveSheet()->getStyle('A2:J2')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('f5f1e6');
+
+            $spreadsheet->getActiveSheet()->getStyle('D1:D2')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('f4f70a');
+
+            $spreadsheet->getActiveSheet()->getStyle('E1:E2')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('f7d00a');
 
             // data
             $index = 0;
             $rowCount = 1;
-            $data = $FoodModel->readAll('food_name', 'asc');
+            $data = $FoodSizeModel->readAll('description', 'asc');
             if (!empty($data)) {
                 foreach ($data as $element) {
                     $index++;
@@ -2786,21 +3047,50 @@ class Home extends BaseController
                     $element = (array) $element;
 
                     // getdata
-                    $catalog_name = '';
-                    $whereC = ['catalog_id' => $element['catalog_id']];
-                    if ($CatalogModel->isAlreadyExist($whereC)) {
-                        $catalogItem = $CatalogModel->readItem($whereC);
-                        $catalog_name = $catalogItem->catalog_name;
+                    $catalog_id = '';
+                    $food_name = '';
+                    $whereF = ['food_id' => $element['food_id']];
+                    if ($FoodModel->isAlreadyExist($whereF)) {
+                        $foodItem = $FoodModel->readItem($whereF);
+                        $food_name = $foodItem->food_name;
+                        $catalog_id = $foodItem->catalog_id;
                     }
 
-                    $catalog = $element['catalog_id'] . '__' . $catalog_name;
+                    $catalog = '';
+                    if (!empty($catalog_id)) {
+                        $whereC = ['catalog_id' => $catalog_id];
+                        if ($CatalogModel->isAlreadyExist($whereC)) {
+                            $catalogItem = $CatalogModel->readItem($whereC);
+                            $catalog = $catalog_id . '__' . $catalogItem->catalog_name;
+                        }
+                    }
+
+
+                    $size_unit_code = $element['size_unit_code'];
+                    $size_unit_arr = !empty($size_unit_code) ? explode(':', $size_unit_code) : [];
+                    $unit_id = !empty($size_unit_arr) ? (int)$size_unit_arr[0] : '';
+                    $size = !empty($size_unit_arr) ? $size_unit_arr[1] : '';
+
+                    $unit = '';
+                    if (!empty($unit_id)) {
+                        $whereU = ['unit_id' => $unit_id];
+                        if ($UnitModel->isAlreadyExist($whereU)) {
+                            $unitItem = $UnitModel->readItem($whereU);
+                            $unit = $unit_id . '__' . $unitItem->unit_name;
+                        }
+                    }
 
                     // add to excel file
                     $spreadsheet->getActiveSheet()->SetCellValue('A' . $rowCount, $index);
                     $spreadsheet->getActiveSheet()->SetCellValue('B' . $rowCount, trim($element['food_id']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('C' . $rowCount, trim($element['food_name']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('D' . $rowCount, trim($element['description']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('E' . $rowCount, trim($catalog));
+                    $spreadsheet->getActiveSheet()->SetCellValue('C' . $rowCount, trim($food_name));
+                    $spreadsheet->getActiveSheet()->SetCellValue('D' . $rowCount, trim($size));
+                    $spreadsheet->getActiveSheet()->SetCellValue('E' . $rowCount, $element['price']);
+                    $spreadsheet->getActiveSheet()->SetCellValue('F' . $rowCount, trim($element['description']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('G' . $rowCount, $unit);
+                    $spreadsheet->getActiveSheet()->SetCellValue('H' . $rowCount, trim($catalog));
+                    $spreadsheet->getActiveSheet()->SetCellValue('I' . $rowCount, trim($element['promotion_price']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('J' . $rowCount, trim($element['promotion_price_deadline']));
                 }
             }
 
@@ -2848,6 +3138,98 @@ class Home extends BaseController
                     // add to excel file
                     $spreadsheet->getActiveSheet()->SetCellValue('A' . $rowCount, $index);
                     $spreadsheet->getActiveSheet()->SetCellValue('B' . $rowCount, trim($catalog));
+                }
+            }
+
+            /* ---------------------------------------------------------------------------------------------------------------
+                | Size
+            */
+            // Add new sheet
+            $spreadsheet->createSheet();
+
+            // Add some data
+            $spreadsheet->setActiveSheetIndex(2);
+
+            // active and set title
+            $spreadsheet->getActiveSheet()->setTitle('Size');
+
+            // set the names of header cells
+            // set Header, width
+            $headers = array('Size', 'Mo_Ta');
+            foreach ($headers as $key => $header) {
+                // width
+                $width = 20;
+                $spreadsheet->getActiveSheet()->getColumnDimension($columns[$key])->setWidth($width);
+                // headers
+                $spreadsheet->getActiveSheet()->setCellValue($columns[$key] . '1', $header);
+            }
+
+            // Font
+            $spreadsheet->getActiveSheet()->getStyle('A1:B1')->getFont()->setBold(true)->setName('Arial')->setSize(10);
+            $spreadsheet->getActiveSheet()->getStyle('A1:B1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('3399ff');
+
+            // data
+            $index = 0;
+            $rowCount = 1;
+            $data = $SizeModel->readAll('size', 'asc');
+            if (!empty($data)) {
+                foreach ($data as $element) {
+                    $index++;
+                    $rowCount++;
+
+                    // convert to array
+                    $element = (array) $element;
+
+                    // add to excel file
+                    $spreadsheet->getActiveSheet()->SetCellValue('A' . $rowCount, trim($element['size']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('B' . $rowCount, trim($element['description']));
+                }
+            }
+
+            /* ---------------------------------------------------------------------------------------------------------------
+                | Unit
+            */
+            // Add new sheet
+            $spreadsheet->createSheet();
+
+            // Add some data
+            $spreadsheet->setActiveSheetIndex(3);
+
+            // active and set title
+            $spreadsheet->getActiveSheet()->setTitle('Don_Vi');
+
+            // set the names of header cells
+            // set Header, width
+            $headers = array('Don_Vi', 'Mo_Ta');
+            foreach ($headers as $key => $header) {
+                // width
+                $width = 20;
+                $spreadsheet->getActiveSheet()->getColumnDimension($columns[$key])->setWidth($width);
+                // headers
+                $spreadsheet->getActiveSheet()->setCellValue($columns[$key] . '1', $header);
+            }
+
+            // Font
+            $spreadsheet->getActiveSheet()->getStyle('A1:B1')->getFont()->setBold(true)->setName('Arial')->setSize(10);
+            $spreadsheet->getActiveSheet()->getStyle('A1:B1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('3399ff');
+
+            // data
+            $index = 0;
+            $rowCount = 1;
+            $data = $UnitModel->readAll('unit_name', 'asc');
+            if (!empty($data)) {
+                foreach ($data as $element) {
+                    $index++;
+                    $rowCount++;
+
+                    // convert to array
+                    $element = (array) $element;
+
+                    $unit = $element['unit_id'] . '__' . $element['unit_name'];
+
+                    // add to excel file
+                    $spreadsheet->getActiveSheet()->SetCellValue('A' . $rowCount, trim($unit));
+                    $spreadsheet->getActiveSheet()->SetCellValue('B' . $rowCount, trim($element['description']));
                 }
             }
         }

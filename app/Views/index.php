@@ -60,7 +60,7 @@
             <div class="section__content section__content--p35">
                 <div class="header3-wrap">
                     <div class="header__logo">
-                        <a href="frontend/#">
+                        <a href="./">
                             <img src="frontend/images/icon/logo-icon.png" width="90px" alt="Babana" />
                             <img src="frontend/images/icon/logo-text.png" width="190px" alt="Babana" style="position: relative; left: -40px;" />
                         </a>
@@ -569,7 +569,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="copyright">
-                                <p>Copyright © 2023 Babana. All rights reserved. Developer by <a href="https://codeclean.org">Tan Doan</a>.</p>
+                                <p>Copyright © 2023 Babana. Developer by <a href="https://codeclean.org">Tan Doan</a>.</p>
                             </div>
                         </div>
                     </div>

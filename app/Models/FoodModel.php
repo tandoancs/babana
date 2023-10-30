@@ -81,6 +81,13 @@ class FoodModel extends Model
         return $this->builder->get()->getResult()[0];
     }
 
+    public function readLastItem() 
+    {
+        $this->builder->select('*');
+        $this->builder->orderBy('food_id', 'desc');
+        return $this->builder->get()->getResult()[0];
+    }
+
     public function readOptions($where, $col = null) 
     {
         $this->builder->where($where);
