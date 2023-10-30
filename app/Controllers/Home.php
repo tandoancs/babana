@@ -634,7 +634,7 @@ class Home extends BaseController
             $table_id = $formData['table_order_name'];
             $promotion_id = $formData['promotion_description'];
             $count_orders = $formData['count_orders'];
-            $total = (int)str_replace(",", "", $formData['total']);
+            $total = $this->setNumber($formData['total']);
             $sum_orders = $formData['sum_orders'];
             // save
             $formSave = array(
