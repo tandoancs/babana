@@ -149,18 +149,18 @@
 
                     <tr>
                         <td class="no"></td>
-                        <td class="description bill-total" colspan="3">Tiền khách đưa:</td>
+                        <td class="description fst-italic" colspan="3">Tiền khách đưa:</td>
                         <!-- <td class="quantity"></td>
                         <td class="price"></td> -->
-                        <td class="total-detail fw-bolder"><?= $money_received ?></td>
+                        <td class="total-detail fst-italic"><?= $money_received ?></td>
                     </tr>
 
                     <tr class="border-bottom border-success">
                         <td class="no"></td>
-                        <td class="description give-back-cust" colspan="3">Tiền thừa:</td>
+                        <td class="description give-back-cust fst-italic" colspan="3">Tiền thừa:</td>
                         <!-- <td class="quantity"></td>
                         <td class="price"></td> -->
-                        <td class="total-detail"><?= $money_refund ?></td>
+                        <td class="total-detail fst-italic"><?= $money_refund ?></td>
                     </tr>
 
 
