@@ -371,19 +371,20 @@ function windows(id, data = null) {
             leftGrid = new dhx.Grid(null, {
                 // css: "dhx_demo-grid",
                 columns: [
-                    { width: 220, id: "food_name", header: [{ text: "Sản phẩm" }, { content: "comboFilter" }], },
+                    { width: 45, id: "food_size_id", header: [{ text: "Id" }]},
+                    { width: 220, id: "food_name", header: [{ text: "Sản phẩm" }, { content: "inputFilter" }], editorType: "combobox" },
                     {
-                        width: 170, id: "food_size_unit_code", header: [{ text: "Đơn vị: Size" }], editorType: "combobox", editorConfig: {
+                        width: 170, id: "size_unit_code", header: [{ text: "Đơn vị: Size" }, { content: "inputFilter" }], editorType: "combobox", editorConfig: {
                             template: ({ value }) => getOptionsTemplate(value)
                         },
                         options: data.sizeUnitOptions,
                         template: (value) => getOptionsTemplate(value),
                         htmlEnable: true
                     },
-                    { width: 100, id: "food_price", header: [{ text: "Đơn giá" }], type: "number", format: "#,#" },
+                    { width: 100, id: "food_price", header: [{ text: "Đơn giá" }, { content: "inputFilter" }], type: "number", format: "#,#" },
                     { width: 90, id: "food_count", header: [{ text: "Số lượng" }] },
 
-                    { id: "food_note", header: [{ text: "Ghi chú" }] },
+                    { id: "food_note", header: [{ text: "Ghi chú" }, { content: "inputFilter" }] },
                     {
                         width: 100,
                         id: "food_action",
@@ -404,6 +405,7 @@ function windows(id, data = null) {
                         "detail-add-button": function (e, data) {
                             let food_total = data.row.food_count * data.row.food_price;
                             let rowData = {
+                                detail_food_size_id: data.row.food_size_id,
                                 detail_food_name_add: data.row.food_name,
                                 detail_size_unit: data.row.food_size_unit_code,
                                 detail_price_add: data.row.food_price,
@@ -433,7 +435,7 @@ function windows(id, data = null) {
                 $.post("getFoodPrice", { food_name: food_name, food_size_unit_code: food_size_unit_code })
                     .done(function (data) {
                         let foodSizeData = JSON.parse(data)
-                        row.food_price = foodSizeData.price
+                        // // row.food_price = foodSizeData.price
 
                     }).fail(function () {
                         dhx.alert({ header: "Tạo Đơn hàng", text: "Không lấy được giá sản phẩm, Vui lòng nhập giá", buttonsAlignment: "center", });
@@ -450,6 +452,7 @@ function windows(id, data = null) {
             rightGrid = new dhx.Grid(null, {
                 // css: "dhx_demo-grid",
                 columns: [
+                    { width: 45, id: "detail_food_size_id", editable: false, header: [{ text: "Id" }]},
                     { width: 200, id: "detail_food_name_add", header: [{ text: "Sản phẩm" }], },
                     { width: 100, id: "detail_size_unit", header: [{ text: "Đơn vị:Size" }] },
                     { width: 100, id: "detail_price_add", header: [{ text: "Đơn giá" }], type: "number", format: "#,#" },
@@ -939,6 +942,7 @@ function addNewItem(rowData) {
 
     // var data = rightGrid.data
     rightGrid.data.add({
+        detail_food_size_id: rowData.detail_food_size_id,
         detail_food_name_add: rowData.detail_food_name_add,
         detail_size_unit: rowData.detail_size_unit,
         detail_price_add: rowData.detail_price_add,

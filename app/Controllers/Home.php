@@ -434,34 +434,66 @@ class Home extends BaseController
             $sizeUnitOptions[] = $value->size_unit_code . "__" . $value->description;
         }
 
-        $foodData = $FoodModel->readOptions(array('status' => 1), 'food_id');
-        if (!empty($foodData)) {
-            foreach ($foodData as $food) {
-
-                $food_id = $food->food_id;
-                $catalog_id = $food->catalog_id;
-                $food_size_unit_code = $catalog_id == 1 ? '1:M__Ly size M' : '';
-                $promotion_price = 0;
-                $price = 0;
-                if (!empty($food_size_unit_code)) {
-                    $foodSizeItem = $FoodSizeModel->readItem(array('food_id' => $food_id, 'size_unit_code' => '1:M'));
-                    $promotion_price = !empty($foodSizeItem) ? $foodSizeItem->promotion_price : 0;
-                    $price = !empty($foodSizeItem) ? $foodSizeItem->price : 0;
-                    if ($promotion_price > 0) {
-                        $price = $promotion_price;
-                    }
+        $foodSizeData = $FoodSizeModel->readAll('food_id', 'asc');
+        if (!empty($foodSizeData)) {
+            foreach ($foodSizeData as $foodSize) {
+                $food_size_id = $foodSize->food_size_id;
+                $food_id = $foodSize->food_id;
+                // $foodItem = $FoodModel->readItem(array('food_id' => $food_id));
+                $price = $foodSize->price;
+                $promotion_price = $foodSize->promotion_price;
+                if ($promotion_price > 0) {
+                    $price = $promotion_price;
                 }
-
+                $description = $foodSize->description;
+                $size_unit_code = $foodSize->size_unit_code;
+                $sizeUnitItem = $SizeUnitModel->readItem(array('size_unit_code' => $size_unit_code));
+                $size_unit_desc = !empty($sizeUnitItem) ? $sizeUnitItem->description : $size_unit_code;
                 $foodDataSet[] = array(
-                    'food_name' => $food->food_id . '__' . $food->food_name,
-                    'food_size_unit_code' => $food_size_unit_code,
+                    'food_size_id' => $food_size_id,
+                    'food_name' => $description,
+                    'size_unit_code' => $size_unit_desc,
                     'food_price' => $price,
                     'food_count' => 1,
                     // 'food_total' => ($food->price * 1),
                     'food_note' => ''
                 );
             }
+
         }
+
+
+        // // $foodData = $FoodModel->readOptions(array('status' => 1), 'food_id');
+        // // if (!empty($foodData)) {
+        // //     foreach ($foodData as $food) {
+
+        // //         $food_id = $food->food_id;
+        // //         $catalog_id = $food->catalog_id;
+        // //         $food_size_unit_code = $catalog_id == 1 ? '1:M__Ly size M' : '';
+        // //         $promotion_price = 0;
+        // //         $price = 0;
+        // //         $description = '';
+        // //         if (!empty($food_size_unit_code)) {
+        // //             $foodSizeItem = $FoodSizeModel->readItem(array('food_id' => $food_id, 'size_unit_code' => '1:M'));
+        // //             $promotion_price = !empty($foodSizeItem) ? $foodSizeItem->promotion_price : 0;
+        // //             $price = !empty($foodSizeItem) ? $foodSizeItem->price : 0;
+        // //             if ($promotion_price > 0) {
+        // //                 $price = $promotion_price;
+        // //             }
+
+        // //             $description = !empty($foodSizeItem) ? $foodSizeItem->description : '';
+        // //         }
+
+        // //         $foodDataSet[] = array(
+        // //             'food_name' => $food->food_id . '__' . $description,
+        // //             'food_size_unit_code' => $food_size_unit_code,
+        // //             'food_price' => $price,
+        // //             'food_count' => 1,
+        // //             // 'food_total' => ($food->price * 1),
+        // //             'food_note' => ''
+        // //         );
+        // //     }
+        // // }
 
         $data['tableOptions'] = $tableOptions;
         $data['promotionOptions'] = $promotionOptions;
@@ -662,21 +694,21 @@ class Home extends BaseController
                 // $gridData = $this->request->getVar('gridData');
                 foreach ($gridData as $item) {
 
+                    $food_size_id = $item['detail_food_size_id'];
+
                     $count = $item['detail_count_add'];
                     $price = $item['detail_price_add'];
 
                     $bill_detail_total = is_int($item['detail_total_add']) ? (int)$item['detail_total_add'] : 0;
-                    $size_unit_code = (strpos($item['detail_size_unit'], "__") !== false) ? explode("__", $item['detail_size_unit'])[0] : "1:M";
-
-
-                    $food_id = (strpos($item['detail_food_name_add'], "__") !== false) ? explode("__", $item['detail_food_name_add'])[0] : 0;
-                    $food_id = (int)$food_id;
+                    // $size_unit_code = (strpos($item['detail_size_unit'], "__") !== false) ? explode("__", $item['detail_size_unit'])[0] : "1:M";
                     $note = $item['detail_note_add'];
 
                     // Cập nhật detail description để in bill, có dạng: TS truyền thống (Vừa), Trà sữa Matcha (Lớn)
                     // dữ liệu này lấy từ cột description trong bảng food_size
-                    $foodSizeItem = $FoodSizeModel->readItem(['food_id' => $food_id, 'size_unit_code' => $size_unit_code]);
+                    $foodSizeItem = $FoodSizeModel->readItem(['food_size_id' => $food_size_id]);
                     $bill_detail_description = !empty($foodSizeItem) ? $foodSizeItem->description : "";
+                    $food_id = !empty($foodSizeItem) ? $foodSizeItem->food_id : "";
+                    $size_unit_code = !empty($foodSizeItem) ? $foodSizeItem->size_unit_code : "";
 
                     // check data
                     if ($count == 0) {
@@ -690,7 +722,7 @@ class Home extends BaseController
                     } else if ($bill_detail_total == 0) {
                         $message = 'Tổng tiền của sản phẩm ' . $item['detail_food_name_add'] . ' bằng 0. Kiểm tra lại đơn hàng hoặc liên hệ Kỹ thuật';
                     } else {
-                        $where = array('bill_id' => $bill_id, 'food_id' => $food_id);
+                        $where = array('bill_id' => $bill_id, 'food_id' => $food_id, 'size_unit_code' => $size_unit_code);
                         $billDetailSave = array(
                             'count' => $count,
                             'price' => $price,
