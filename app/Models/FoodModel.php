@@ -95,6 +95,15 @@ class FoodModel extends Model
         return $this->builder->get()->getResult();
     }
 
+    public function readNotIn($col, $whereNot) 
+    {
+        $this->builder->whereNotIn($col, $whereNot);
+        $this->builder->orderBy($col, 'asc');
+        return $this->builder->get()->getResult();
+    }
+
+    
+
     public function create($data)
 	{
         // Cách 1: Có thể truyền dữ liệu bằng phương thức: $this->builder->set('name', $name); Sau đó sử dụng $this->builder->insert();

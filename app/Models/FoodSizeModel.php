@@ -18,8 +18,8 @@ class FoodSizeModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['food_size_id', 'price', 'promotion_price', 'description', 'food_id', 'size_unit_code', 'promotion_price_deadline'];
-    protected $fields = 'food_size_id, price, promotion_price, description, food_id, size_unit_code, size_unit_code, promotion_price_deadline';
+    protected $allowedFields = ['food_size_id', 'price', 'promotion_price', 'description', 'food_id', 'size', 'unit_id', 'promotion_price_deadline'];
+    protected $fields = 'food_size_id, price, promotion_price, description, food_id, size, unit_id, promotion_price_deadline';
 
     // Validation
     protected $validationRules      = [];

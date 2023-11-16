@@ -18,8 +18,8 @@ class CatalogModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['catalog_id', 'catalog_name', 'description'];
-    protected $fields = 'catalog_id, catalog_name, description';
+    protected $allowedFields = ['catalog_id', 'catalog_group', 'catalog_name', 'description'];
+    protected $fields = 'catalog_id, catalog_group, catalog_name, description';
 
     // Validation
     protected $validationRules      = [];

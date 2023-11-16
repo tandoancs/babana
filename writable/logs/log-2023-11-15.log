@@ -1,0 +1,7 @@
+CRITICAL - 2023-11-15 19:45:44 --> Undefined property: stdClass::$catalog_group
+in APPPATH\Controllers\Home.php on line 3348.
+ 1 APPPATH\Controllers\Home.php(3348): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: stdClass::$catalog_group', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 3348)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->exports()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()

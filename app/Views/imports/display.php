@@ -5,7 +5,7 @@
 	console.log('message : ' + message);
 
     alert(message); 
-	window.location = './';
+	// window.location = './';
 	
 
 </script>

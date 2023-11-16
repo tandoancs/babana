@@ -118,7 +118,7 @@
                                         <a href="#" id="table-order">Bàn</a>
                                     </li>
                                     <li>
-                                        <a href="#" id="food">Sản phẩm</a>
+                                        <a href="#" id="food">Danh mục Sản phẩm</a>
                                     </li>
 
                                     <li>

@@ -213,7 +213,7 @@ class Home extends BaseController
             }
         }
 
-        $sizeUnitData = $SizeUnitModel->readAll('size_unit_code');
+        $sizeUnitData = $SizeUnitModel->readAll('size_unit_code', 'asc');
         foreach ($sizeUnitData as $value) {
             $sizeUnitOptions[] = $value->size_unit_code . "__" . $value->description;
         }
@@ -429,7 +429,7 @@ class Home extends BaseController
             }
         }
 
-        $sizeUnitData = $SizeUnitModel->readAll('size_unit_code');
+        $sizeUnitData = $SizeUnitModel->readAll('size_unit_code', 'asc');
         foreach ($sizeUnitData as $value) {
             $sizeUnitOptions[] = $value->size_unit_code . "__" . $value->description;
         }
@@ -446,7 +446,10 @@ class Home extends BaseController
                     $price = $promotion_price;
                 }
                 $description = $foodSize->description;
-                $size_unit_code = $foodSize->size_unit_code;
+
+                $size = $foodSize->size;
+                $unit_id = $foodSize->unit_id;
+                $size_unit_code = $unit_id . ':' . $size;
                 $sizeUnitItem = $SizeUnitModel->readItem(array('size_unit_code' => $size_unit_code));
                 $size_unit_desc = !empty($sizeUnitItem) ? $sizeUnitItem->description : $size_unit_code;
                 $foodDataSet[] = array(
@@ -459,7 +462,6 @@ class Home extends BaseController
                     'food_note' => ''
                 );
             }
-
         }
 
 
@@ -613,6 +615,7 @@ class Home extends BaseController
             $food_id = (!empty($detail_food_name) && strpos($detail_food_name, "__") !== false) ? explode("__", $detail_food_name)[0] : 0;
             $size_unit_code = (!empty($detail_size_unit_code) && strpos($detail_size_unit_code, "__") !== false) ? explode("__", $detail_size_unit_code)[0] : 0;
 
+            $size_unit_code_arr = explode(":", $size_unit_code);
 
             if (!empty($food_id) && !empty($size_unit_code)) {
 
@@ -620,7 +623,7 @@ class Home extends BaseController
                 $db = db_connect();
                 $FoodSizeModel = new FoodSizeModel($db);
 
-                $where = ['food_id' => $food_id, 'size_unit_code' => $size_unit_code];
+                $where = ['food_id' => $food_id, 'size' => $size_unit_code_arr[1]];
                 if ($FoodSizeModel->isAlreadyExist($where)) {
                     $foodSizeData = $FoodSizeModel->readItem($where);
                     if (!empty($foodSizeData)) {
@@ -708,7 +711,7 @@ class Home extends BaseController
                     $foodSizeItem = $FoodSizeModel->readItem(['food_size_id' => $food_size_id]);
                     $bill_detail_description = !empty($foodSizeItem) ? $foodSizeItem->description : "";
                     $food_id = !empty($foodSizeItem) ? $foodSizeItem->food_id : "";
-                    $size_unit_code = !empty($foodSizeItem) ? $foodSizeItem->size_unit_code : "";
+                    $size_unit_code = !empty($foodSizeItem) ? ($foodSizeItem->unit_id . ':' . $foodSizeItem->size) : "";
 
                     // check data
                     if ($count == 0) {
@@ -865,6 +868,7 @@ class Home extends BaseController
                 $bill_detail_total = $value['detail_total'];
                 $size_unit_code = (!empty($value['detail_size_unit_code']) && strpos($value['detail_size_unit_code'], '__') !== false) ? explode('__', $value['detail_size_unit_code'])[0] : "1:M";
 
+                $size_unit_code_arr = explode(':', $size_unit_code);
 
                 $bill_id = $value['detail_bill_id'];
                 $food_id = (!empty($value['detail_food_name']) && strpos($value['detail_food_name'], '__') !== false) ? explode('__', $value['detail_food_name'])[0] : 0;
@@ -872,7 +876,7 @@ class Home extends BaseController
 
                 // Cập nhật detail description để in bill, có dạng: TS truyền thống (Vừa), Trà sữa Matcha (Lớn)
                 // dữ liệu này lấy từ cột description trong bảng food_size
-                $foodSizeItem = $FoodSizeModel->readItem(['food_id' => $food_id, 'size_unit_code' => $size_unit_code]);
+                $foodSizeItem = $FoodSizeModel->readItem(['food_id' => $food_id, 'size' => $size_unit_code_arr[1]]);
                 $bill_detail_description = !empty($foodSizeItem) ? $foodSizeItem->description : "";
 
                 // cập nhật lại tổng đơn và ghi chú đơn
@@ -1435,16 +1439,16 @@ class Home extends BaseController
             foreach ($result as $item) {
 
                 $where = ['catalog_id' => $item->catalog_id];
-                $catalog_name = '';
+                $catalog = '';
                 if ($CatalogModel->isAlreadyExist($where)) {
                     $catalogItem = $CatalogModel->readItem($where);
-                    $catalog_name = $catalogItem->catalog_id . "__" . $catalogItem->catalog_name;
+                    $catalog = $catalogItem->catalog_group . " - " . $catalogItem->catalog_name;
                 }
                 $data[] = [
                     'food_id' => $item->food_id,
                     'food_name' => $item->food_name,
                     'description' => $item->description,
-                    'catalog' => $catalog_name
+                    'catalog' => $catalog
                 ];
             }
         }
@@ -1462,7 +1466,7 @@ class Home extends BaseController
         // area all
         $catalogData = $CatalogModel->readAll('catalog_id', 'asc');
         foreach ($catalogData as $value) {
-            $catalogOptions[] = $value->catalog_id . "__" . $value->catalog_name;
+            $catalogOptions[] = $value->catalog_id . "__" . $value->catalog_group . " - " . $value->catalog_name;
         }
 
         $db->close();
@@ -2436,6 +2440,7 @@ class Home extends BaseController
         $foodOptions = [];
         $sizeOptions = [];
         $unitOptions = [];
+        $food_id_list = [];
 
         $status = false;
         $message = 'Chưa lấy được thông tin xử lý';
@@ -2448,91 +2453,180 @@ class Home extends BaseController
         $sizeModel = new sizeModel($db);
 
 
-        $result = $FoodSizeModel->readAll('description', 'asc');
-        if (!empty($result)) {
-            foreach ($result as $item) {
+        // lấy danh sách food_id có trong menu
+        $foodSizeData = $FoodSizeModel->readAll('description', 'asc');
+        if (!empty($foodSizeData)) {
+            foreach ($foodSizeData as $item)
+                $food_id_list[] = $item->food_id;
 
-                $catalog_id = '';
+            // danh sách SIZE
+            $sizeData = $sizeModel->readAll();
 
-                $where = ['food_id' => $item->food_id];
-                $food = '';
-                if ($FoodModel->isAlreadyExist($where)) {
-                    $foodItem = $FoodModel->readItem($where);
-                    $food = $foodItem->food_name;
-                    $catalog_id = $foodItem->catalog_id;
+            // Kiểm tra các sản phẩm chưa có trong menu và thêm vào menu
+            $foodData = $FoodModel->readNotIn('food_id', $food_id_list);
+            if (!empty($foodData)) {
+                foreach ($foodData as $element) {
+
+                    // getdata
+                    $food_id = $element->food_id;
+                    $food_name = $element->food_name;
+
+                    foreach ($sizeData as $sizeItem) {
+                        $size = $sizeItem->size;
+
+                        $description = $food_name . ' (' . $sizeItem->description . ')';
+                        $foodSizeSave = [
+                            'food_id' => $food_id,
+                            'size' => $size,
+                            'description' => $description,
+                            'price' => 0
+                        ];
+
+                        // kiểm tra xem có description này chưa (khả năng trùng) loại bỏ
+                        $where = ['description' => $description];
+                        if (!$FoodSizeModel->isAlreadyExist($where)) {
+                            $FoodSizeModel->create($foodSizeSave);
+                        }
+                    }
+                }
+            }
+
+            // menu da nhap gia
+            $results = $FoodSizeModel->readOptions(['price >' => 0], 'description');
+            if (!empty($results)) {
+                $index = 0;
+                foreach ($results as $item) {
+
+                    $index++;
+
+                    $catalog_id = '';
+
+                    $food_id_list[] = $item->food_id;
+
+                    $where = ['food_id' => $item->food_id];
+                    $food = '';
+                    if ($FoodModel->isAlreadyExist($where)) {
+                        $foodItem = $FoodModel->readItem($where);
+                        $food = $foodItem->food_name;
+                        $catalog_id = $foodItem->catalog_id;
+                    }
+
+
+                    $where = ['catalog_id' => $catalog_id];
+                    $catalog = '';
+                    if ($CatalogModel->isAlreadyExist($where)) {
+                        $catalogItem = $CatalogModel->readItem($where);
+                        $catalog = $catalogItem->catalog_name;
+                    }
+
+                    $unit = '';
+                    $where = ['unit_id' => $item->unit_id];
+                    if ($UnitModel->isAlreadyExist($where)) {
+                        $unitItem = $UnitModel->readItem($where);
+                        // $unit = $unitItem->unit_id . "__" . $unitItem->unit_name;
+                        $unit = $unitItem->unit_name;
+                    }
+
+                    $data[] = [
+                        'index' => $index,
+                        'food_size_id' => $item->food_size_id,
+                        'food' => $item->description,
+                        'price' => $item->price,
+                        'catalog' => $catalog,
+                        'unit' => $unit,
+                        'size' => $item->size,
+                        'promotion_price' => $item->promotion_price,
+                        'promotion_price_deadline' => $item->promotion_price_deadline
+                    ];
                 }
 
+                // // // thêm 5 dòng trống để User thêm area mới
+                // // for ($i = 0; $i < 5; $i++) {
+                // //     $data[] = [
+                // //         'index' => $index,
+                // //         'food_size_id' => 'new',
+                // //         'food' => '',
+                // //         'price' => 0,
+                // //         'description' => '',
+                // //         'catalog' => '',
+                // //         'unit' => '',
+                // //         'size' => '',
+                // //         'promotion_price' => 0,
+                // //         'promotion_price_deadline' => ''
+                // //     ];
+                // // }
+            }
 
-                $where = ['catalog_id' => $catalog_id];
-                $catalog = '';
-                if ($CatalogModel->isAlreadyExist($where)) {
-                    $catalogItem = $CatalogModel->readItem($where);
-                    $catalog = $catalogItem->catalog_id . "__" . $catalogItem->catalog_name;
+            // menu chua nhap gia
+            $results = $FoodSizeModel->readOptions(['price' => 0], 'description');
+            if (!empty($results)) {
+                $index = 0;
+                foreach ($results as $item) {
+
+                    $index++;
+
+                    $catalog_id = '';
+
+                    $food_id_list[] = $item->food_id;
+
+                    $where = ['food_id' => $item->food_id];
+                    $food = '';
+                    if ($FoodModel->isAlreadyExist($where)) {
+                        $foodItem = $FoodModel->readItem($where);
+                        $food = $foodItem->food_name;
+                        $catalog_id = $foodItem->catalog_id;
+                    }
+
+
+                    $where = ['catalog_id' => $catalog_id];
+                    $catalog = '';
+                    if ($CatalogModel->isAlreadyExist($where)) {
+                        $catalogItem = $CatalogModel->readItem($where);
+                        $catalog = $catalogItem->catalog_name;
+                    }
+
+                    $size = $item->size;
+                    $unit = '';
+                    $where = ['unit_id' => $item->unit_id];
+                    if ($UnitModel->isAlreadyExist($where)) {
+                        $unitItem = $UnitModel->readItem($where);
+                        // $unit = $unitItem->unit_id . "__" . $unitItem->unit_name;
+                        $unit = $unitItem->unit_name;
+                    }
+
+                    $data[] = [
+                        'index' => $index,
+                        'food_size_id' => $item->food_size_id,
+                        'food' => $item->description,
+                        'price' => $item->price,
+                        'catalog' => $catalog,
+                        'unit' => $unit,
+                        'size' => $size,
+                        'promotion_price' => $item->promotion_price,
+                        'promotion_price_deadline' => $item->promotion_price_deadline
+                    ];
                 }
+            }
 
-                $size_unit_code_arr = (!empty($item->size_unit_code) && strpos($item->size_unit_code, ':') !== false) ? explode(':', $item->size_unit_code) : [];
-                $unit_id = !empty($size_unit_code_arr) ? $size_unit_code_arr[0] : '';
-                $size = !empty($size_unit_code_arr) ? $size_unit_code_arr[1] : '';
+            // options
+            $catalogData = $CatalogModel->readAll('catalog_id', 'asc');
+            foreach ($catalogData as $value) {
+                $catalogOptions[] = $value->catalog_id . "__" . $value->catalog_name;
+            }
 
-                $unit = '';
-                $where = ['unit_id' => $unit_id];
-                if ($UnitModel->isAlreadyExist($where)) {
-                    $unitItem = $UnitModel->readItem($where);
-                    $unit = $unitItem->unit_id . "__" . $unitItem->unit_name;
-                }
+            // options
+            $sizeData = $sizeModel->readAll('size', 'desc');
+            foreach ($sizeData as $value) {
+                $sizeOptions[] = $value->size;
+            }
 
-                $data[] = [
-                    'food_id' => $item->food_id,
-                    'food' => $food,
-                    'price' => $item->price,
-                    'description' => $item->description,
-                    'catalog' => $catalog,
-                    'unit' => $unit,
-                    'size' => $size,
-                    'promotion_price' => $item->promotion_price,
-                    'promotion_price_deadline' => $item->promotion_price_deadline
-                ];
+            // options
+            $unitData = $UnitModel->readAll('unit_id', 'asc');
+            foreach ($unitData as $value) {
+                $unitOptions[] = $value->unit_id . '__' . $value->unit_name;
             }
         }
 
-        // thêm 5 dòng trống để User thêm dòng mới
-        for ($i = 0; $i < 5; $i++) {
-            $data[] = [
-                'food_id' => 'new',
-                'food' => '',
-                'description' => '',
-                'catalog' => '',
-                'unit' => '',
-                'size' => '',
-                'promotion_price' => '',
-                'promotion_price_deadline' => ''
-            ];
-        }
-
-
-        // options
-        $catalogData = $CatalogModel->readAll('catalog_id', 'asc');
-        foreach ($catalogData as $value) {
-            $catalogOptions[] = $value->catalog_id . "__" . $value->catalog_name;
-        }
-
-        // options
-        $foodData = $FoodModel->readAll('food_name', 'asc');
-        foreach ($foodData as $value) {
-            $foodOptions[] = $value->food_id . "__" . $value->food_name;
-        }
-
-        // options
-        $sizeData = $sizeModel->readAll('size', 'desc');
-        foreach ($sizeData as $value) {
-            $sizeOptions[] = $value->size;
-        }
-
-        // options
-        $unitData = $UnitModel->readAll('unit_id', 'asc');
-        foreach ($unitData as $value) {
-            $unitOptions[] = $value->unit_id . '__' . $value->unit_name;
-        }
 
         $db->close();
 
@@ -2774,15 +2868,18 @@ class Home extends BaseController
                         | header check
                         | 
                     -----------------------------------------------------------------------------------------------------------------------*/
-                    $createArray = ['Ma_San_Pham', 'San_Pham', 'Gia_Tien_Size', 'Mo_Ta', 'Don_Vi', 'Loai_San_Pham'];
+                    $createArray = ['ID', 'Ma_SP', 'San_Pham', 'Gia_Tien_Size', 'Mo_Ta_SP', 'Don_Vi', 'Loai_SP', 'Gia_KM', 'Han_KM'];
 
                     $makeArray = [
-                        'Ma_San_Pham' => 'Ma_San_Pham',
+                        'ID' => 'ID',
+                        'Ma_SP' => 'Ma_SP',
                         'San_Pham' => 'San_Pham',
                         'Gia_Tien_Size' => 'Gia_Tien_Size',
-                        'Mo_Ta' => 'Mo_Ta',
+                        'Mo_Ta_SP' => 'Mo_Ta_SP',
                         'Don_Vi' => 'Don_Vi',
-                        'Loai_San_Pham' => 'Loai_San_Pham'
+                        'Loai_SP' => 'Loai_SP',
+                        'Gia_KM' => 'Gia_KM',
+                        'Han_KM' => 'Han_KM'
                     ];
 
                     $SheetDataKey = array();
@@ -2807,21 +2904,24 @@ class Home extends BaseController
                         $db = db_connect();
                         $FoodModel = new FoodModel($db);
                         $FoodSizeModel = new FoodSizeModel($db);
-                        $SizeUnitModel = new SizeUnitModel($db);
+                        $SizeModel = new SizeModel($db);
                         // // $CatalogModel = new CatalogModel($db);
                         // // $UnitModel = new UnitModel($db);
                         // // $SizeModel = new SizeModel($db);
 
                         // get col key
-                        $food_id_col = 'B';
-                        $food_name_col = 'C';
-                        $price_size_m_col = 'D';
-                        $price_size_l_col = 'E';
-                        $description_col = 'F';
-                        $unit_col = 'G';
-                        $catalog_col = 'H';
-                        $promotion_price_col = 'I';
-                        $promotion_price_deadline_col = 'J';
+                        $food_size_id_col = $SheetDataKey['ID'];
+                        $food_id_col = $SheetDataKey['Ma_SP'];
+                        $food_name_col = $SheetDataKey['San_Pham'];
+                        $description_col = $SheetDataKey['Mo_Ta_SP'];
+                        $unit_col = $SheetDataKey['Don_Vi'];
+                        $catalog_col = $SheetDataKey['Loai_SP'];
+                        $promotion_price_col = $SheetDataKey['Gia_KM'];
+                        $promotion_price_deadline_col = $SheetDataKey['Han_KM'];
+
+                        // giá của từng size đang lấy manual
+                        $price_size_m_col = 'E';
+                        $price_size_l_col = 'F';
 
                         // load
                         $data = array();
@@ -2831,6 +2931,7 @@ class Home extends BaseController
                             $index++;
 
                             // get data
+                            $food_size_id = filter_var(trim($allDataInSheet[$i][$food_size_id_col]));
                             $food_id = filter_var(trim($allDataInSheet[$i][$food_id_col]));
                             $food_name = filter_var(trim($allDataInSheet[$i][$food_name_col]));
                             $price_size_m = trim($allDataInSheet[$i][$price_size_m_col]);
@@ -2838,7 +2939,6 @@ class Home extends BaseController
                             $unit = filter_var(trim($allDataInSheet[$i][$unit_col]));
 
                             $description = filter_var(trim($allDataInSheet[$i][$description_col]));
-                            $description = empty($description) ? $food_name : $description;
 
                             $catalog = filter_var(trim($allDataInSheet[$i][$catalog_col]));
                             $promotion_price = filter_var(trim($allDataInSheet[$i][$promotion_price_col]));
@@ -2856,9 +2956,9 @@ class Home extends BaseController
                                 else
                                     break;
                             } else {
+
                                 if (empty($price_size_m) && empty($price_size_l)) {
-                                    $message = "Vui lòng nhập giá cho sản phẩm $food_name";
-                                    break;
+                                    continue;
                                 } else if (empty($unit) || strpos($unit, '__') === false) {
                                     $message = "Vui lòng nhập (đúng) Đơn vị cho sản phẩm $food_name";
                                     break;
@@ -2886,9 +2986,10 @@ class Home extends BaseController
                             // // }
 
                             # Update food
+                            $food_description = !empty($description) ? $description : $food_name;
                             $data = [
                                 'food_name' => $food_name,
-                                'description' => $description,
+                                'description' => $food_description,
                                 'status' => 1,
                                 'catalog_id' => $catalog_id
                             ];
@@ -2913,67 +3014,85 @@ class Home extends BaseController
                                     $food_id = $foodItem->food_id;
                                 }
 
-                                # Update Food Size
+                                # Update Food Size M
                                 $result = false;
                                 $dataFS = [];
-
-                                echo "<br>\n food_name: $food_name -- price_size_m: $price_size_m -- price_size_l: $price_size_l";
-
                                 if ($price_size_m > 0) {
 
-                                    // phải kiểm tra xem bảng size_unit có dữ liệu không // Nếu không ==> User nhập sai 
-                                    $size_unit_code = $unit_id . ':M';
-                                    if ($SizeUnitModel->isAlreadyExist(['size_unit_code' => $size_unit_code])) {
-                                        $dataFS = [
-                                            'price' => $price_size_m,
-                                            'promotion_price' => $promotion_price,
-                                            'description' => ($food_name . ' (Vừa)'),
-                                            'food_id' => $food_id,
-                                            'size_unit_code' => $size_unit_code,
-                                            'promotion_price_deadline' => $promotion_price_deadline
-                                        ];
+                                    $price = $price_size_m;
 
-                                        $whereFS = ['food_id' => $food_id, 'size_unit_code' => $size_unit_code];
+                                    // phải kiểm tra xem bảng size_unit có dữ liệu không // Nếu không ==> User nhập sai 
+                                    $size = 'M';
+                                    $size_description = 'Vừa';
+                                    $where_s = ['size' => $size];
+                                    if ($SizeModel->isAlreadyExist($where_s)) {
+                                        $sizeData = $SizeModel->readItem($where_s);
+                                        $size_description = $sizeData->description;
+                                    }
+
+                                    $dataFS = [
+                                        'price' => $price,
+                                        'promotion_price' => $promotion_price,
+                                        'description' => $food_name . ' (' . $size_description . ')',
+                                        'food_id' => $food_id,
+                                        'size' => $size,
+                                        'unit_id' => $unit_id,
+                                        'promotion_price_deadline' => $promotion_price_deadline
+                                    ];
+
+                                    if (!empty($food_size_id)) {
+                                        $whereFS = ['food_size_id' => $food_size_id];
                                         if ($FoodSizeModel->isAlreadyExist($whereFS)) {
-                                            unset($dataFS['food_id']);
-                                            unset($dataFS['size_unit_code']);
                                             $result = $FoodSizeModel->edit($whereFS, $dataFS);
-                                        } else {
-                                            $result = $FoodSizeModel->create($dataFS);
                                         }
+                                    } else {
+                                        $result = $FoodSizeModel->create($dataFS);
                                     }
                                 }
 
+                                # Update Food Size L
                                 $result = false;
                                 $dataFS = [];
                                 if ($price_size_l > 0) {
 
-                                    // phải kiểm tra xem bảng size_unit có dữ liệu không // Nếu không ==> User nhập sai 
-                                    $size_unit_code = $unit_id . ':L';
-                                    if ($SizeUnitModel->isAlreadyExist(['size_unit_code' => $size_unit_code])) {
-                                        $dataFS = [
-                                            'price' => $price_size_l,
-                                            'promotion_price' => $promotion_price,
-                                            'description' => ($food_name . ' (Lớn)'),
-                                            'food_id' => $food_id,
-                                            'size_unit_code' => $size_unit_code,
-                                            'promotion_price_deadline' => $promotion_price_deadline
-                                        ];
+                                    $price = $price_size_l;
 
-                                        $whereFS = ['food_id' => $food_id, 'size_unit_code' => $size_unit_code];
+                                    // phải kiểm tra xem bảng size_unit có dữ liệu không // Nếu không ==> User nhập sai 
+                                    $size = 'L';
+                                    $size_description = 'Lớn';
+                                    $where_s = ['size' => $size];
+                                    if ($SizeModel->isAlreadyExist($where_s)) {
+                                        $sizeData = $SizeModel->readItem($where_s);
+                                        $size_description = $sizeData->description;
+                                    }
+
+                                    $dataFS = [
+                                        'price' => $price,
+                                        'promotion_price' => $promotion_price,
+                                        'description' => $food_name . ' (' . $size_description . ')',
+                                        'food_id' => $food_id,
+                                        'size' => $size,
+                                        'unit_id' => $unit_id,
+                                        'promotion_price_deadline' => $promotion_price_deadline
+                                    ];
+
+                                    if (!empty($food_size_id)) {
+                                        $whereFS = ['food_size_id' => $food_size_id];
                                         if ($FoodSizeModel->isAlreadyExist($whereFS)) {
-                                            unset($dataFS['food_id']);
-                                            unset($dataFS['size_unit_code']);
                                             $result = $FoodSizeModel->edit($whereFS, $dataFS);
-                                        } else {
-                                            $result = $FoodSizeModel->create($dataFS);
                                         }
+                                    } else {
+                                        $result = $FoodSizeModel->create($dataFS);
                                     }
                                 }
 
+                                # check
                                 if (!$result) {
                                     $message = "ERROR. Nhập file lỗi dòng Sản phẩm: $food_name. Chương trình đã dừng Cập nhật các dòng dữ liệu phía dưới";
                                     break;
+                                } else {
+                                    $count_success++;
+                                    $message = "SUCCESS. Thêm menu thành công ($count_success dòng)";
                                 }
                             }
                         }
@@ -3012,6 +3131,8 @@ class Home extends BaseController
         $file_name_type = '';
         if ($type == 'menu') {
             $file_name_type = 'Menu_';
+        } else if ($type == 'food') {
+            $file_name_type = 'Food_';
         }
 
         // Start the output buffer.
@@ -3039,38 +3160,41 @@ class Home extends BaseController
 
             // set the names of header cells
             // set Header, width
-            $headers = array('No.', 'Ma_San_Pham', 'San_Pham', 'Gia_Tien_Size', 'Gia_Tien_Size', 'Mo_Ta', 'Don_Vi', 'Loai_San_Pham', 'Gia_KM', 'Han_KM');
+            $headers = array('No.', 'ID', 'Ma_SP', 'San_Pham', 'Gia_Tien_Size', 'Gia_Tien_Size', 'Mo_Ta_SP', 'Don_Vi', 'Loai_SP', 'Gia_KM', 'Han_KM');
             foreach ($headers as $key => $header) {
 
                 // width
-                $width = ($key == 0) ? 5 : 20;
+                $width = 20;
+                if ($key == 0 || $key == 1 || $key == 2) {
+                    $width = 10;
+                } else if ($key == 3) {
+                    $width = 35;
+                }
                 $spreadsheet->getActiveSheet()->getColumnDimension($columns[$key])->setWidth($width);
+
                 // headers
                 $spreadsheet->getActiveSheet()->setCellValue($columns[$key] . '1', $header);
             }
 
             // set Header, width
-            $headers2 = array('', '', '', 'M', 'L', '', '', '', '', '');
+            $headers2 = array('', '', '', '', 'M', 'L', '', '', '', '', '');
             foreach ($headers2 as $key => $header) {
-
-                // width
-                $width = ($key == 0) ? 5 : 20;
-                $spreadsheet->getActiveSheet()->getColumnDimension($columns[$key])->setWidth($width);
                 // headers
-                $spreadsheet->getActiveSheet()->setCellValue($columns[$key] . '1', $header);
+                $spreadsheet->getActiveSheet()->setCellValue($columns[$key] . '2', $header);
             }
 
             // Font
-            $spreadsheet->getActiveSheet()->getStyle('A2:J2')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('f5f1e6');
+            $spreadsheet->getActiveSheet()->getStyle('A1:K1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('f5f1e6');
+            $spreadsheet->getActiveSheet()->getStyle('A2:K2')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('f5f1e6');
 
-            $spreadsheet->getActiveSheet()->getStyle('D1:D2')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('f4f70a');
+            $spreadsheet->getActiveSheet()->getStyle('E1:E2')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('f4f70a');
 
-            $spreadsheet->getActiveSheet()->getStyle('E1:E2')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('f7d00a');
+            $spreadsheet->getActiveSheet()->getStyle('F1:F2')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('f7d00a');
 
             // data
             $index = 0;
             $rowCount = 1;
-            $data = $FoodSizeModel->readAll('description', 'asc');
+            $data = $FoodSizeModel->readAll('food_size_id', 'asc');
             if (!empty($data)) {
                 foreach ($data as $element) {
                     $index++;
@@ -3079,9 +3203,11 @@ class Home extends BaseController
                     $element = (array) $element;
 
                     // getdata
+                    $food_id = $element['food_id'];
+
                     $catalog_id = '';
                     $food_name = '';
-                    $whereF = ['food_id' => $element['food_id']];
+                    $whereF = ['food_id' => $food_id];
                     if ($FoodModel->isAlreadyExist($whereF)) {
                         $foodItem = $FoodModel->readItem($whereF);
                         $food_name = $foodItem->food_name;
@@ -3098,12 +3224,12 @@ class Home extends BaseController
                     }
 
 
-                    $size_unit_code = $element['size_unit_code'];
-                    $size_unit_arr = !empty($size_unit_code) ? explode(':', $size_unit_code) : [];
-                    $unit_id = !empty($size_unit_arr) ? (int)$size_unit_arr[0] : '';
-                    $size = !empty($size_unit_arr) ? $size_unit_arr[1] : '';
+                    $size = $element['size'];
+                    $price_m = $size == "M" ? $element['price'] : 0;
+                    $price_l = $size == "L" ? $element['price'] : 0;
 
                     $unit = '';
+                    $unit_id = $element['unit_id'];
                     if (!empty($unit_id)) {
                         $whereU = ['unit_id' => $unit_id];
                         if ($UnitModel->isAlreadyExist($whereU)) {
@@ -3114,17 +3240,36 @@ class Home extends BaseController
 
                     // add to excel file
                     $spreadsheet->getActiveSheet()->SetCellValue('A' . $rowCount, $index);
-                    $spreadsheet->getActiveSheet()->SetCellValue('B' . $rowCount, trim($element['food_id']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('C' . $rowCount, trim($food_name));
-                    $spreadsheet->getActiveSheet()->SetCellValue('D' . $rowCount, trim($size));
-                    $spreadsheet->getActiveSheet()->SetCellValue('E' . $rowCount, $element['price']);
-                    $spreadsheet->getActiveSheet()->SetCellValue('F' . $rowCount, trim($element['description']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('G' . $rowCount, $unit);
-                    $spreadsheet->getActiveSheet()->SetCellValue('H' . $rowCount, trim($catalog));
-                    $spreadsheet->getActiveSheet()->SetCellValue('I' . $rowCount, trim($element['promotion_price']));
-                    $spreadsheet->getActiveSheet()->SetCellValue('J' . $rowCount, trim($element['promotion_price_deadline']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('B' . $rowCount, $element['food_size_id']);
+                    $spreadsheet->getActiveSheet()->SetCellValue('C' . $rowCount, $food_id);
+                    $spreadsheet->getActiveSheet()->SetCellValue('D' . $rowCount, trim($food_name));
+                    $spreadsheet->getActiveSheet()->SetCellValue('E' . $rowCount, $price_m);
+                    $spreadsheet->getActiveSheet()->SetCellValue('F' . $rowCount, $price_l);
+                    $spreadsheet->getActiveSheet()->SetCellValue('G' . $rowCount, trim($element['description']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('H' . $rowCount, $unit);
+                    $spreadsheet->getActiveSheet()->SetCellValue('I' . $rowCount, trim($catalog));
+                    $spreadsheet->getActiveSheet()->SetCellValue('J' . $rowCount, trim($element['promotion_price']));
+                    $spreadsheet->getActiveSheet()->SetCellValue('K' . $rowCount, trim($element['promotion_price_deadline']));
                 }
             }
+
+            // // // lấy dữ liệu sản phẩm chưa có trong menu
+            // // $data = $FoodModel->readNotIn('food_id', $food_id_list);
+            // // if (!empty($data)) {
+            // //     foreach ($data as $element) {
+
+            // //         $index++;
+            // //         $rowCount++;
+
+            // //         // convert to array
+            // //         $element = (array) $element;
+
+            // //         // getdata
+            // //         $food_id = $element['food_id'];
+            // //         $food_name = $element['food_name'];
+
+            // //     }
+            // // }
 
             /* ---------------------------------------------------------------------------------------------------------------
                 | Catalog
@@ -3262,6 +3407,115 @@ class Home extends BaseController
                     // add to excel file
                     $spreadsheet->getActiveSheet()->SetCellValue('A' . $rowCount, trim($unit));
                     $spreadsheet->getActiveSheet()->SetCellValue('B' . $rowCount, trim($element['description']));
+                }
+            }
+        } else if ($type == 'food') {
+
+            /* ---------------------------------------------------------------------------------------------------------------
+                | Food
+            */
+
+            // models
+            $FoodModel = new FoodModel($db);
+            $CatalogModel = new CatalogModel($db);
+
+            // Add some data
+            $spreadsheet->setActiveSheetIndex(0);
+
+            // active and set title
+            $spreadsheet->getActiveSheet()->setTitle('Food');
+
+            // set the names of header cells
+            // set Header, width
+            $headers = array('No.', 'Code', 'San_Pham', 'Mo_Ta', 'Catalog', 'Tên Catalog');
+            $key_min = [0, 1, 4];
+            foreach ($headers as $key => $header) {
+
+                // width
+                $width = (in_array($key, $key_min)) ? 10 : 40;
+                $spreadsheet->getActiveSheet()->getColumnDimension($columns[$key])->setWidth($width);
+                // headers
+                $spreadsheet->getActiveSheet()->setCellValue($columns[$key] . '1', $header);
+            }
+
+            // Font
+            $spreadsheet->getActiveSheet()->getStyle('B1:E1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('3399ff');
+
+            // data
+            $index = 0;
+            $rowCount = 1;
+            $data = $FoodModel->readAll('food_id', 'asc');
+            if (!empty($data)) {
+                foreach ($data as $element) {
+                    $index++;
+                    $rowCount++;
+                    // convert to array
+                    // // $element = (array) $element;
+
+                    // getdata
+                    $food_id = $element->food_id;
+                    $food_name = $element->food_name;
+                    $description = $element->description;
+                    $catalog_id = $element->catalog_id;
+                    $catalogItem = $CatalogModel->readItem(['catalog_id' => $catalog_id]);
+                    $catalog = !empty($catalogItem) ? ($catalogItem->catalog_group . ' - ' . $catalogItem->catalog_name) : '';
+
+                    // add to excel file
+                    $spreadsheet->getActiveSheet()->SetCellValue('A' . $rowCount, $index);
+                    $spreadsheet->getActiveSheet()->SetCellValue('B' . $rowCount, trim($food_id));
+                    $spreadsheet->getActiveSheet()->SetCellValue('C' . $rowCount, trim($food_name));
+                    $spreadsheet->getActiveSheet()->SetCellValue('D' . $rowCount, trim($description));
+                    $spreadsheet->getActiveSheet()->SetCellValue('E' . $rowCount, $catalog_id);
+                    $spreadsheet->getActiveSheet()->SetCellValue('F' . $rowCount, $catalog);
+                }
+            }
+
+            /* ---------------------------------------------------------------------------------------------------------------
+                | Catalog
+            */
+            // Add new sheet
+            $spreadsheet->createSheet();
+
+            // Add some data
+            $spreadsheet->setActiveSheetIndex(1);
+
+            // active and set title
+            $spreadsheet->getActiveSheet()->setTitle('Catalog');
+
+            // set the names of header cells
+            // set Header, width
+            $headers = array('Code', 'Nhom', 'Catalog', 'Mo_Ta');
+            foreach ($headers as $key => $header) {
+                // width
+                $width = ($key == 0) ? 5 : 20;
+                $spreadsheet->getActiveSheet()->getColumnDimension($columns[$key])->setWidth($width);
+                // headers
+                $spreadsheet->getActiveSheet()->setCellValue($columns[$key] . '1', $header);
+            }
+
+            // Font
+            $spreadsheet->getActiveSheet()->getStyle('A1:D1')->getFont()->setBold(true)->setName('Arial')->setSize(10);
+            $spreadsheet->getActiveSheet()->getStyle('A1:D1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('3399ff');
+
+            // data
+            $index = 0;
+            $rowCount = 1;
+            $data = $CatalogModel->readAll('catalog_id', 'asc');
+            if (!empty($data)) {
+                foreach ($data as $element) {
+                    $index++;
+                    $rowCount++;
+
+                    $catalog_id = $element->catalog_id;
+                    $catalog_group = $element->catalog_group;
+                    $catalog_name = $element->catalog_name;
+                    $description = $element->description;
+
+                    // add to excel file
+                    $spreadsheet->getActiveSheet()->SetCellValue('A' . $rowCount, $catalog_id);
+                    $spreadsheet->getActiveSheet()->SetCellValue('B' . $rowCount, trim($catalog_group));
+                    $spreadsheet->getActiveSheet()->SetCellValue('C' . $rowCount, trim($catalog_name));
+                    $spreadsheet->getActiveSheet()->SetCellValue('D' . $rowCount, trim($description));
                 }
             }
         }

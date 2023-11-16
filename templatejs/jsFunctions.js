@@ -91,7 +91,7 @@ function orderGrid() {
             grid = new dhx.Grid("grid_container", {
                 css: "dhx_demo-grid",
                 columns: [
-                    { width: 70, id: "bill_id", header: [{ text: "Mã Bill", align: "center" }], align: "center" },
+                    { width: 70, id: "bill_id", header: [{ text: "Id", align: "center" }], align: "center" },
                     {
                         width: 110, id: "area_name", header: [{ text: "Khu vực" }, { content: "comboFilter" }], editorType: "combobox", editorConfig: {
                             template: ({ value }) => getOptionsTemplate(value)
@@ -371,7 +371,7 @@ function windows(id, data = null) {
             leftGrid = new dhx.Grid(null, {
                 // css: "dhx_demo-grid",
                 columns: [
-                    { width: 45, id: "food_size_id", header: [{ text: "Id" }]},
+                    { width: 45, id: "food_size_id", header: [{ text: "Id" }] },
                     { width: 220, id: "food_name", header: [{ text: "Sản phẩm" }, { content: "inputFilter" }], editorType: "combobox" },
                     {
                         width: 170, id: "size_unit_code", header: [{ text: "Đơn vị: Size" }, { content: "inputFilter" }], editorType: "combobox", editorConfig: {
@@ -452,7 +452,7 @@ function windows(id, data = null) {
             rightGrid = new dhx.Grid(null, {
                 // css: "dhx_demo-grid",
                 columns: [
-                    { width: 45, id: "detail_food_size_id", editable: false, header: [{ text: "Id" }]},
+                    { width: 45, id: "detail_food_size_id", editable: false, header: [{ text: "Id" }] },
                     { width: 200, id: "detail_food_name_add", header: [{ text: "Sản phẩm" }], },
                     { width: 100, id: "detail_size_unit", header: [{ text: "Đơn vị:Size" }] },
                     { width: 100, id: "detail_price_add", header: [{ text: "Đơn giá" }], type: "number", format: "#,#" },
@@ -705,7 +705,7 @@ function windows(id, data = null) {
                 detailToolbar.data.parse(toolbarData)
 
                 detailToolbar.events.on("click", function (id, e) {
-                    if (id == "detail-save ") {
+                    if (id == "detail-save") {
                         var detailData = detailGrid.data.serialize()
                         getAjaxData2(function (data) {
 
@@ -729,7 +729,7 @@ function windows(id, data = null) {
                     css: "dhx_demo-grid",
 
                     columns: [
-                        { width: 50, id: "bill_detail_id", header: [{ text: "Mã" }], type: "number", format: "#,#" },
+                        { width: 50, id: "bill_detail_id", header: [{ text: "Id" }], type: "number", format: "#,#" },
                         {
                             width: 270, id: "detail_food_name", header: [{ text: "Sản phẩm" }], editorType: "combobox", editorConfig: {
                                 template: ({ value }) => getOptionsTemplate(value)
@@ -993,7 +993,7 @@ function orderDoneWindow() {
             doneGrid = new dhx.Grid(null, {
                 css: "dhx_demo-grid",
                 columns: [
-                    { width: 70, id: "bill_id", header: [{ text: "Mã Bill", align: "center" }], align: "center" },
+                    { width: 70, id: "bill_id", header: [{ text: "Id", align: "center" }], align: "center" },
                     {
                         width: 110, id: "area_name", header: [{ text: "Khu vực" }, { content: "comboFilter" }], editorType: "combobox", editorConfig: {
                             template: ({ value }) => getOptionsTemplate(value)
@@ -1074,7 +1074,7 @@ function orderDoneWindow() {
                                         css: "dhx_demo-grid",
 
                                         columns: [
-                                            { width: 50, id: "bill_detail_id", header: [{ text: "Mã" }], type: "number", format: "#,#" },
+                                            { width: 50, id: "bill_detail_id", header: [{ text: "Id" }], type: "number", format: "#,#" },
                                             {
                                                 width: 270, id: "detail_food_name", header: [{ text: "Sản phẩm" }], editorType: "combobox", editorConfig: {
                                                     template: ({ value }) => getOptionsTemplate(value)
@@ -1171,7 +1171,7 @@ function area() {
 
 
         /*  window -------------------------------------------------------------------------------------- */
-        areaWinddow = new dhx.Window({ width: 1048, height: 620, closable: true, movable: true, modal: true, title: "Khu vực chổ ngồi", resizable: true});
+        areaWinddow = new dhx.Window({ width: 1048, height: 620, closable: true, movable: true, modal: true, title: "Khu vực chổ ngồi", resizable: true });
 
         /*  toolbar-------------------------------------------------------------------------------------- */
         var structure = [
@@ -1198,7 +1198,7 @@ function area() {
             css: "dhx_demo-grid",
 
             columns: [
-                { width: 150, id: "area_id", header: [{ text: "Mã Khu vực", align: "center" }], align: "center", editable: false },
+                { width: 150, id: "area_id", header: [{ text: "Id", align: "center" }], align: "center", editable: false },
                 { id: "area_name", header: [{ text: "Tên khu vực" }], type: "text" },
                 {
                     width: 200, id: "detail_action", gravity: 1.5, header: [{ text: "Actions", align: "center" }], htmlEnable: true, align: "center",
@@ -1307,7 +1307,7 @@ function tableOrder() {
 
 
         /*  window -------------------------------------------------------------------------------------- */
-        tableWindow = new dhx.Window({ width: 1048, height: 620, closable: true, movable: true, modal: true, title: "Bàn", resizable: true});
+        tableWindow = new dhx.Window({ width: 1048, height: 620, closable: true, movable: true, modal: true, title: "Bàn", resizable: true });
 
         /*  toolbar-------------------------------------------------------------------------------------- */
         var structure = [
@@ -1334,7 +1334,7 @@ function tableOrder() {
             css: "dhx_demo-grid",
 
             columns: [
-                { width: 100, id: "table_id", header: [{ text: "Mã Bàn", align: "center" }], align: "center", editable: false },
+                { width: 100, id: "table_id", header: [{ text: "Id", align: "center" }], align: "center", editable: false },
                 { id: "table_order_name", header: [{ text: "Tên Bàn" }], type: "text" },
                 {
                     width: 200, id: "area_name", header: [{ text: "Khu vực" }], editorType: "combobox", editorConfig: {
@@ -1448,7 +1448,7 @@ function food() {
         var result = JSON.parse(data)
 
         /*  window -------------------------------------------------------------------------------------- */
-        foodWindow = new dhx.Window({ width: 1048, height: 620, closable: true, movable: true, modal: true, title: "Sản phẩm", resizable: true})
+        foodWindow = new dhx.Window({ width: 1600, height: 620, closable: true, movable: true, modal: true, title: "Sản phẩm", resizable: true })
 
         /*  toolbar-------------------------------------------------------------------------------------- */
         var structure = [
@@ -1481,11 +1481,11 @@ function food() {
             css: "dhx_demo-grid",
 
             columns: [
-                { width: 100, id: "food_id", header: [{ text: "Mã SP", align: "center" }], align: "center", editable: false },
-                { id: "food_name", header: [{ text: "Tên Sản phẩm" }], type: "text" },
-                { id: "description", header: [{ text: "Mô tả Sản phẩm" }], type: "text" },
+                { width: 100, id: "food_id", header: [{ text: "Id", align: "center" }, { content: "inputFilter" }], align: "center", editable: false },
+                { id: "food_name", header: [{ text: "Tên Sản phẩm" }, { content: "comboFilter" }] },
+                { id: "description", header: [{ text: "Mô tả Sản phẩm" }, { content: "comboFilter" }] },
                 {
-                    width: 200, id: "catalog", header: [{ text: "Loại sản phẩm" }], editorType: "combobox", editorConfig: {
+                    width: 320, id: "catalog", header: [{ text: "Loại sản phẩm" }, { content: "inputFilter" }], editorType: "combobox", editorConfig: {
                         template: ({ value }) => getOptionsTemplate(value)
                     },
                     options: result.catalogOptions,
@@ -1600,7 +1600,7 @@ function promotion() {
         var result = JSON.parse(data)
 
         /*  window -------------------------------------------------------------------------------------- */
-        promotionWindow = new dhx.Window({ width: 1548, height: 620, closable: true, movable: true, modal: true, title: "Khuyến mãi", resizable: true})
+        promotionWindow = new dhx.Window({ width: 1548, height: 620, closable: true, movable: true, modal: true, title: "Khuyến mãi", resizable: true })
 
         /*  toolbar-------------------------------------------------------------------------------------- */
         var structure = [
@@ -1626,7 +1626,7 @@ function promotion() {
         promotionGrid = new dhx.Grid(null, {
             css: "dhx_demo-grid",
             columns: [
-                { width: 70, id: "promotion_id", header: [{ text: "Mã KM", align: "center" }], align: "center", editable: false },
+                { width: 70, id: "promotion_id", header: [{ text: "Id", align: "center" }], align: "center", editable: false },
                 { width: 100, id: "promotion_type", header: [{ text: "Loại KM", align: "center" }], type: "text", align: "center" },
                 { width: 170, id: "promotion_code", header: [{ text: "Khuyến mãi", align: "center" }], type: "text", align: "center" },
                 { width: 100, id: "promotion_condition", header: [{ text: "Điều kiện", align: "center" }], type: "text", align: "center" },
@@ -1783,7 +1783,7 @@ function size() {
         var result = JSON.parse(data)
 
         /*  window -------------------------------------------------------------------------------------- */
-        sizeWindow = new dhx.Window({ width: 848, height: 620, closable: true, movable: true, modal: true, title: "Kích cỡ (Size)", resizable: true})
+        sizeWindow = new dhx.Window({ width: 848, height: 620, closable: true, movable: true, modal: true, title: "Kích cỡ (Size)", resizable: true })
 
         /*  toolbar-------------------------------------------------------------------------------------- */
         var structure = [
@@ -1914,7 +1914,7 @@ function unit() {
         var result = JSON.parse(data)
 
         /*  window -------------------------------------------------------------------------------------- */
-        unitWindow = new dhx.Window({ width: 948, height: 620, closable: true, movable: true, modal: true, title: "Khuyến mãi", resizable: true})
+        unitWindow = new dhx.Window({ width: 948, height: 620, closable: true, movable: true, modal: true, title: "Khuyến mãi", resizable: true })
 
         /*  toolbar-------------------------------------------------------------------------------------- */
         var structure = [
@@ -1940,7 +1940,7 @@ function unit() {
         unitGrid = new dhx.Grid(null, {
             css: "dhx_demo-grid",
             columns: [
-                { width: 120, id: "unit_id", header: [{ text: "Mã Đơn vị", align: "center" }], align: "center", editable: false },
+                { width: 120, id: "unit_id", header: [{ text: "Id", align: "center" }], align: "center", editable: false },
                 { id: "unit_name", header: [{ text: "Tên Đơn vị", align: "center" }], type: "text", align: "center" },
                 { width: 250, id: "description", header: [{ text: "Mô tả", align: "center" }], type: "text", align: "left" },
                 {
@@ -2047,7 +2047,7 @@ function sizeUnit() {
         var result = JSON.parse(data)
 
         /*  window -------------------------------------------------------------------------------------- */
-        sizeUnitWindow = new dhx.Window({ width: 948, height: 620, closable: true, movable: true, modal: true, title: "Khuyến mãi", resizable: true})
+        sizeUnitWindow = new dhx.Window({ width: 948, height: 620, closable: true, movable: true, modal: true, title: "Khuyến mãi", resizable: true })
 
         /*  toolbar-------------------------------------------------------------------------------------- */
         var structure = [
@@ -2148,8 +2148,8 @@ function transaction() {
         transGrid = new dhx.Grid(null, {
             css: "dhx_demo-grid",
             columns: [
-                { width: 120, id: "trans_id", header: [{ text: "Mã Giao dịch", align: "center" }], align: "center", editable: false },
-                { id: "trans_date", header: [{ text: "Ngày Giao dịch", align: "center" }, {content: "inputFilter"}], type: "text", align: "center" },
+                { width: 120, id: "trans_id", header: [{ text: "Id", align: "center" }], align: "center", editable: false },
+                { id: "trans_date", header: [{ text: "Ngày Giao dịch", align: "center" }, { content: "inputFilter" }], type: "text", align: "center" },
                 {
                     width: 120, id: "trans_type", header: [{ text: "Loại giao dịch" }, { content: "comboFilter" }], editorType: "combobox", editorConfig: {
                         template: ({ value }) => getOptionsTemplate(value)
@@ -2158,7 +2158,7 @@ function transaction() {
                     template: (value) => getOptionsTemplate(value),
                     htmlEnable: true
                 },
-                { id: "trans_name", header: [{ text: "Tên Giao dịch", align: "center" }, {content: "inputFilter"}], type: "text", align: "center" },
+                { id: "trans_name", header: [{ text: "Tên Giao dịch", align: "center" }, { content: "inputFilter" }], type: "text", align: "center" },
                 // // {
                 // //     width: 200, id: "trans_name", header: [{ text: "Tên Giao dịch" }], type: "text", editorType: "combobox", editorConfig: {
                 // //         template: ({ value }) => getOptionsTemplate(value)
@@ -2184,7 +2184,7 @@ function transaction() {
                     template: (value) => getOptionsTemplate(value),
                     htmlEnable: true
                 },
-                { width: 300, id: "description", header: [{ text: "Mô tả", align: "center" }, {content: "inputFilter"}], type: "text", align: "left" },
+                { width: 300, id: "description", header: [{ text: "Mô tả", align: "center" }, { content: "inputFilter" }], type: "text", align: "left" },
                 {
                     width: 150, id: "action", gravity: 1.5, header: [{ text: "Actions", align: "center" }], htmlEnable: true, align: "center",
                     template: function () {
@@ -2318,7 +2318,7 @@ function menu() {
         var result = JSON.parse(data)
 
         /*  window -------------------------------------------------------------------------------------- */
-        menuWindow = new dhx.Window({ width: 1048, height: 620, closable: true, movable: true, modal: true, title: "Menu", resizable: true})
+        menuWindow = new dhx.Window({ width: 1048, height: 620, closable: true, movable: true, modal: true, title: "Menu", resizable: true })
 
         /*  toolbar-------------------------------------------------------------------------------------- */
         var structure = [
@@ -2351,15 +2351,9 @@ function menu() {
             css: "dhx_demo-grid",
 
             columns: [
-                { width: 100, id: "food_id", header: [{ text: "Mã SP", align: "center" }, { content: "comboFilter" }], align: "left", editable: false },
-                {
-                    width: 250, id: "food", header: [{ text: "Tên Sản phẩm" }, { content: "comboFilter" }], editorType: "combobox", editorConfig: {
-                        template: ({ value }) => getOptionsTemplate(value)
-                    },
-                    options: result.foodOptions,
-                    template: (value) => getOptionsTemplate(value),
-                    htmlEnable: true
-                },
+                { width: 55, id: "index", header: [{ text: "TT", align: "center" }], align: "center", editable: false },
+                { width: 100, id: "food_size_id", header: [{ text: "Id", align: "center" }, { content: "comboFilter" }], align: "left", editable: false },
+                { width: 350, id: "food", header: [{ text: "Tên Sản phẩm", align: "center" }, { content: "inputFilter" }], align: "left", editable: false },
                 {
                     width: 100, id: "size", header: [{ text: "Size" }, { content: "comboFilter" }], editorType: "combobox", editorConfig: {
                         template: ({ value }) => getOptionsTemplate(value)
@@ -2369,7 +2363,7 @@ function menu() {
                     htmlEnable: true
                 },
                 { width: 150, id: "price", header: [{ text: "Giá tiền", align: "center" }, { content: "comboFilter" }], type: "number", format: "#,#", align: "center" },
-                { id: "description", header: [{ text: "Mô tả Sản phẩm" }, { content: "inputFilter" }], type: "text" },
+                // { id: "description", header: [{ text: "Mô tả Sản phẩm" }, { content: "inputFilter" }], align: "left" },
                 {
                     width: 120, id: "unit", header: [{ text: "Đơn vị" }, { content: "comboFilter" }], editorType: "combobox", editorConfig: {
                         template: ({ value }) => getOptionsTemplate(value)
@@ -2379,7 +2373,7 @@ function menu() {
                     htmlEnable: true
                 },
                 {
-                    width: 170, id: "catalog", header: [{ text: "Loại sản phẩm" }, { content: "comboFilter" }], editorType: "combobox", editorConfig: {
+                    width: 170, id: "catalog", header: [{ text: "Loại sản phẩm" }, { content: "comboFilter" }], align: "left", editorType: "combobox", editorConfig: {
                         template: ({ value }) => getOptionsTemplate(value)
                     },
                     options: result.catalogOptions,
@@ -2388,7 +2382,7 @@ function menu() {
                 },
                 { width: 150, id: "promotion_price", header: [{ text: "Giá Khuyến mãi", align: "center" }, { content: "comboFilter" }], type: "number", format: "#,#", align: "center" },
                 {
-                    id: "promotion_price_deadline", header: [{ text: "Giá KM đến" }, { content: "comboFilter" }], type: "date", format: "%d-%m-%Y %H:%i:%s",
+                    id: "promotion_price_deadline", header: [{ text: "Khuyến mãi đến" }, { content: "comboFilter" }], type: "date", format: "%d-%m-%Y %H:%i:%s",
                     editorConfig: {
                         weekStart: "monday", weekNumbers: true, mode: "calendar", timePicker: true, timeFormat: 24, thisMonthOnly: false,
                         mark: (date) => { if (date.getDay() === 5) return "highlight-date"; },
@@ -2413,6 +2407,7 @@ function menu() {
             multiselection: true,
             eventHandlers: {
                 onclick: {
+
                     "md-remove-button": function (e, dataR) {
                         console.log(`md data: ${JSON.stringify(dataR.row)}`);
                         if (dataR.row.food_id == 'new') {
@@ -2439,10 +2434,8 @@ function menu() {
                         console.log(`md data: ${JSON.stringify(data.row)}`);
                         if (!data.row.food_id == 'new') {
                             dhx.alert({ header: "Thông báo", text: "Bạn đang chọn dòng dữ liệu trống", buttonsAlignment: "center", });
-                        } else if (!data.row.food_name) {
+                        } else if (!data.row.food) {
                             dhx.alert({ header: "Thông báo", text: "Dữ liệu: Tên Sản Phẩm không được trống", buttonsAlignment: "center", });
-                        } else if (!data.row.description) {
-                            dhx.alert({ header: "Thông báo", text: "Dữ liệu: Mô tả Sản Phẩm không được trống", buttonsAlignment: "center", });
                         } else if (!data.row.catalog) {
                             dhx.alert({ header: "Thông báo", text: "Dữ liệu: Loại Sản Phẩm không được trống", buttonsAlignment: "center", });
                         } else {
@@ -2471,6 +2464,13 @@ function menu() {
         });
 
         menuGrid.selection.enable();
+        menuGrid.hideColumn('food_size_id');
+
+        menuGrid.events.on("cellDblClick", function (row, column, e) {
+            if (column.id == 'food') {
+                dhx.message({ node: "message_container", text: "Vui lòng sửa Tên Sản Phẩm từ chức năng Sản Phẩm", icon: "mdi mdi-delete-empty-outline", css: "dhx_message--error", expire: 5000 })
+            }
+        });
 
         menuGrid.events.on("afterEditEnd", function (value, row, column) { });
 
@@ -2540,7 +2540,7 @@ function reports(type = 'daily', title = 'Dữ liệu Báo cáo theo Ngày', fro
         var result = JSON.parse(data)
 
         /*  window -------------------------------------------------------------------------------------- */
-        reportsWindow = new dhx.Window({ width: 1548, height: 620, closable: true, movable: true, modal: true, title: "Báo cáo", resizable: true})
+        reportsWindow = new dhx.Window({ width: 1548, height: 620, closable: true, movable: true, modal: true, title: "Báo cáo", resizable: true })
 
         /*  toolbar-------------------------------------------------------------------------------------- */
         var structure = [
