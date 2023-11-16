@@ -434,7 +434,7 @@ class Home extends BaseController
             $sizeUnitOptions[] = $value->size_unit_code . "__" . $value->description;
         }
 
-        $foodSizeData = $FoodSizeModel->readAll('food_id', 'asc');
+        $foodSizeData = $FoodSizeModel->readOptions(['price > ' => 0], 'food_id');
         if (!empty($foodSizeData)) {
             foreach ($foodSizeData as $foodSize) {
                 $food_size_id = $foodSize->food_size_id;
@@ -450,8 +450,14 @@ class Home extends BaseController
                 $size = $foodSize->size;
                 $unit_id = $foodSize->unit_id;
                 $size_unit_code = $unit_id . ':' . $size;
-                $sizeUnitItem = $SizeUnitModel->readItem(array('size_unit_code' => $size_unit_code));
-                $size_unit_desc = !empty($sizeUnitItem) ? $sizeUnitItem->description : $size_unit_code;
+
+                $size_unit_desc = '';
+                $w = array('size_unit_code' => $size_unit_code);
+                if ($SizeUnitModel->isAlreadyExist($w)) {
+                    $sizeUnitItem = $SizeUnitModel->readItem(array('size_unit_code' => $size_unit_code));
+                    $size_unit_desc = !empty($sizeUnitItem) ? $sizeUnitItem->description : $size_unit_code;
+                }
+                
                 $foodDataSet[] = array(
                     'food_size_id' => $food_size_id,
                     'food_name' => $description,
