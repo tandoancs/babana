@@ -707,6 +707,8 @@ function windows(id, data = null) {
                 detailToolbar.events.on("click", function (id, e) {
                     if (id == "detail-save") {
                         var detailData = detailGrid.data.serialize()
+
+                        console.log(`detailData:: ${JSON.stringify(detailData)}}`);
                         getAjaxData2(function (data) {
 
                             var result = JSON.parse(data)
@@ -715,8 +717,8 @@ function windows(id, data = null) {
                             // creating DHTMLX Message 
                             dhx.message({ node: "message_container", text: result.message, icon: "dxi dxi-content-save", css: css, expire: 5000 });
 
-                            // đợi 4s sau đó load lại trang
-                            setTimeout(function () { location.reload() }, 4000)
+                            // // đợi 4s sau đó load lại trang
+                            // setTimeout(function () { location.reload() }, 4000)
 
                         }, "saveDetail", detailData)
                     }
@@ -729,7 +731,7 @@ function windows(id, data = null) {
                     css: "dhx_demo-grid",
 
                     columns: [
-                        { width: 50, id: "bill_detail_id", header: [{ text: "Id" }], type: "number", format: "#,#" },
+                        { width: 50, id: "bill_detail_id", header: [{ text: "Id" }], type: "number", format: "#,#", editable: false },
                         {
                             width: 270, id: "detail_food_name", header: [{ text: "Sản phẩm" }], editorType: "combobox", editorConfig: {
                                 template: ({ value }) => getOptionsTemplate(value)
@@ -739,7 +741,7 @@ function windows(id, data = null) {
                             htmlEnable: true
                         },
                         {
-                            width: 270, id: "detail_size_unit_code", header: [{ text: "Đơn vị: Size" }], editorType: "combobox", editorConfig: {
+                            width: 170, id: "detail_size_unit_code", header: [{ text: "Đơn vị: Size" }], editorType: "combobox", editorConfig: {
                                 template: ({ value }) => getOptionsTemplate(value)
                             },
                             options: data.sizeUnitOptions,
@@ -1522,7 +1524,7 @@ function food() {
                                 }
                                 // creating DHTMLX Message 
                                 dhx.message({ node: "message_container", text: result.message, icon: "mdi mdi-delete-empty-outline", css: css, expire: 5000 })
-
+                                foodWindow.destructor();
                             }, "deleteFood", dataR.row)
                         }
 
@@ -1548,6 +1550,7 @@ function food() {
                                 dhx.message({ node: "message_container", text: result.message, icon: "mdi mdi-square-edit-outline", css: css, expire: 5000 });
 
                                 if (result.status) {
+                                    foodWindow.destructor();
                                     food();
                                 }
                                 // // đợi 4s sau đó load lại trang
@@ -2353,7 +2356,7 @@ function menu() {
             columns: [
                 { width: 55, id: "index", header: [{ text: "TT", align: "center" }], align: "center", editable: false },
                 { width: 100, id: "food_size_id", header: [{ text: "Id", align: "center" }, { content: "comboFilter" }], align: "left", editable: false },
-                { width: 350, id: "food", header: [{ text: "Tên Sản phẩm", align: "center" }, { content: "inputFilter" }], align: "left", editable: false },
+                { width: 350, id: "description", header: [{ text: "Tên Sản phẩm", align: "center" }, { content: "inputFilter" }], align: "left" },
                 {
                     width: 100, id: "size", header: [{ text: "Size" }, { content: "comboFilter" }], editorType: "combobox", editorConfig: {
                         template: ({ value }) => getOptionsTemplate(value)
@@ -2373,7 +2376,7 @@ function menu() {
                     htmlEnable: true
                 },
                 {
-                    width: 170, id: "catalog", header: [{ text: "Loại sản phẩm" }, { content: "comboFilter" }], align: "left", editorType: "combobox", editorConfig: {
+                    width: 170, id: "catalog", header: [{ text: "Loại sản phẩm" }, { content: "comboFilter" }], editable: false, align: "left", editorType: "combobox", editorConfig: {
                         template: ({ value }) => getOptionsTemplate(value)
                     },
                     options: result.catalogOptions,
@@ -2425,19 +2428,17 @@ function menu() {
                                 // creating DHTMLX Message 
                                 dhx.message({ node: "message_container", text: result.message, icon: "mdi mdi-delete-empty-outline", css: css, expire: 5000 })
 
-                            }, "deleteFood", dataR.row)
+                            }, "deleteMenu", dataR.row)
                         }
 
                     },
                     "md-edit-button": function (e, data) {
 
                         console.log(`md data: ${JSON.stringify(data.row)}`);
-                        if (!data.row.food_id == 'new') {
-                            dhx.alert({ header: "Thông báo", text: "Bạn đang chọn dòng dữ liệu trống", buttonsAlignment: "center", });
-                        } else if (!data.row.food) {
+                        if (!data.row.description) {
                             dhx.alert({ header: "Thông báo", text: "Dữ liệu: Tên Sản Phẩm không được trống", buttonsAlignment: "center", });
-                        } else if (!data.row.catalog) {
-                            dhx.alert({ header: "Thông báo", text: "Dữ liệu: Loại Sản Phẩm không được trống", buttonsAlignment: "center", });
+                        } else if (!data.row.unit) {
+                            dhx.alert({ header: "Thông báo", text: "Dữ liệu: Đơn vị Sản Phẩm không được trống", buttonsAlignment: "center", });
                         } else {
 
                             getAjaxData2(function (data) {

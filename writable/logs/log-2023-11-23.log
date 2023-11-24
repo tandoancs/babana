@@ -1,0 +1,36 @@
+CRITICAL - 2023-11-23 08:55:34 --> Class "Locale" not found
+in SYSTEMPATH\CodeIgniter.php on line 195.
+ 1 FCPATH\index.php(56): CodeIgniter\CodeIgniter->initialize()
+WARNING - 2023-11-23 14:56:23 --> [DEPRECATED] json_decode(): Passing null to parameter #1 ($json) of type string is deprecated in APPPATH\Controllers\Home.php on line 668.
+ 1 APPPATH\Controllers\Home.php(668): json_decode(null, true)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-23 14:56:23 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\Home.php on line 671.
+ 1 APPPATH\Controllers\Home.php(671): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\babana\\app\\Controllers\\Home.php', 671)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->saveOrder()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+WARNING - 2023-11-23 14:56:23 --> [DEPRECATED] strtotime(): Passing null to parameter #1 ($datetime) of type string is deprecated in APPPATH\Controllers\Home.php on line 120.
+ 1 APPPATH\Controllers\Home.php(120): strtotime(null)
+ 2 APPPATH\Controllers\Home.php(307): App\Controllers\Home->load(null)
+ 3 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->getOptionsOfOrderGrid()
+ 4 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 5 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+WARNING - 2023-11-23 14:56:28 --> [DEPRECATED] strtotime(): Passing null to parameter #1 ($datetime) of type string is deprecated in APPPATH\Controllers\Home.php on line 566.
+ 1 APPPATH\Controllers\Home.php(566): strtotime(null)
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->printer()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()
+WARNING - 2023-11-23 14:56:38 --> [DEPRECATED] strtotime(): Passing null to parameter #1 ($datetime) of type string is deprecated in APPPATH\Controllers\Home.php on line 120.
+ 1 APPPATH\Controllers\Home.php(120): strtotime(null)
+ 2 APPPATH\Controllers\Home.php(307): App\Controllers\Home->load(null)
+ 3 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\Home->getOptionsOfOrderGrid()
+ 4 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 5 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 FCPATH\index.php(68): CodeIgniter\CodeIgniter->run()

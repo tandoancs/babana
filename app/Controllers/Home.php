@@ -188,7 +188,7 @@ class Home extends BaseController
             if ($done != "done") {
                 for ($i = 0; $i < 9; $i++) {
                     $detailData[] = array(
-                        'bill_detail_id' => "",
+                        'bill_detail_id' => "new",
                         'detail_food_name' => "",
                         'detail_size_unit_code' => "1:M__Ly size M",
                         'detail_count' => "",
@@ -457,7 +457,7 @@ class Home extends BaseController
                     $sizeUnitItem = $SizeUnitModel->readItem(array('size_unit_code' => $size_unit_code));
                     $size_unit_desc = !empty($sizeUnitItem) ? $sizeUnitItem->description : $size_unit_code;
                 }
-                
+
                 $foodDataSet[] = array(
                     'food_size_id' => $food_size_id,
                     'food_name' => $description,
@@ -861,7 +861,7 @@ class Home extends BaseController
 
                 // check 
                 if (empty($value['detail_food_name']) || empty($value['detail_size_unit_code'])) {
-                    if ($error_count <= 3) {
+                    if ($error_count <= 10) {
                         $error_count++;
                         continue;
                     } else {
@@ -869,6 +869,7 @@ class Home extends BaseController
                     }
                 }
 
+                $bill_detail_id = $value['bill_detail_id'];
                 $count = $value['detail_count'];
                 $price = $value['detail_price'];
                 $bill_detail_total = $value['detail_total'];
@@ -900,14 +901,41 @@ class Home extends BaseController
                     'note' => $note
                 ];
 
-                $where = ['bill_id' => $bill_id, 'food_id' => $food_id];
-                if ($BillDetailModel->isAlreadyExist($where)) {
-                    $sub = "(Update)";
-                    $result = $BillDetailModel->edit($where, $saveData);
+                // Nếu thêm 1 dòng mới thì kiểm tra xem có trùng với dòng dữ liệu nào trong hệ thông không
+                // Nếu trùng ==> cập nhật với dòng dữ liệu đó
+                // Nếu không ==> Thêm mới
+                if ($bill_detail_id == 'new') {
+                    $where = ['bill_id' => $bill_id, 'food_id' => $food_id];
+                    if ($BillDetailModel->isAlreadyExist($where)) {
+                        $sub = "(Update)";
+
+                        // Cộng các dòng dữ liệu trùng với nhau
+                        $billDetailItem = $BillDetailModel->readItem($where);
+                        $bill_detail_id = $billDetailItem->bill_detail_id;
+                        $count += $billDetailItem->count;
+                        $bill_detail_total += $billDetailItem->bill_detail_total;
+                        $note = $billDetailItem->note . "; " . $note;
+
+                        // cập nhật lại dữ liệu save
+                        $saveData['bill_detail_total'] = $bill_detail_total;
+                        $saveData['count'] = $count;
+                        $saveData['note'] = $note;
+
+                        // update
+                        $result = $BillDetailModel->edit(['bill_detail_id' => $bill_detail_id], $saveData);
+                    } else {
+                        $sub = "(Insert)";
+                        $result = $BillDetailModel->create($saveData);
+                    }
                 } else {
-                    $sub = "(Insert)";
-                    $result = $BillDetailModel->create($saveData);
+                    $where = ['bill_detail_id' => $bill_detail_id];
+                    if ($BillDetailModel->isAlreadyExist($where)) {
+                        $sub = "(Update)";
+                        $result = $BillDetailModel->edit($where, $saveData);
+                    }
                 }
+                
+                
 
                 if (!$result) {
                     // return error message
@@ -1509,7 +1537,8 @@ class Home extends BaseController
                 $saveData = [
                     'food_name' => $food_name,
                     'description' => $description,
-                    'catalog_id' => $catalog_id
+                    'catalog_id' => $catalog_id,
+                    'status' => 1
                 ];
 
                 if ($food_id != 'new') {
@@ -1537,7 +1566,6 @@ class Home extends BaseController
 
         return json_encode(array('status' => $status, 'message' => $message), JSON_UNESCAPED_UNICODE);
     }
-
     public function deleteFood()
     {
         $result = false;
@@ -1935,7 +1963,6 @@ class Home extends BaseController
 
         return json_encode(array('status' => $status, 'message' => $message), JSON_UNESCAPED_UNICODE);
     }
-
     public function deleteUnit()
     {
         $result = false;
@@ -2438,7 +2465,7 @@ class Home extends BaseController
         return json_encode(array('status' => $status, 'message' => $message, 'html' => $html, 'treeMapData' => $treeMapData, 'pieData' => $pieData), JSON_UNESCAPED_UNICODE);
     }
 
-    // food --------------------------------------------------------------------------------------------------------------------
+    // menu --------------------------------------------------------------------------------------------------------------------
     public function menu()
     {
         $data = [];
@@ -2536,7 +2563,7 @@ class Home extends BaseController
                     $data[] = [
                         'index' => $index,
                         'food_size_id' => $item->food_size_id,
-                        'food' => $item->description,
+                        'description' => $item->description,
                         'price' => $item->price,
                         'catalog' => $catalog,
                         'unit' => $unit,
@@ -2566,7 +2593,7 @@ class Home extends BaseController
             // menu chua nhap gia
             $results = $FoodSizeModel->readOptions(['price' => 0], 'description');
             if (!empty($results)) {
-                $index = 0;
+
                 foreach ($results as $item) {
 
                     $index++;
@@ -2603,7 +2630,7 @@ class Home extends BaseController
                     $data[] = [
                         'index' => $index,
                         'food_size_id' => $item->food_size_id,
-                        'food' => $item->description,
+                        'description' => $item->description,
                         'price' => $item->price,
                         'catalog' => $catalog,
                         'unit' => $unit,
@@ -2650,6 +2677,104 @@ class Home extends BaseController
         );
     }
 
+    public function saveMenu()
+    {
+        $result = false;
+        $status = false;
+        $message = 'Chưa lấy được thông tin xử lý';
+
+        $request = \Config\Services::request();
+        if ($request->is('post')) {
+
+            $data = $this->request->getVar('data');
+            $data = json_decode($data, true);
+
+            // open connection and models
+            $db = db_connect();
+            $FoodSizeModel = new FoodSizeModel($db);
+
+            $food_size_id = $data['food_size_id'];
+            $description = $data['description'];
+
+            $size = $data['size'];
+            $price =  $data['price'];
+            $unit =  $data['unit'];
+            // // $catalog =  $data['catalog'];
+            $promotion_price =  $data['promotion_price'];
+            $promotion_price_deadline =  $data['promotion_price_deadline'];
+
+            if (empty($description) || empty($price) || empty($unit)) {
+                $message = 'Dữ liệu không được trống';
+            } else {
+
+                $unit_id = (strpos($unit, "__") !== false) ? (int) explode("__", $unit)[0] : 0;
+                $saveData = [
+                    'description' => $description,
+                    'size' => $size,
+                    'price' => $price,
+                    'unit_id' => $unit_id,
+                    'promotion_price' => $promotion_price,
+                    'promotion_price_deadline' => $promotion_price_deadline
+                ];
+
+                $where = ['food_size_id' => $food_size_id];
+                if ($FoodSizeModel->isAlreadyExist($where)) {
+                    $sub = "(Update)";
+                    $result = $FoodSizeModel->edit($where, $saveData);
+                }
+
+
+                if (!$result) {
+                    $message = 'Có lỗi khi lưu dữ liệu' . $sub;
+                } else {
+                    $status = true;
+                    $message = 'Cập nhật dữ liệu thành công';
+                }
+            }
+
+            // close connection
+            $db->close();
+        }
+
+        return json_encode(array('status' => $status, 'message' => $message), JSON_UNESCAPED_UNICODE);
+    }
+
+    public function deleteMenu()
+    {
+        $result = false;
+        $status = false;
+        $message = 'Chưa lấy được thông tin xử lý';
+
+        $request = \Config\Services::request();
+        if ($request->is('post')) {
+
+            $data = $this->request->getVar('data');
+            $data = json_decode($data, true);
+
+            // open connection and models
+            $db = db_connect();
+            $FoodSizeModel = new FoodSizeModel($db);
+
+            $food_size_id = $data['food_size_id'];
+            $where = ['food_size_id' => $food_size_id];
+            if ($FoodSizeModel->isAlreadyExist($where)) {
+                $result = $FoodSizeModel->del($where);
+                if (!$result) {
+                    $message = 'Có lỗi khi xóa dữ liệu';
+                } else {
+                    $status = true;
+                    $message = 'Xóa dữ liệu thành công';
+                }
+            }
+
+            // close connection
+            $db->close();
+        }
+
+        return json_encode(array('status' => $status, 'message' => $message), JSON_UNESCAPED_UNICODE);
+    }
+
+    // import - export ---------------------------------------------------------------------------------------------------------
     public function imports()
     {
         // set time out

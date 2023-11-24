@@ -99,7 +99,10 @@ $routes->add('/deleteTransaction', 'Home::deleteTransaction');
 // reports
 $routes->add('/reports', 'Home::reports');
 
+// menu
 $routes->add('/menu', 'Home::menu');
+$routes->add('/saveMenu', 'Home::saveMenu');
+$routes->add('/deleteMenu', 'Home::deleteMenu');
 
 
 
